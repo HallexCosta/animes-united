@@ -24,6 +24,7 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
+    'no-useless-constructor': 'off',
     'space-before-function-paren': [
       'error',
       {
