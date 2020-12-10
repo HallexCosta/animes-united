@@ -6,6 +6,8 @@ type PuppeteerLaunchConfig = {
   args: string[]
 }
 
+export const gotoURI = 'https://yayanimes.net'
+
 export const launch: PuppeteerLaunchConfig = {
   executablePath: path.join('/', 'mnt', 'c', 'chrome-win', 'chrome.exe'),
   headless: !process.env.DEBUG,
