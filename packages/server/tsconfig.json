@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/server", 
+    "rootDir": "./src", 
+    "removeComments": true,
+    "experimentalDecorators": true, 
+    "emitDecoratorMetadata": true, 
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@useCases/*": ["./src/useCases/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@repositories/*": ["./src/repositories/*"],
+      "@providers/*": ["./src/providers/*"],
+      "@commons/*": ["./src/commons/*"]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
