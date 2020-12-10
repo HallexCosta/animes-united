@@ -1,4 +1,6 @@
 import path from 'path'
+import dotenv from 'dotenv'
+dotenv.config()
 
 type PuppeteerLaunchConfig = {
   executablePath: string
@@ -10,6 +12,6 @@ export const gotoURI = 'https://yayanimes.net'
 
 export const launch: PuppeteerLaunchConfig = {
   executablePath: path.join('/', 'mnt', 'c', 'chrome-win', 'chrome.exe'),
-  headless: !process.env.DEBUG,
+  headless: Boolean(!process.env.DEBUG),
   args: ['--no-sandbox']
 }
