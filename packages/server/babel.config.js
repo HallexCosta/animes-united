@@ -8,7 +8,8 @@ module.exports = {
           '@entities': './src/entities',
           '@repositories': './src/repositories',
           '@providers': './src/providers',
-          '@common': './src/common'
+          '@common': './src/common',
+          '@http': './src/http'
         }
       }
     ]
