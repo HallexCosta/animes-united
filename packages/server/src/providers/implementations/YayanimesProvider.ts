@@ -4,7 +4,7 @@ import { Ova } from '@entities/Ova'
 import { IYayanimesProvider } from '@providers/IYayanimesProvider'
 import puppeteer, { Browser, Page } from 'puppeteer'
 import * as config from '@common/configs/puppeteer'
-import { PageErrors } from '@http/PageErros'
+import { PageErrors } from '@http/PageErrors'
 
 abstract class Puppeteer {
   protected async initPage(): Promise<{ browser: Browser; page: Page }> {
