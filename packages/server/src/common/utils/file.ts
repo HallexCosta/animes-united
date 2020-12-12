@@ -14,8 +14,8 @@ export function saveFile(data: EmptyFile): boolean {
     extension === 'json' ? JSON.stringify(dataContent, null, 2) : dataContent
 
   if (typeof dataText === 'object') {
-    throw new Error(
-      'TypeError: It is not possible to write an object type in a text file! Convert the object to JSON'
+    throw new TypeError(
+      'It is not possible to write an object type in a text file'
     )
   }
 
