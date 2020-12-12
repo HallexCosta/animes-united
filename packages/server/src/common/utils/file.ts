@@ -1,30 +1,30 @@
 import fs from 'fs'
 import path from 'path'
 
-type DataContent = string | [] | {}
-
 export type EmptyFile = {
   filename: string
   extension: string
   directorySave: string
-  dataContent: DataContent
-  isJSON: boolean
+  dataContent: any
 }
 
-export function saveFile(data: EmptyFile): DataContent {
-  const { filename, extension, directorySave, dataContent, isJSON } = data
+export function saveFile(data: EmptyFile): boolean {
+  const { filename, extension, directorySave, dataContent } = data
 
-  const dataText = isJSON
-    ? JSON.stringify(dataContent, null, 2)
-    : (dataContent as string)
+  const dataText =
+    extension === 'json' ? JSON.stringify(dataContent, null, 2) : dataContent
 
-  fs.writeFile(
-    path.join(__dirname, directorySave, `${filename}.${extension}`),
-    dataText,
-    err => {
-      if (err) throw new Error('something went wrong.')
-    }
-  )
+  if (typeof dataText === 'object') {
+    throw new Error(
+      'TypeError: It is not possible to write an object type in a text file! Convert the object to JSON'
+    )
+  }
+
+  console.log(`Directory saved: ${directorySave}/${filename}.${extension}`)
+
+  fs.writeFile(`${directorySave}/${filename}.${extension}`, dataText, err => {
+    if (err) throw new Error('FileError: Something went wrong.')
+  })
 
   return true
 }
