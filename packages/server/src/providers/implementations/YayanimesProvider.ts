@@ -1,10 +1,8 @@
-import { AnimeTextData } from '@entities/AnimeTextData'
-import { Episode } from '@entities/Episode'
-import { Ova } from '@entities/Ova'
 import { IYayanimesProvider } from '@providers/IYayanimesProvider'
 import puppeteer, { Browser, Page } from 'puppeteer'
 import * as config from '@common/configs/puppeteer'
 import { PageErrors } from '@http/PageErrors'
+import { Anime, Episode } from '@entities/Anime'
 
 abstract class Puppeteer {
   protected async initPage(): Promise<{ browser: Browser; page: Page }> {
@@ -51,7 +49,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
     return names
   }
 
-  public async getAnime(name: string): Promise<AnimeTextData | undefined> {
+  public async getAnime(name: string): Promise<Anime | undefined> {
     const { browser, page } = await this.initPage()
 
     const uri = `${this.getBaseURL()}/${name.toLowerCase()}`
@@ -65,7 +63,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
       error: false
     }
 
-    const animeTextData = await page.evaluate(
+    const anime = await page.evaluate(
       (baseURL: string, errors: PageErrors) => {
         const verifyIsInvalidAnime = () => {
           const pageNotFound = document.querySelector<HTMLHeadingElement>('h3')
@@ -96,7 +94,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
 
         const separateOvaOfEpisodie = (allEpisodes: Element[]) => {
           const episodes: Episode[] = []
-          const ovas: Ova[] = []
+          const ovas: Episode[] = []
 
           allEpisodes.forEach(episodeOrOva => {
             const title = episodeOrOva.children[0].children[0].innerHTML.trim()
@@ -150,7 +148,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
 
         const streamings = separateOvaOfEpisodie(allEpisodes)
 
-        const animeTextData: AnimeTextData = {
+        const anime: Anime = {
           name: title ? title.innerText.trim() : 'Without name',
           imageURL: image ? image.src.trim() : 'Without image',
           studio: about[1] ? about[1].innerText.trim() : 'Without studio',
@@ -165,9 +163,9 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
           }
         }
 
-        console.log(animeTextData)
+        console.log(anime)
 
-        return animeTextData
+        return anime
       },
       this.getBaseURL(),
       errors
@@ -178,6 +176,6 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
     await browser.close()
     console.log('Browser fechado!')
 
-    return animeTextData
+    return anime
   }
 }
