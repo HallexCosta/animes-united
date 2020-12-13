@@ -1,4 +1,4 @@
-type Episode = {
+export type Episode = {
   title: string
   thumbnail: string
   qualityStreaming: string
