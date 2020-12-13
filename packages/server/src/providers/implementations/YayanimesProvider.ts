@@ -1,8 +1,8 @@
+import * as config from '@common/configs/puppeteer'
+import { Anime, Episode } from '@entities/Anime'
+import { PageErrors } from '@http/PageErrors'
 import { IYayanimesProvider } from '@providers/IYayanimesProvider'
 import puppeteer, { Browser, Page } from 'puppeteer'
-import * as config from '@common/configs/puppeteer'
-import { PageErrors } from '@http/PageErrors'
-import { Anime, Episode } from '@entities/Anime'
 
 abstract class Puppeteer {
   protected async initPage(): Promise<{ browser: Browser; page: Page }> {
