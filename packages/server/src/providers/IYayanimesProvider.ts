@@ -1,7 +1,7 @@
-import { AnimeTextData } from '@entities/AnimeTextData'
+import { Anime } from '@entities/Anime'
 
 export interface IYayanimesProvider {
   getBaseURL(): string
   getAnimeNames(): Promise<string[]>
-  getAnimeTextData(name: string): Promise<AnimeTextData | undefined>
+  getAnime(name: string): Promise<Anime | undefined>
 }

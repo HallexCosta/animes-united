@@ -51,9 +51,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
     return names
   }
 
-  public async getAnimeTextData(
-    name: string
-  ): Promise<AnimeTextData | undefined> {
+  public async getAnime(name: string): Promise<AnimeTextData | undefined> {
     const { browser, page } = await this.initPage()
 
     const uri = `${this.getBaseURL()}/${name.toLowerCase()}`
