@@ -1,5 +1,6 @@
 export type Episode = {
   title: string
+  number: number
   thumbnail: string
   qualityStreaming: string
   url: string
