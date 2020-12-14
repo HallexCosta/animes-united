@@ -1,13 +1,13 @@
 import fs from 'fs'
 
-export type EmptyFile = {
+type EmptyFile = {
   filename: string
   extension: string
   directorySave: string
   dataContent: any
 }
 
-export type RequestFile = {
+type RequestFile = {
   directorySource: string
   filename: string
   extension: string
