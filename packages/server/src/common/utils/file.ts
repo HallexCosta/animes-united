@@ -11,7 +11,7 @@ type RequestFile = {
   directorySource: string
   filename: string
   extension: string
-  createThisFileIfNotExists: boolean
+  createThisFileIfNotExists?: boolean
 }
 
 class FileError extends Error {}
