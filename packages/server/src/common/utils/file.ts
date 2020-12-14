@@ -7,6 +7,12 @@ export type EmptyFile = {
   dataContent: any
 }
 
+class FileError extends Error {}
+
+export function getFile(dirFile: string): string {
+  return fs.readFileSync(dirFile, 'utf-8')
+}
+
 export function saveFile(data: EmptyFile): boolean {
   const { filename, extension, directorySave, dataContent } = data
 
@@ -22,7 +28,7 @@ export function saveFile(data: EmptyFile): boolean {
   console.log(`Directory saved: ${directorySave}/${filename}.${extension}`)
 
   fs.writeFile(`${directorySave}/${filename}.${extension}`, dataText, err => {
-    if (err) throw new Error('FileError: Something went wrong.')
+    if (err) throw new FileError('Something went wrong.')
   })
 
   return true
