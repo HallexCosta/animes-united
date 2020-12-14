@@ -97,12 +97,21 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
           const ovas: Episode[] = []
 
           allEpisodes.forEach(episodeOrOva => {
-            const title = episodeOrOva.children[0].children[0].innerHTML.trim()
-            const thumbnail = episodeOrOva.children[0].children[1].children[0]
-              .attributes[0].nodeValue as string
+            const title = (episodeOrOva.children[0]
+              .children[0] as HTMLAnchorElement).innerText.trim()
 
-            const qualityStreaming = episodeOrOva.children[0].children[1]
-              .children[1].textContent as string
+            const number = Number(
+              (episodeOrOva.children[0].children[1]
+                .children[2] as HTMLSpanElement).innerText
+                .split(' ')[1]
+                .trim()
+            )
+
+            const thumbnail = (episodeOrOva.children[0].children[1]
+              .children[0] as HTMLImageElement).src
+
+            const qualityStreaming = (episodeOrOva.children[0].children[1]
+              .children[1] as HTMLSpanElement).innerText.trim()
 
             const route = (episodeOrOva.children[1].children[0]
               .children[1] as HTMLAnchorElement).pathname
@@ -110,6 +119,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
             if (title.match(/(ova)/gi)) {
               ovas.push({
                 title,
+                number,
                 thumbnail,
                 qualityStreaming,
                 url: `${baseURL}${route}`
@@ -117,6 +127,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
             } else {
               episodes.push({
                 title,
+                number,
                 thumbnail,
                 qualityStreaming,
                 url: `${baseURL}${route}`
@@ -142,9 +153,8 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
         )
         const sinopse = document.querySelectorAll<HTMLDivElement>('.single div')
         const rating = document.querySelector<HTMLSpanElement>('#rmp-rating')
-        const allEpisodes = [
-          ...document.querySelectorAll('.contentBox ul li > div.box-episodio3')
-        ]
+
+        const allEpisodes = [...document.querySelectorAll('div.box-episodio3')]
 
         const streamings = separateOvaOfEpisode(allEpisodes)
 
