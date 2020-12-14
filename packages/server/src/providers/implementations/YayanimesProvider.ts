@@ -92,7 +92,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
           return errors.error
         }
 
-        const separateOvaOfEpisodie = (allEpisodes: Element[]) => {
+        const separateOvaOfEpisode = (allEpisodes: Element[]) => {
           const episodes: Episode[] = []
           const ovas: Episode[] = []
 
@@ -146,7 +146,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
           ...document.querySelectorAll('.contentBox ul li > div.box-episodio3')
         ]
 
-        const streamings = separateOvaOfEpisodie(allEpisodes)
+        const streamings = separateOvaOfEpisode(allEpisodes)
 
         const anime: Anime = {
           name: title ? title.innerText.trim() : 'Without name',
@@ -154,7 +154,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
           studio: about[1] ? about[1].innerText.trim() : 'Without studio',
           genre: about[3] ? about[3].innerText.trim() : 'Without genre',
           status: about[5] ? about[5].innerText.trim() : 'Without release data',
-          releaseData: about[7] ? Number(about[7].innerText.trim()) : 0,
+          yearRelease: about[7] ? Number(about[7].innerText.trim()) : 0,
           rating: rating ? Number(rating.innerText.trim()) : 0,
           sinopse: sinopse ? sinopse[13].innerText.trim() : 'Without sinopse',
           streamings: {
