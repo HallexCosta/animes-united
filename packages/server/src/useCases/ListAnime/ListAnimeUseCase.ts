@@ -1,9 +1,11 @@
+import path from 'path'
+
 import { ListAnimeRequestDTO } from './ListAnimeDTO'
 import { Anime } from '@entities/Anime'
-import { IYayanimesProvider } from '@providers/IYayanimesProvider'
-import { getFile, saveFile } from '@common/utils/file'
 
-import path from 'path'
+import { IYayanimesProvider } from '@providers/IYayanimesProvider'
+
+import { getFile, saveFile } from '@common/utils/file'
 import { toUpperFirstCase } from '@common/utils/text'
 import { getCurrentDate, getCurrentTime } from '@common/utils/date'
 
