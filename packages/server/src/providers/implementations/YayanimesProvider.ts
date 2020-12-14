@@ -215,7 +215,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
       const animes: Anime[] = names.map((name: string, key: number) => {
         return {
           name,
-          imageURL: images[key] || '',
+          imageURL: images[key] ?? '',
           genre: '',
           status: '',
           studio: '',
@@ -232,10 +232,10 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
       return animes
     })
 
-    // console.log('Fechando browser...')
-    // await this.closePages(browser)
-    // await browser.close()
-    // console.log('Browser fechado!')
+    console.log('Fechando browser...')
+    await this.closePages(browser)
+    await browser.close()
+    console.log('Browser fechado!')
     return animes
   }
 }
