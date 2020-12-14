@@ -17,7 +17,7 @@ export type Anime = {
   status: string
   studio: string
   sinopse: string
-  releaseData: number
+  yearRelease: number
   rating: number
   streamings: Streamings
 }
