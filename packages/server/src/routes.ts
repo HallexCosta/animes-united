@@ -1,11 +1,10 @@
+import { listAnimeController } from '@useCases/ListAnime'
 import { Router, Request, Response } from 'express'
 
 const routes: Router = Router()
 
-routes.get('/', (request: Request, response: Response) => {
-  return response.status(200).json({
-    message: 'Hello NodeJS'
-  })
+routes.get('/animes/:name', (request: Request, response: Response) => {
+  return listAnimeController.handle(request, response)
 })
 
 export { routes }
