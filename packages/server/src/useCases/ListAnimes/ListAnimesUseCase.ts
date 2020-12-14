@@ -1,7 +1,7 @@
-import { YayanimesProvider } from '@providers/implementations/YayanimesProvider'
+import { IYayanimesProvider } from '@providers/IYayanimesProvider'
 
 export class ListAnimesUseCase {
-  public constructor(private yayanimesProvider: YayanimesProvider) {}
+  public constructor(private yayanimesProvider: IYayanimesProvider) {}
 
   public async execute(): Promise<string[]> {
     const names = await this.yayanimesProvider.getAnimeNames()
