@@ -16,7 +16,7 @@ export class ListAnimeUseCase {
       throw new Error(`Anime ${toUpperFirstCase(data.name)} not Found`)
     }
 
-    const directorySave = path.join(
+    const directoryAnimeSave = path.join(
       __dirname,
       '..',
       '..',
@@ -28,10 +28,9 @@ export class ListAnimeUseCase {
     saveFile({
       filename: data.name.toLowerCase(),
       extension: 'json',
-      directorySave,
+      directorySave: directoryAnimeSave,
       dataContent: anime
     })
-
     return anime
   }
 }
