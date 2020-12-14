@@ -178,4 +178,64 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
 
     return anime
   }
+
+  public async getRecommendationAnimes(): Promise<Anime[]> {
+    const { browser, page } = await this.initPage()
+
+    const uri = this.getBaseURL()
+
+    await page.goto(uri, {
+      timeout: 0,
+      waitUntil: 'networkidle2'
+    })
+
+    const animes: Anime[] = await page.evaluate(() => {
+      const imagesElements = [
+        ...document.querySelectorAll<HTMLImageElement>(
+          '.carousel-slider__item > a > img'
+        )
+      ]
+      const namesElements = [
+        ...document.querySelectorAll<HTMLImageElement>(
+          '.carousel-slider__item > a > div > h4'
+        )
+      ]
+
+      const images = imagesElements.map(imageElement => {
+        return imageElement.attributes[0].textContent
+      })
+
+      const names = namesElements.map(nameElement => {
+        return nameElement.innerText
+      })
+
+      console.log('Final images', images)
+      console.log('Final names', names)
+
+      const animes: Anime[] = names.map((name: string, key: number) => {
+        return {
+          name,
+          imageURL: images[key] || '',
+          genre: '',
+          status: '',
+          studio: '',
+          sinopse: '',
+          yearRelease: 0,
+          rating: 0,
+          streamings: {
+            episodes: [] as Episode[],
+            ovas: [] as Episode[]
+          }
+        }
+      })
+
+      return animes
+    })
+
+    // console.log('Fechando browser...')
+    // await this.closePages(browser)
+    // await browser.close()
+    // console.log('Browser fechado!')
+    return animes
+  }
 }
