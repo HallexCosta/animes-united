@@ -1,1 +1,3 @@
 .env
+src/database.json
+src/database/**/**/*.json
