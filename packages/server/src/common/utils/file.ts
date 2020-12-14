@@ -7,10 +7,38 @@ export type EmptyFile = {
   dataContent: any
 }
 
+export type RequestFile = {
+  directorySource: string
+  filename: string
+  extension: string
+  createThisFileIfNotExists: boolean
+}
+
 class FileError extends Error {}
 
-export function getFile(dirFile: string): string {
-  return fs.readFileSync(dirFile, 'utf-8')
+export function verifyFileExists(filePath: string): boolean {
+  return fs.existsSync(filePath)
+}
+
+export function getFile({
+  directorySource,
+  filename,
+  extension,
+  createThisFileIfNotExists = false
+}: RequestFile): string | false {
+  const fullDirectory = `${directorySource}/${filename}.${extension}`
+
+  if (createThisFileIfNotExists) {
+    if (!verifyFileExists(fullDirectory)) {
+      fs.writeFileSync(fullDirectory, '')
+    }
+  }
+
+  if (!verifyFileExists(fullDirectory)) {
+    throw new FileError(`File ${filename}.${extension} not found`)
+  }
+
+  return fs.readFileSync(fullDirectory, 'utf-8')
 }
 
 export function saveFile(data: EmptyFile): boolean {
