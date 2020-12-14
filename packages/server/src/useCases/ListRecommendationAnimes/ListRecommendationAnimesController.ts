@@ -8,9 +8,9 @@ export class ListRecommendationAnimesController {
 
   public async handle(request: Request, response: Response): Promise<Response> {
     try {
-      await this.listRecommendationAnimesUseCase.execute()
+      const animes = await this.listRecommendationAnimesUseCase.execute()
 
-      return response.status(200).json()
+      return response.status(200).json(animes)
     } catch (e) {
       console.error(e)
       return response.status(400).json({
