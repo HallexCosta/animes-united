@@ -9,7 +9,8 @@ module.exports = {
           '@repositories': './src/repositories',
           '@providers': './src/providers',
           '@common': './src/common',
-          '@http': './src/http'
+          '@http': './src/http',
+          '@errors': './src/errors'
         }
       }
     ]
