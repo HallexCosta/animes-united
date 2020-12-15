@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { readFile, writeFile, stat } from 'fs/promises'
+import { readFile, writeFile, stat, open } from 'fs/promises'
 
 import { ILogger } from './ILogger'
 import { FileError } from '@errors/system/FileError'
@@ -35,32 +35,53 @@ export class Logger implements ILogger {
   }
 
   public async write(message: string): Promise<void> {
-    const fileExists = await this.verifyLoggerFileExists()
-    if (!fileExists) {
-      const file = `${Logger.filename}.${Logger.extension}`
-      throw new FileError(`Cannot write to file ${file}! File does not exist`)
+    try {
+      const fileExists = await this.verifyLoggerFileExists()
+      if (!fileExists) {
+        const file = `${Logger.filename}.${Logger.extension}`
+        throw new FileError(`Cannot write to file ${file}! File does not exist`)
+      }
+      const buffer = await readFile(Logger.filePath)
+      const textModified = `${buffer.toString()}\n${message}`
+      await writeFile(Logger.filePath, textModified)
+    } catch (e) {
+      console.log(e)
     }
-    const buffer = await readFile(Logger.filePath)
-    const textModified = `${buffer.toString()}\n${message}`
-    await writeFile(Logger.filePath, textModified)
   }
 
   public async read(): Promise<string> {
-    const buffer = await readFile(Logger.filePath)
-    return buffer.toString()
+    try {
+      const fileExists = await this.verifyLoggerFileExists()
+      if (!fileExists) {
+        const file = `${Logger.filename}.${Logger.extension}`
+        throw new FileError(`Cannot read to file ${file}! File does not exist`)
+      }
+      const buffer = await readFile(Logger.filePath)
+      return buffer.toString()
+    } catch (e) {
+      console.log(e)
+      return ''
+    }
   }
 
   public async create(): Promise<void> {
     const fileExists = await this.verifyLoggerFileExists()
 
     if (!fileExists) {
-      await writeFile(Logger.filePath, '')
+      const file = await open(Logger.filePath, 'w+')
+      await file.close()
     }
   }
 
   private async verifyLoggerFileExists(): Promise<boolean> {
-    const fileStat = await stat(Logger.filePath)
-
-    return fileStat.isFile()
+    try {
+      const fileStat = await stat(Logger.filePath)
+      if (fileStat.isFile()) {
+        return true
+      }
+      return false
+    } catch (e) {
+      return false
+    }
   }
 }
