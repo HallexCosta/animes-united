@@ -1,1 +1,1 @@
-class FileError extends Error {}
+export class FileError extends Error {}
