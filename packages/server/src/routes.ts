@@ -5,16 +5,15 @@ import { Router, Request, Response } from 'express'
 
 const routes: Router = Router()
 
-routes.get('/animes', (request: Request, response: Response) => {
-  return listAnimesController.handle(request, response)
-})
-
-routes.get('/animes/recommendation', (request: Request, response: Response) => {
-  return listRecommendationAnimesController.handle(request, response)
-})
-
-routes.get('/animes/:name', (request: Request, response: Response) => {
-  return listAnimeController.handle(request, response)
-})
+routes
+  .get('/animes', (request: Request, response: Response) => {
+    return listAnimesController.handle(request, response)
+  })
+  .get('/animes/recommendation', (request: Request, response: Response) => {
+    return listRecommendationAnimesController.handle(request, response)
+  })
+  .get('/animes/:name', (request: Request, response: Response) => {
+    return listAnimeController.handle(request, response)
+  })
 
 export { routes }
