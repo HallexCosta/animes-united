@@ -5,12 +5,16 @@ import { Anime } from '@entities/Anime'
 
 import { IYayanimesProvider } from '@providers/IYayanimesProvider'
 
+import { ILogger } from '@common/system/Logger/ILogger'
+
 import { getFile, saveFile } from '@common/utils/file'
 import { toUpperFirstCase } from '@common/utils/text'
 import { getCurrentDate, getCurrentTime } from '@common/utils/date'
-
 export class ListAnimeUseCase {
-  constructor(private yayanimesProvider: IYayanimesProvider) {}
+  constructor(
+    private yayanimesProvider: IYayanimesProvider,
+    private monitor: ILogger
+  ) {}
 
   public async execute(data: ListAnimeRequestDTO): Promise<Anime> {
     const anime = await this.yayanimesProvider.getAnime(data.name)
@@ -35,28 +39,14 @@ export class ListAnimeUseCase {
       dataContent: anime
     })
 
-    const directoryLogSave = path.join(__dirname, '..', '..')
-
-    const currentDataContent = getFile({
-      directorySource: directoryLogSave,
-      filename: 'console',
-      extension: 'log',
-      createThisFileIfNotExists: true
-    })
-
     const date = getCurrentDate()
     const time = getCurrentTime()
 
-    const addNewContent = `[${date} ${time}] INFO  :...Anime ${toUpperFirstCase(
+    const log = `[${date} ${time}] INFO  :...Anime ${toUpperFirstCase(
       data.name
-    )} - Getting Successfully\n`
+    )} - Getting Successfully`
 
-    saveFile({
-      filename: 'console',
-      extension: 'log',
-      directorySave: directoryLogSave,
-      dataContent: `${currentDataContent}\n${addNewContent}`
-    })
+    await this.monitor.write(log)
 
     return anime
   }
