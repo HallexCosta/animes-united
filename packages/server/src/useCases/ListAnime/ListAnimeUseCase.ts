@@ -7,7 +7,7 @@ import { IYayanimesProvider } from '@providers/IYayanimesProvider'
 
 import { ILogger } from '@common/system/Logger/ILogger'
 
-import { getFile, saveFile } from '@common/utils/file'
+import { saveFile } from '@common/utils/file'
 import { toUpperFirstCase } from '@common/utils/text'
 import { getCurrentDate, getCurrentTime } from '@common/utils/date'
 export class ListAnimeUseCase {
