@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-import { FileError } from '@common/errors/FileError'
+import { FileError } from '@errors/system/FileError'
 
 type EmptyFile = {
   filename: string
