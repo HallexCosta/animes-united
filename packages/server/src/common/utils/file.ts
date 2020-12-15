@@ -1,5 +1,7 @@
 import fs from 'fs'
 
+import { FileError } from '@common/errors/FileError'
+
 type EmptyFile = {
   filename: string
   extension: string
@@ -13,8 +15,6 @@ type RequestFile = {
   extension: string
   createThisFileIfNotExists?: boolean
 }
-
-class FileError extends Error {}
 
 export function verifyFileExists(filePath: string): boolean {
   return fs.existsSync(filePath)
