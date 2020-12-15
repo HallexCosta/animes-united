@@ -1,0 +1,1 @@
+class FileError extends Error {}
