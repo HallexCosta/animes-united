@@ -19,6 +19,10 @@ abstract class Puppeteer {
   }
 }
 
+export type AnimeCalendar = {
+  title: string
+  thumbnail: string
+}
 export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
   private static baseURL = 'https://yayanimes.net'
   public getBaseURL: () => string = () => YayanimesProvider.baseURL
@@ -345,5 +349,57 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
     console.log('Browser fechado!')
 
     return episodes
+  }
+
+  public async getAnimesCalendar(): Promise<AnimeCalendar[]> {
+    const { browser, page } = await this.initPage()
+
+    const uri = `${this.getBaseURL()}/calendario`
+
+    await page.goto(uri, {
+      timeout: 0,
+      waitUntil: 'networkidle2'
+    })
+
+    const animesCalendar = await page.evaluate(() => {
+      const treatmentData = (
+        titleElements: HTMLDivElement[],
+        imageElements: HTMLDivElement[]
+      ) => {
+        const titles = titleElements.map(titleElement => titleElement.innerText)
+        const images = imageElements.map(imageElement =>
+          imageElement.style.backgroundImage.slice(5, -2)
+        )
+
+        return {
+          titles,
+          images
+        }
+      }
+      const titleElements = [
+        ...document.querySelectorAll<HTMLDivElement>(
+          'div.maisBaixadosImagem > div.maisBaixadosNome'
+        )
+      ]
+      const imageElements = [
+        ...document.querySelectorAll<HTMLDivElement>('div.maisBaixadosImagem')
+      ]
+
+      const { titles, images } = treatmentData(titleElements, imageElements)
+
+      const animesCalendar: AnimeCalendar[] = titles.map((title, index) => ({
+        title,
+        thumbnail: images[index]
+      }))
+
+      return animesCalendar
+    })
+
+    console.log('Fechando browser...')
+    await this.closePages(browser)
+    await browser.close()
+    console.log('Browser fechado!')
+
+    return animesCalendar
   }
 }
