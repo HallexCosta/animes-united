@@ -1,6 +1,7 @@
 import { lastReleasesEpisodesController } from '@useCases/LastReleasesEpisodes'
 import { listAnimeController } from '@useCases/ListAnime'
 import { listAnimesController } from '@useCases/ListAnimes'
+import { listAnimesCalendarController } from '@useCases/ListAnimesCalendar'
 import { listRecommendationAnimesController } from '@useCases/ListRecommendationAnimes'
 import { Router, Request, Response } from 'express'
 
@@ -19,6 +20,9 @@ routes
       return lastReleasesEpisodesController.handle(request, response)
     }
   )
+  .get('/animes/calendar', (request: Request, response: Response) => {
+    return listAnimesCalendarController.handle(request, response)
+  })
   .get('/animes/:name', (request: Request, response: Response) => {
     return listAnimeController.handle(request, response)
   })
