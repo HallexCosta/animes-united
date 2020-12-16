@@ -1,4 +1,4 @@
-import { Anime } from '@entities/Anime'
+import { Anime, Episode } from '@entities/Anime'
 
 export interface IYayanimesProvider {
   getBaseURL(): string
