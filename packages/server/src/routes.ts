@@ -1,3 +1,4 @@
+import { lastReleasesEpisodesController } from '@useCases/LastReleasesEpisodes'
 import { listAnimeController } from '@useCases/ListAnime'
 import { listAnimesController } from '@useCases/ListAnimes'
 import { listRecommendationAnimesController } from '@useCases/ListRecommendationAnimes'
@@ -12,6 +13,12 @@ routes
   .get('/animes/recommendation', (request: Request, response: Response) => {
     return listRecommendationAnimesController.handle(request, response)
   })
+  .get(
+    '/animes/last-releases-episodes',
+    (request: Request, response: Response) => {
+      return lastReleasesEpisodesController.handle(request, response)
+    }
+  )
   .get('/animes/:name', (request: Request, response: Response) => {
     return listAnimeController.handle(request, response)
   })
