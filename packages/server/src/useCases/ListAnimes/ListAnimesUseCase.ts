@@ -10,16 +10,6 @@ export class ListAnimesUseCase {
       throw new Error('No anime found')
     }
 
-    // saveFile({
-    //   filename: 'database',
-    //   extension: 'json',
-    //   directorySave: '../..',
-    //   isJSON: true,
-    //   dataContent: animeDetail
-    // })
-
-    console.log(names)
-
     return names
   }
 }
