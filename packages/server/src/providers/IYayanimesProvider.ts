@@ -5,4 +5,5 @@ export interface IYayanimesProvider {
   getAnimeNames(): Promise<string[]>
   getAnime(name: string): Promise<Anime | undefined>
   getRecommendationAnimes(): Promise<Anime[]>
+  getLastReleasesEpisodes(): Promise<Episode[]>
 }

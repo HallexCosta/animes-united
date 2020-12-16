@@ -248,4 +248,102 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
     console.log('Browser fechado!')
     return animes
   }
+
+  public async getLastReleasesEpisodes(): Promise<Episode[]> {
+    const { browser, page } = await this.initPage()
+    const uri = this.getBaseURL()
+
+    await page.goto(uri, {
+      timeout: 0,
+      waitUntil: 'networkidle2'
+    })
+
+    const episodes = await page.evaluate(() => {
+      const treatmentData = (
+        titleElements: HTMLAnchorElement[],
+        imageElements: HTMLImageElement[],
+        qualityStreamingElements: HTMLSpanElement[],
+        numberElements: HTMLSpanElement[],
+        urlElements: HTMLAnchorElement[]
+      ) => {
+        const titles = titleElements.map(titleElement => titleElement.innerText)
+        const images = imageElements.map(imageElement => imageElement.src)
+        const qualityStreamings = qualityStreamingElements.map(
+          qualityStreaming => qualityStreaming.innerText
+        )
+        const numbers = numberElements.map(episode => Number(episode.innerText))
+        const urls = urlElements.map(url => url.href)
+
+        return {
+          titles,
+          images,
+          qualityStreamings,
+          numbers,
+          urls
+        }
+      }
+
+      const titleElements = [
+        ...document.querySelectorAll<HTMLAnchorElement>(
+          'div.box-episodio > div.nome-thumb > a'
+        )
+      ]
+      const imageElements = [
+        ...document.querySelectorAll<HTMLImageElement>(
+          'div.box-episodio3 > div.nome-thumb > a.thumb > img'
+        )
+      ]
+      const qualityStreamingElements = [
+        ...document.querySelectorAll<HTMLSpanElement>(
+          'div.box-episodio3  > div.nome-thumb > a.thumb > span.num-episodio3'
+        )
+      ]
+      const numberElements = [
+        ...document.querySelectorAll<HTMLSpanElement>(
+          'div.box-episodio3 > div.nome-thumb > a.thumb > span.num-episodio'
+        )
+      ]
+      const urlElements = [
+        ...document.querySelectorAll<HTMLAnchorElement>('a.btn-online')
+      ]
+
+      const {
+        titles,
+        images,
+        qualityStreamings,
+        numbers,
+        urls
+      } = treatmentData(
+        titleElements,
+        imageElements,
+        qualityStreamingElements,
+        numberElements,
+        urlElements
+      )
+
+      const episodes: Episode[] = titles.map((title, index) => {
+        const thumbnail = images[index]
+        const qualityStreaming = qualityStreamings[index]
+        const number = numbers[index]
+        const url = urls[index]
+
+        return {
+          title,
+          thumbnail,
+          qualityStreaming,
+          number,
+          url
+        }
+      })
+
+      return episodes
+    })
+
+    console.log('Fechando browser...')
+    await this.closePages(browser)
+    await browser.close()
+    console.log('Browser fechado!')
+
+    return episodes
+  }
 }
