@@ -1,9 +1,10 @@
-import { lastReleasesEpisodesController } from '@useCases/LastReleasesEpisodes'
-import { listAnimeController } from '@useCases/ListAnime'
-import { listAnimesController } from '@useCases/ListAnimes'
-import { listAnimesCalendarController } from '@useCases/ListAnimesCalendar'
-import { listRecommendationAnimesController } from '@useCases/ListRecommendationAnimes'
 import { Router, Request, Response } from 'express'
+
+import { lastReleasesEpisodesController } from '@useCases/YayanimesProvider/LastReleasesEpisodes'
+import { listAnimeController } from '@useCases/YayanimesProvider/ListAnime'
+import { listAnimesController } from '@useCases/YayanimesProvider/ListAnimes'
+import { listAnimesCalendarController } from '@useCases/YayanimesProvider/ListAnimesCalendar'
+import { listRecommendationAnimesController } from '@useCases/YayanimesProvider/ListRecommendationAnimes'
 
 const routes: Router = Router()
 
