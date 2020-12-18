@@ -7,6 +7,10 @@ export class ListAnimesCalendarUseCase {
   public async execute(): Promise<AnimeCalendar[]> {
     const animesCalendar = await this.yayanimesProvider.getAnimesCalendar()
 
+    if (!animesCalendar || animesCalendar.length === 0) {
+      throw new Error('Animes calendar not fond')
+    }
+
     return animesCalendar
   }
 }
