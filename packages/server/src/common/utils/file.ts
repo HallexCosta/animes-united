@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { inspect } from 'util'
 
 import { FileError } from '@errors/system/FileError'
 
@@ -44,18 +45,19 @@ export function getFile({
 export function saveFile(data: EmptyFile): boolean {
   const { filename, extension, directorySave, dataContent } = data
 
-  const dataText =
-    extension === 'json' ? JSON.stringify(dataContent, null, 2) : dataContent
+  let writeData: string = dataContent
 
-  if (typeof dataText === 'object') {
-    throw new TypeError(
-      'It is not possible to write an object type in a text file'
-    )
+  if (extension === 'json') {
+    writeData = JSON.stringify(dataContent, null, 2)
+  }
+
+  if (typeof writeData === 'object') {
+    writeData = `module.exports = ${JSON.stringify(dataContent, null, 2)}`
   }
 
   console.log(`Directory saved: ${directorySave}/${filename}.${extension}`)
 
-  fs.writeFile(`${directorySave}/${filename}.${extension}`, dataText, err => {
+  fs.writeFile(`${directorySave}/${filename}.${extension}`, writeData, err => {
     if (err) throw new FileError('Something went wrong.')
   })
 
