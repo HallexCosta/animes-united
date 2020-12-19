@@ -27,6 +27,7 @@ export class ListAnimeUseCase {
       __dirname,
       '..',
       '..',
+      '..',
       'database',
       'json',
       'animes'
@@ -34,7 +35,7 @@ export class ListAnimeUseCase {
 
     saveFile({
       filename: data.name.toLowerCase(),
-      extension: 'json',
+      extension: 'js',
       directorySave: directoryAnimeSave,
       dataContent: anime
     })
