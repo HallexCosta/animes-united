@@ -1,3 +1,5 @@
+import { Request, Response } from 'express'
+
 import { ListAnimesCalendarUseCase } from './ListAnimesCalendarUseCase'
 
 export class ListAnimesCalendarController {
