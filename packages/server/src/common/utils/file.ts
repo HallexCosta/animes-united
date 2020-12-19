@@ -1,5 +1,4 @@
 import fs from 'fs'
-import { inspect } from 'util'
 
 import { FileError } from '@errors/system/FileError'
 
@@ -51,7 +50,7 @@ export function saveFile(data: EmptyFile): boolean {
     writeData = JSON.stringify(dataContent, null, 2)
   }
 
-  if (typeof writeData === 'object') {
+  if (extension === 'js') {
     writeData = `module.exports = ${JSON.stringify(dataContent, null, 2)}`
   }
 
