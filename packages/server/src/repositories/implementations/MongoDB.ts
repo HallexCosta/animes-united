@@ -2,7 +2,7 @@ import { Db, MongoClient } from 'mongodb'
 
 export abstract class MongoDB {
   private cachedDb: Db | null = null
-  protected collectionName?: string
+  protected collectionName = ''
 
   constructor(private uri: string) {}
 
