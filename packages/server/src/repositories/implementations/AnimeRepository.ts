@@ -47,6 +47,14 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
     await collection.insertOne(anime)
   }
 
+  public async deleteByName(name: string): Promise<void> {
+    const db = await this.connect()
+    const collection = db.collection(this.collectionName)
+    await collection.deleteOne({
+      name
+    })
+  }
+
   private orderByAlphabetical(categories: CategoryAnime[]): CategoryAnime[] {
     return categories.sort((a, b) =>
       a.category > b.category ? 1 : b.category > a.category ? -1 : 0
