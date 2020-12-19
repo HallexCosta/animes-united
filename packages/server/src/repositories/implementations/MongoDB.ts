@@ -2,6 +2,7 @@ import { Db, MongoClient } from 'mongodb'
 
 export abstract class MongoDB {
   private cachedDb: Db | null = null
+  protected collectionName?: string
 
   constructor(private uri: string) {}
 
@@ -23,5 +24,10 @@ export abstract class MongoDB {
     this.cachedDb = db
 
     return db
+  }
+
+  protected collection(collectionName: string): this {
+    this.collectionName = collectionName
+    return this
   }
 }
