@@ -31,10 +31,13 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
     return this.orderByAlphabetical(animes)
   }
 
-  public async findByCategory(category: string): Promise<Anime[]> {
+  public async findByCategory(category: string): Promise<CategoryAnime> {
     const db = await this.connect()
     const collection = db.collection(category.toUpperCase())
-    return await collection.find<Anime>().toArray()
+    return {
+      category: this.collectionName === '' ? category : this.collectionName,
+      data: await collection.find<Anime>().toArray()
+    }
   }
 
   public category(category: string): IAnimeRepository {
