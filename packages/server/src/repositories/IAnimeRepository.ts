@@ -5,6 +5,6 @@ export interface IAnimeRepository {
   findAll(): Promise<CategoryAnime[]>
   findByCategory(category: string): Promise<Anime[]>
   category(category: string): IAnimeRepository
-  save(anime: Anime): Promise<void>
+  save(anime: Anime): Promise<boolean>
   deleteByName(name: string): Promise<void>
 }

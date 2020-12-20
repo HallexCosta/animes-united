@@ -1,4 +1,4 @@
-import { Collection } from 'mongodb'
+import { Collection, MongoError } from 'mongodb'
 
 import { Anime } from '@entities/Anime'
 import { IAnimeRepository } from '@repositories/IAnimeRepository'
@@ -41,10 +41,16 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
     return this.collection(category.toUpperCase())
   }
 
-  public async save(anime: Anime): Promise<void> {
+  public async save(anime: Anime): Promise<boolean> {
     const db = await this.connect()
     const collection = db.collection(this.collectionName)
-    await collection.insertOne(anime)
+    const inserted = await collection.insertOne(anime)
+
+    if (inserted.result.ok) {
+      return true
+    }
+
+    throw new MongoError('Failed to save anime')
   }
 
   public async deleteByName(name: string): Promise<void> {
