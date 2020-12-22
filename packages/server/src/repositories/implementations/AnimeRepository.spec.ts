@@ -62,12 +62,14 @@ describe('Test Anime Repository', () => {
 
   it('Should be able to throw error if findByCategory method does not have a parameter', async () => {
     const animeRepository = new AnimeRepository(mongodbURITest)
+    let error
     try {
       await animeRepository.findByCategory()
     } catch (e) {
-      expect(e.name).toBe('Error')
-      expect(e.message).toBe('Collection name not defined')
+      error = e
     }
+    expect(error.name).toBe('Error')
+    expect(error.message).toBe('Collection name not defined')
   })
 
   it('Should be able to find animes by category', async () => {
