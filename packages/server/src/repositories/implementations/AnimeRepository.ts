@@ -1,4 +1,4 @@
-import { Collection, MongoError } from 'mongodb'
+import { Collection, MongoError, ObjectId } from 'mongodb'
 
 import { Anime } from '@entities/Anime'
 import { IAnimeRepository } from '@repositories/IAnimeRepository'
@@ -6,7 +6,11 @@ import { MongoDB } from './MongoDB'
 
 export type CategoryAnime = {
   category: string
-  data: Anime[]
+  data: AnimeDatabase[]
+}
+
+type AnimeDatabase = Anime & {
+  _id: ObjectId
 }
 
 export class AnimeRepository extends MongoDB implements IAnimeRepository {
@@ -19,7 +23,7 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
 
     const animes: CategoryAnime[] = []
 
-    const collections: Collection<Anime>[] = await db.collections()
+    const collections: Collection<AnimeDatabase>[] = await db.collections()
 
     for (const collection of collections) {
       animes.push({
@@ -31,12 +35,18 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
     return this.orderByAlphabetical(animes)
   }
 
-  public async findByCategory(category: string): Promise<CategoryAnime> {
+  public async findByCategory(category?: string): Promise<CategoryAnime> {
     const db = await this.connect()
-    const collection = db.collection(category.toUpperCase())
+    const collectionName = category || this.collectionName
+
+    if (!collectionName) {
+      throw new Error('Collection name not defined')
+    }
+
+    const collection = db.collection(collectionName)
     return {
-      category: this.collectionName === '' ? category : this.collectionName,
-      data: await collection.find<Anime>().toArray()
+      category: collectionName,
+      data: await collection.find<AnimeDatabase>().toArray()
     }
   }
 
@@ -46,6 +56,12 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
 
   public async save(anime: Anime): Promise<boolean> {
     const db = await this.connect()
+
+    /// TESTAR ISSSO
+    if (!this.collectionName) {
+      throw new Error('Collection name not defined')
+    }
+
     const collection = db.collection(this.collectionName)
     const inserted = await collection.insertOne(anime)
 
@@ -53,15 +69,26 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
       return true
     }
 
-    throw new MongoError('Failed to save anime')
+    throw new Error('Failed to save anime')
   }
 
-  public async deleteByName(name: string): Promise<void> {
+  public async deleteByName(name: string): Promise<boolean> {
     const db = await this.connect()
+
+    if (!this.collectionName) {
+      throw new Error('Collection name not defined')
+    }
+
     const collection = db.collection(this.collectionName)
-    await collection.deleteOne({
+    const deleted = await collection.deleteOne({
       name
     })
+
+    if (!deleted.result.ok) {
+      throw new MongoError('Failed to delete anime')
+    }
+
+    return true
   }
 
   private orderByAlphabetical(categories: CategoryAnime[]): CategoryAnime[] {
