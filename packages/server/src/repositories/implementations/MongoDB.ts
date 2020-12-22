@@ -2,9 +2,9 @@ import { Db, MongoClient } from 'mongodb'
 
 export abstract class MongoDB {
   private cachedDb: Db | null = null
-  protected collectionName = ''
+  protected collectionName?: string
 
-  constructor(private uri: string) {}
+  constructor(protected uri: string) {}
 
   protected async connect(): Promise<Db> {
     if (this.cachedDb) {
