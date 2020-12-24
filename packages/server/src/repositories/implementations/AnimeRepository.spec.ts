@@ -54,14 +54,15 @@ describe('Test Anime Repository', () => {
     expect(expected).toBeInstanceOf(AnimeRepository)
   })
 
-  it('Should be able to save an anime with successfully', async () => {
+  it('Should be able to save an anime with successfully', async done => {
     const animeRepository = new AnimeRepository(mongodbURITest)
     const expected = await animeRepository.category(category).save(anime)
 
     expect(expected).toEqual(true)
+    done()
   })
 
-  it('Should be able to throw error if findByCategory method does not have a parameter', async () => {
+  it('Should be able to throw error if findByCategory method does not have a parameter', async done => {
     const animeRepository = new AnimeRepository(mongodbURITest)
     let error
     try {
@@ -71,9 +72,10 @@ describe('Test Anime Repository', () => {
     }
     expect(error.name).toBe('Error')
     expect(error.message).toBe('Collection name not defined')
+    done()
   })
 
-  it('Should be able to find animes by category', async () => {
+  it('Should be able to find animes by category', async done => {
     const animeRepository = new AnimeRepository(mongodbURITest)
     const expected = await animeRepository.findByCategory(category)
 
@@ -81,18 +83,20 @@ describe('Test Anime Repository', () => {
     expect(expected).toHaveProperty('data')
     expect(expected).toHaveProperty('category')
     expect(expected.data[0]).toHaveProperty('_id')
+    done()
   })
 
-  it('Should be able to find all categories animes', async () => {
+  it('Should be able to find all categories animes', async done => {
     const animeRepository = new AnimeRepository(mongodbURITest)
     const expected = await animeRepository.findAll()
 
     expect(expected).not.toBeUndefined()
     expect(expected[0]).toHaveProperty('data')
     expect(expected[0]).toHaveProperty('category')
+    done()
   })
 
-  it('Should be able to throw error if the collectionName is not defined when executing the method deleteByName', async () => {
+  it('Should be able to throw error if the collectionName is not defined when executing the method deleteByName', async done => {
     const animeRepository = new AnimeRepository(mongodbURITest)
     let error
     try {
@@ -102,9 +106,10 @@ describe('Test Anime Repository', () => {
     }
     expect(error.name).toBe('Error')
     expect(error.message).toBe('Collection name not defined')
+    done()
   })
 
-  it('Should be able to throw error if not find anime by name', async () => {
+  it('Should be able to throw error if not find anime by name', async done => {
     const animeRepository = new AnimeRepository(mongodbURITest)
     const animeName = 'QUALQUER NOME'
     let error
@@ -116,21 +121,24 @@ describe('Test Anime Repository', () => {
 
     expect(error.name).toBe('Error')
     expect(error.message).toBe(`Anime with name "${animeName}" not found`)
+    done()
   })
 
-  it('Should be able to find anime by name', async () => {
+  it('Should be able to find anime by name', async done => {
     const animeRepository = new AnimeRepository(mongodbURITest)
     const expected = await animeRepository.findByName('Charlotte')
 
     expect(expected).toHaveProperty('_id')
+    done()
   })
 
-  it('Should be able to delete anime by name', async () => {
+  it('Should be able to delete anime by name', async done => {
     const animeRepository = new AnimeRepository(mongodbURITest)
     const expected = await animeRepository
       .category(category)
       .deleteByName('Charlotte')
 
     expect(expected).toEqual(true)
+    done()
   })
 })
