@@ -10,7 +10,7 @@ export type CategoryAnime = {
   data: AnimeDatabase[]
 }
 
-type AnimeDatabase = Anime & {
+export type AnimeDatabase = Anime & {
   _id: ObjectId
 }
 
