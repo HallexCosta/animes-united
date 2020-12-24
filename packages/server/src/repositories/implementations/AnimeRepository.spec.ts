@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { mongodbURITest } from '@common/configs/mongodb'
 import { Anime } from '@entities/Anime'
 import { AnimeRepository } from './AnimeRepository'
@@ -101,6 +102,27 @@ describe('Test Anime Repository', () => {
     }
     expect(error.name).toBe('Error')
     expect(error.message).toBe('Collection name not defined')
+  })
+
+  it('Should be able to throw error if not find anime by name', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+    const animeName = 'QUALQUER NOME'
+    let error
+    try {
+      await animeRepository.findByName(animeName)
+    } catch (e) {
+      error = e
+    }
+
+    expect(error.name).toBe('Error')
+    expect(error.message).toBe(`Anime with name "${animeName}" not found`)
+  })
+
+  it('Should be able to find anime by name', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+    const expected = await animeRepository.findByName('Charlotte')
+
+    expect(expected).toHaveProperty('_id')
   })
 
   it('Should be able to delete anime by name', async () => {
