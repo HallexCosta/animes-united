@@ -6,7 +6,7 @@ export class ListAnimeController {
 
   public async handle(request: Request, response: Response): Promise<Response> {
     const { name } = request.params
-    console.log(name)
+
     try {
       const animeTextData = await this.listAnimeUseCase.execute({
         name
