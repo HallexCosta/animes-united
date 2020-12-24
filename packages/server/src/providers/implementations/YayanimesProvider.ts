@@ -45,10 +45,8 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
       return anchors.map(anchor => String(anchor.textContent))
     })
 
-    console.log('Fechando browser...')
     await this.closePages(browser)
     await browser.close()
-    console.log('Browser fechado!')
 
     return names
   }
@@ -185,10 +183,8 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
       errors
     )
 
-    console.log('Fechando browser...')
     await this.closePages(browser)
     await browser.close()
-    console.log('Browser fechado!')
 
     return anime
   }
@@ -246,10 +242,9 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
       return animes
     })
 
-    console.log('Fechando browser...')
     await this.closePages(browser)
     await browser.close()
-    console.log('Browser fechado!')
+
     return animes
   }
 
@@ -343,10 +338,8 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
       return episodes
     })
 
-    console.log('Fechando browser...')
     await this.closePages(browser)
     await browser.close()
-    console.log('Browser fechado!')
 
     return episodes
   }
@@ -395,10 +388,8 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
       return animesCalendar
     })
 
-    console.log('Fechando browser...')
     await this.closePages(browser)
     await browser.close()
-    console.log('Browser fechado!')
 
     return animesCalendar
   }
