@@ -168,7 +168,7 @@ mockYayanimesProvider.getAnime.mockResolvedValueOnce(anime)
 mockYayanimesProvider.getRecommendationAnimes.mockResolvedValueOnce([anime])
 
 describe('Test YayanimesProvider', () => {
-  it('Should be able to return array with all anime names (YayanimesProvider.getAnimeNames)', async () => {
+  it('Should be able to return array with all anime names (YayanimesProvider.getAnimeNames)', async done => {
     const expected = await mockYayanimesProvider.getAnimeNames()
     expect(mockYayanimesProvider.getAnimeNames).toHaveBeenCalledTimes(1)
     expect(expected).toEqual([
@@ -176,6 +176,7 @@ describe('Test YayanimesProvider', () => {
       'Charlotte',
       'Boku no Hero'
     ])
+    done()
   })
 
   it('Should be able to return base URL of yayanimes.net (YayanimesProvider.getBaseURL)', () => {
@@ -185,7 +186,7 @@ describe('Test YayanimesProvider', () => {
     expect(url).toBe('https://yayanimes.net')
   })
 
-  it('Should be able to return calendar of animes from yayanimes.net (Yayanimes.getAnimesCalendar)', async () => {
+  it('Should be able to return calendar of animes from yayanimes.net (Yayanimes.getAnimesCalendar)', async done => {
     const expected = await mockYayanimesProvider.getAnimesCalendar()
 
     expect(mockYayanimesProvider.getAnimesCalendar).toHaveBeenCalledTimes(1)
@@ -195,9 +196,10 @@ describe('Test YayanimesProvider', () => {
         thumbnail: 'https://yayanimes.net/Calendario/MunounaNana.jpg'
       }
     ])
+    done()
   })
 
-  it('Should be able to return release last episodes of yayanimes.net (YayanimesProvider.getLastReleasesEpisodes)', async () => {
+  it('Should be able to return release last episodes of yayanimes.net (YayanimesProvider.getLastReleasesEpisodes)', async done => {
     const expected = await mockYayanimesProvider.getLastReleasesEpisodes()
 
     expect(mockYayanimesProvider.getLastReleasesEpisodes).toHaveBeenCalledTimes(
@@ -212,19 +214,22 @@ describe('Test YayanimesProvider', () => {
         url: 'https://yayanimes.net/dogeza-de-tanondemita-episodio-11/'
       }
     ])
+    done()
   })
 
-  it('Should be able to return anime detail of yayanimes.net (YayanimesProvider.getAnime)', async () => {
+  it('Should be able to return anime detail of yayanimes.net (YayanimesProvider.getAnime)', async done => {
     const expected = await mockYayanimesProvider.getAnime('charlotte')
 
     expect(mockYayanimesProvider.getAnime).toHaveBeenCalledTimes(1)
     expect(expected).toEqual(anime)
+    done()
   })
 
-  it('Should be able to return animes recommendation of yayanimes.net (YayanimesProvider.getRecommendationAnimes)', async () => {
+  it('Should be able to return animes recommendation of yayanimes.net (YayanimesProvider.getRecommendationAnimes)', async done => {
     const expected = await mockYayanimesProvider.getRecommendationAnimes()
 
     expect(mockYayanimesProvider.getAnime).toHaveBeenCalledTimes(1)
     expect(expected).toEqual([anime])
+    done()
   })
 })
