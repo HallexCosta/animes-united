@@ -12,6 +12,6 @@ describe('Test utils/date', () => {
   it('Should be able to get current time in format (h:m:s)', () => {
     const expected = getCurrentTime()
 
-    expect(expected).not.toMatch(/([0-9][0-9]):([0-9][0-9]):([0-9][0-9])/g)
+    expect(expected).toMatch(/([0-9][0-9]):([0-9][0-9]):([0-9][0-9])/g)
   })
 })
