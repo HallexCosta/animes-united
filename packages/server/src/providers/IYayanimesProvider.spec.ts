@@ -167,7 +167,7 @@ const anime = {
 mockYayanimesProvider.getAnime.mockResolvedValueOnce(anime)
 mockYayanimesProvider.getRecommendationAnimes.mockResolvedValueOnce([anime])
 
-describe('Test YayanimesProvider', () => {
+describe('Test YayanimesProvider contract', () => {
   it('Should be able to return array with all anime names (YayanimesProvider.getAnimeNames)', async done => {
     const expected = await mockYayanimesProvider.getAnimeNames()
     expect(mockYayanimesProvider.getAnimeNames).toHaveBeenCalledTimes(1)
