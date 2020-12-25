@@ -1,5 +1,6 @@
 import path from 'path'
-import 'dotenv/config'
+import dotenv from 'dotenv'
+dotenv.config({ path: path.join(__dirname, '..', '..', '..', '.env') })
 
 type PuppeteerLaunchConfig = {
   executablePath: string
@@ -7,9 +8,7 @@ type PuppeteerLaunchConfig = {
   args: string[]
 }
 
-const debug: boolean =
-  process.env.PUPPETEER_DEBUG === 'true' ||
-  process.env.PUPPETEER_DEBUG === 'TRUE'
+const debug: boolean = process.env.PUPPETEER_DEBUG === 'true'
 
 export const launch: PuppeteerLaunchConfig = {
   executablePath: path.join('/', 'mnt', 'c', 'chrome-win', 'chrome.exe'),
