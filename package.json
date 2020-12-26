@@ -11,7 +11,7 @@
     ]
   },
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "test": "jest",
     "test:watch": "jest --watch --detectOpenHandles",
     "build:server": "babel packages/server/src --extensions \".js,.ts\" --out-dir dist/server --copy-files --no-copy-ignored",
     "start:server:production": "node dist/server/server.js",
