@@ -1,4 +1,3 @@
-import { Streamings } from '@entities/Anime'
 import { ObjectId } from 'mongodb'
 import { IAnimeRepository } from './IAnimeRepository'
 import { CategoryAnime } from './implementations/AnimeRepository'
@@ -173,14 +172,13 @@ const categoriesAnimes: CategoryAnime[] = [
   }
 ]
 mockAnimeRepository.findAll.mockResolvedValueOnce(categoriesAnimes)
-mockAnimeRepository.category.mockReturnThis()
+mockAnimeRepository.category.mockReturnValueOnce(mockAnimeRepository)
 
 describe('Test Anime Repository contract', () => {
   it('Should be able to find all categories animes', async done => {
     const expected = await mockAnimeRepository.findAll()
 
     expect(mockAnimeRepository.findAll).toHaveBeenCalledTimes(1)
-    expect(expected).resolves.toReturnWith(categoriesAnimes)
     expect(expected[0]).toHaveProperty('category')
     expect(expected[0]).toHaveProperty('data')
     expect(expected[0].data[0]).toHaveProperty('_id')
@@ -191,6 +189,6 @@ describe('Test Anime Repository contract', () => {
   it('Should be able to category method return instance this class', () => {
     const expected = mockAnimeRepository.category('')
 
-    expect(expected).toHaveProperty(['findAll'])
+    expect(expected).toEqual(mockAnimeRepository)
   })
 })
