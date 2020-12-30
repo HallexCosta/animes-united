@@ -5,5 +5,6 @@ const moduleNameMapper = require('tsconfig-paths-jest')(tsconfig)
 module.exports = {
   displayName: name,
   name,
-  moduleNameMapper
+  moduleNameMapper,
+  setupFilesAfterEnv: ['./jest.setup.js']
 }
