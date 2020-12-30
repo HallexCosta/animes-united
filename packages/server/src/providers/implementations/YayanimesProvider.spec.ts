@@ -1,4 +1,4 @@
-import { AnimeCalendar, YayanimesProvider } from './YayanimesProvider'
+import { YayanimesProvider } from './YayanimesProvider'
 
 function factoryYayanimesProvider() {
   const yayanimesProvider = new YayanimesProvider()
