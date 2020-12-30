@@ -1,4 +1,4 @@
-import { YayanimesProvider } from './YayanimesProvider'
+import { AnimeCalendar, YayanimesProvider } from './YayanimesProvider'
 
 function factoryYayanimesProvider() {
   const yayanimesProvider = new YayanimesProvider()
@@ -20,5 +20,12 @@ describe('Test YayanimesProvider implementation', () => {
     expect(expected.length).not.toEqual(0)
 
     done()
+  })
+
+  it('Should be able to return base URL of yayanimes.net (YayanimesProvider.getBaseURL)', () => {
+    const { yayanimesProvider } = factoryYayanimesProvider()
+    const expected = yayanimesProvider.getBaseURL()
+
+    expect(expected).toBe('https://yayanimes.net')
   })
 })
