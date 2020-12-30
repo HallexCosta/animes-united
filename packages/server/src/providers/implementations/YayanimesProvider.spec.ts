@@ -28,4 +28,18 @@ describe('Test YayanimesProvider implementation', () => {
 
     expect(expected).toBe('https://yayanimes.net')
   })
+
+  it('Should be able to return calendar of animes from yayanimes.net (Yayanimes.getAnimesCalendar)', async done => {
+    const { yayanimesProvider } = factoryYayanimesProvider()
+    const expected = yayanimesProvider.getAnimesCalendar()
+
+    expect(expected).toEqual<AnimeCalendar[]>([
+      {
+        title: 'Munou na Nana',
+        thumbnail: 'https://yayanimes.net/Calendario/MunounaNana.jpg'
+      }
+    ])
+
+    done()
+  })
 })
