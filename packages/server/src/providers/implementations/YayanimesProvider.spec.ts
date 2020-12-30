@@ -31,14 +31,18 @@ describe('Test YayanimesProvider implementation', () => {
 
   it('Should be able to return calendar of animes from yayanimes.net (Yayanimes.getAnimesCalendar)', async done => {
     const { yayanimesProvider } = factoryYayanimesProvider()
-    const expected = yayanimesProvider.getAnimesCalendar()
+    const expected = await yayanimesProvider.getAnimesCalendar()
 
-    expect(expected).toEqual<AnimeCalendar[]>([
-      {
-        title: 'Munou na Nana',
-        thumbnail: 'https://yayanimes.net/Calendario/MunounaNana.jpg'
-      }
-    ])
+    expect(expected.length).not.toEqual(0)
+
+    done()
+  })
+
+  it('Should be able to return release last episodes of yayanimes.net (YayanimesProvider.getLastReleasesEpisodes)', async done => {
+    const { yayanimesProvider } = factoryYayanimesProvider()
+    const expected = await yayanimesProvider.getLastReleasesEpisodes()
+
+    expect(expected.length).not.toEqual(0)
 
     done()
   })
