@@ -8,7 +8,7 @@ type CategoryNames = {
 export class ListAnimesUseCase {
   public constructor(private yayanimesProvider: IYayanimesProvider) {}
 
-  private separateByCategory(names: string[]) {
+  private separateByCategory(names: string[]): CategoryNames[] {
     const namesByCategories: CategoryNames[] = []
 
     for (const name of names) {
@@ -36,10 +36,14 @@ export class ListAnimesUseCase {
         }
       }
     }
+
+    return namesByCategories
   }
 
-  public async execute(): Promise<string[]> {
-    const names = await this.yayanimesProvider.getAnimeNames()
+  public async execute(): Promise<CategoryNames[]> {
+    const names = this.separateByCategory(
+      await this.yayanimesProvider.getAnimeNames()
+    )
 
     if (names.length === 0) {
       throw new Error('No anime found')
