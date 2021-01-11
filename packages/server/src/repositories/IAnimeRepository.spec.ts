@@ -3,6 +3,8 @@ import { ObjectId } from 'mongodb'
 import { IAnimeRepository } from './IAnimeRepository'
 import { CategoryAnime } from './implementations/AnimeRepository'
 
+const timeout = 1000 * 60 * 10
+
 const mockAnimeRepository: jest.Mocked<IAnimeRepository> = {
   findAll: jest.fn(),
   category: jest.fn(),
@@ -184,119 +186,155 @@ mockAnimeRepository.save.mockResolvedValue(true)
 mockAnimeRepository.deleteByName.mockResolvedValue(true)
 
 describe('Test Anime Repository contract', () => {
-  it('Should be able to find all categories animes', async done => {
-    const expected = await mockAnimeRepository.findAll()
+  it(
+    'Should be able to find all categories animes',
+    async done => {
+      const expected = await mockAnimeRepository.findAll()
 
-    expect(mockAnimeRepository.findAll).toHaveBeenCalledTimes(1)
-    expect(expected[0]).toHaveProperty('category')
-    expect(expected[0]).toHaveProperty('data')
-    expect(expected[0].data[0]).toHaveProperty('_id')
-    expect(expected.length).toEqual(2)
-    done()
-  })
+      expect(mockAnimeRepository.findAll).toHaveBeenCalledTimes(1)
+      expect(expected[0]).toHaveProperty('category')
+      expect(expected[0]).toHaveProperty('data')
+      expect(expected[0].data[0]).toHaveProperty('_id')
+      expect(expected.length).toEqual(2)
+      done()
+    },
+    timeout
+  )
 
-  it('Should be able to category method return instance this class', () => {
-    const expected = mockAnimeRepository.category('')
+  it(
+    'Should be able to category method return instance this class',
+    () => {
+      const expected = mockAnimeRepository.category('')
 
-    expect(expected).toEqual(mockAnimeRepository)
-  })
+      expect(expected).toEqual(mockAnimeRepository)
+    },
+    timeout
+  )
 
-  it('Should be able to throw error if not find anime by category (Yayanimes.findByCategory)', async done => {
-    mockAnimeRepository.findByCategory.mockRejectedValueOnce(
-      new Error('Collection name not defined')
-    )
+  it(
+    'Should be able to throw error if not find anime by category (Yayanimes.findByCategory)',
+    async done => {
+      mockAnimeRepository.findByCategory.mockRejectedValueOnce(
+        new Error('Collection name not defined')
+      )
 
-    let error
-    try {
-      await mockAnimeRepository.findByCategory({} as any)
-    } catch (e) {
-      error = e
-    }
+      let error
+      try {
+        await mockAnimeRepository.findByCategory({} as any)
+      } catch (e) {
+        error = e
+      }
 
-    expect(error.name).toBe('Error')
-    expect(error.message).toBe('Collection name not defined')
+      expect(error.name).toBe('Error')
+      expect(error.message).toBe('Collection name not defined')
 
-    done()
-  })
+      done()
+    },
+    timeout
+  )
 
-  it('Should be able to find anime by category (Yayanimes.findByCategory)', async done => {
-    const expected = await mockAnimeRepository.findByCategory('C')
+  it(
+    'Should be able to find anime by category (Yayanimes.findByCategory)',
+    async done => {
+      const expected = await mockAnimeRepository.findByCategory('C')
 
-    expect(mockAnimeRepository.findByCategory).toHaveBeenCalledTimes(2)
-    expect(mockAnimeRepository.findByCategory).toHaveBeenCalledWith('C')
-    expect(expected).toHaveProperty('category')
-    expect(expected).toHaveProperty('data')
+      expect(mockAnimeRepository.findByCategory).toHaveBeenCalledTimes(2)
+      expect(mockAnimeRepository.findByCategory).toHaveBeenCalledWith('C')
+      expect(expected).toHaveProperty('category')
+      expect(expected).toHaveProperty('data')
 
-    done()
-  })
+      done()
+    },
+    timeout
+  )
 
-  it('Should be able to find anime by name (Yayanimes.findByName)', async done => {
-    const expected = await mockAnimeRepository.findByName('Charlotte')
+  it(
+    'Should be able to find anime by name (Yayanimes.findByName)',
+    async done => {
+      const expected = await mockAnimeRepository.findByName('Charlotte')
 
-    expect(mockAnimeRepository.findByName).toHaveBeenCalledTimes(1)
-    expect(mockAnimeRepository.findByName).toHaveBeenCalledWith('Charlotte')
-    expect(expected).toHaveProperty('_id')
-    expect(expected).toEqual(animeDatabase)
+      expect(mockAnimeRepository.findByName).toHaveBeenCalledTimes(1)
+      expect(mockAnimeRepository.findByName).toHaveBeenCalledWith('Charlotte')
+      expect(expected).toHaveProperty('_id')
+      expect(expected).toEqual(animeDatabase)
 
-    done()
-  })
+      done()
+    },
+    timeout
+  )
 
-  it('Should be able to throw error if not save anime (Yayanimes.save)', async done => {
-    mockAnimeRepository.save.mockRejectedValueOnce(
-      new Error('Failed to save anime')
-    )
+  it(
+    'Should be able to throw error if not save anime (Yayanimes.save)',
+    async done => {
+      mockAnimeRepository.save.mockRejectedValueOnce(
+        new Error('Failed to save anime')
+      )
 
-    let error
+      let error
 
-    try {
-      await mockAnimeRepository.save(anime)
-    } catch (e) {
-      error = e
-    }
+      try {
+        await mockAnimeRepository.save(anime)
+      } catch (e) {
+        error = e
+      }
 
-    expect(error.name).toBe('Error')
-    expect(error.message).toBe('Failed to save anime')
+      expect(error.name).toBe('Error')
+      expect(error.message).toBe('Failed to save anime')
 
-    done()
-  })
+      done()
+    },
+    timeout
+  )
 
-  it('Should be able to save anime (Yayanimes.save)', async done => {
-    const expected = await mockAnimeRepository.save(anime)
+  it(
+    'Should be able to save anime (Yayanimes.save)',
+    async done => {
+      const expected = await mockAnimeRepository.save(anime)
 
-    expect(mockAnimeRepository.save).toBeCalledTimes(2)
-    expect(mockAnimeRepository.save).toBeCalledWith(anime)
-    expect(expected).toBeTruthy()
+      expect(mockAnimeRepository.save).toBeCalledTimes(2)
+      expect(mockAnimeRepository.save).toBeCalledWith(anime)
+      expect(expected).toBeTruthy()
 
-    done()
-  })
+      done()
+    },
+    timeout
+  )
 
-  it('Should be able to throw error if not delete anime by name (Yayanimes.deleteByName)', async done => {
-    mockAnimeRepository.deleteByName.mockRejectedValueOnce(
-      new Error(`Failed to delete anime by name ${anime.name}`)
-    )
+  it(
+    'Should be able to throw error if not delete anime by name (Yayanimes.deleteByName)',
+    async done => {
+      mockAnimeRepository.deleteByName.mockRejectedValueOnce(
+        new Error(`Failed to delete anime by name ${anime.name}`)
+      )
 
-    let error
+      let error
 
-    try {
-      await mockAnimeRepository.deleteByName(anime.name)
-    } catch (e) {
-      error = e
-    }
+      try {
+        await mockAnimeRepository.deleteByName(anime.name)
+      } catch (e) {
+        error = e
+      }
 
-    expect(mockAnimeRepository.deleteByName).toHaveBeenCalledTimes(1)
-    expect(error.name).toBe('Error')
-    expect(error.message).toBe(`Failed to delete anime by name ${anime.name}`)
+      expect(mockAnimeRepository.deleteByName).toHaveBeenCalledTimes(1)
+      expect(error.name).toBe('Error')
+      expect(error.message).toBe(`Failed to delete anime by name ${anime.name}`)
 
-    done()
-  })
+      done()
+    },
+    timeout
+  )
 
-  it('Should be able to delete anime by name (Yayanimes.deleteByName)', async done => {
-    const expected = await mockAnimeRepository.deleteByName('Charlotte')
+  it(
+    'Should be able to delete anime by name (Yayanimes.deleteByName)',
+    async done => {
+      const expected = await mockAnimeRepository.deleteByName('Charlotte')
 
-    expect(mockAnimeRepository.deleteByName).toHaveBeenCalledTimes(2)
-    expect(mockAnimeRepository.deleteByName).toHaveBeenCalledWith('Charlotte')
-    expect(expected).toBeTruthy()
+      expect(mockAnimeRepository.deleteByName).toHaveBeenCalledTimes(2)
+      expect(mockAnimeRepository.deleteByName).toHaveBeenCalledWith('Charlotte')
+      expect(expected).toBeTruthy()
 
-    done()
-  })
+      done()
+    },
+    timeout
+  )
 })

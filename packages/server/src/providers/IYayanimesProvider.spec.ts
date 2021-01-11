@@ -1,6 +1,8 @@
 import { IYayanimesProvider } from './IYayanimesProvider'
 import { AnimeCalendar } from './implementations/YayanimesProvider'
 
+const timeout = 1000 * 60 * 10
+
 const mockYayanimesProvider: jest.Mocked<IYayanimesProvider> = {
   getAnimeNames: jest.fn(), // OK
   getBaseURL: jest.fn(), // OK
@@ -168,68 +170,93 @@ mockYayanimesProvider.getAnime.mockResolvedValueOnce(anime)
 mockYayanimesProvider.getRecommendationAnimes.mockResolvedValueOnce([anime])
 
 describe('Test YayanimesProvider contract', () => {
-  it('Should be able to return array with all anime names (YayanimesProvider.getAnimeNames)', async done => {
-    const expected = await mockYayanimesProvider.getAnimeNames()
-    expect(mockYayanimesProvider.getAnimeNames).toHaveBeenCalledTimes(1)
-    expect(expected).toEqual([
-      'Darling in the franxx',
-      'Charlotte',
-      'Boku no Hero'
-    ])
-    done()
-  })
+  it(
+    'Should be able to return array with all anime names (YayanimesProvider.getAnimeNames)',
+    async done => {
+      const expected = await mockYayanimesProvider.getAnimeNames()
+      expect(mockYayanimesProvider.getAnimeNames).toHaveBeenCalledTimes(1)
+      expect(expected).toEqual([
+        'Darling in the franxx',
+        'Charlotte',
+        'Boku no Hero'
+      ])
+      done()
+    },
+    timeout
+  )
 
-  it('Should be able to return base URL of yayanimes.net (YayanimesProvider.getBaseURL)', () => {
-    const url = mockYayanimesProvider.getBaseURL()
+  it(
+    'Should be able to return base URL of yayanimes.net (YayanimesProvider.getBaseURL)',
+    () => {
+      const url = mockYayanimesProvider.getBaseURL()
 
-    expect(mockYayanimesProvider.getBaseURL).toHaveBeenCalledTimes(1)
-    expect(url).toBe('https://yayanimes.net')
-  })
+      expect(mockYayanimesProvider.getBaseURL).toHaveBeenCalledTimes(1)
+      expect(url).toBe('https://yayanimes.net')
+    },
+    timeout
+  )
 
-  it('Should be able to return calendar of animes from yayanimes.net (Yayanimes.getAnimesCalendar)', async done => {
-    const expected = await mockYayanimesProvider.getAnimesCalendar()
+  it(
+    'Should be able to return calendar of animes from yayanimes.net (Yayanimes.getAnimesCalendar)',
+    async done => {
+      const expected = await mockYayanimesProvider.getAnimesCalendar()
 
-    expect(mockYayanimesProvider.getAnimesCalendar).toHaveBeenCalledTimes(1)
-    expect(expected).toEqual<AnimeCalendar[]>([
-      {
-        title: 'Munou na Nana',
-        thumbnail: 'https://yayanimes.net/Calendario/MunounaNana.jpg'
-      }
-    ])
-    done()
-  })
+      expect(mockYayanimesProvider.getAnimesCalendar).toHaveBeenCalledTimes(1)
+      expect(expected).toEqual<AnimeCalendar[]>([
+        {
+          title: 'Munou na Nana',
+          thumbnail: 'https://yayanimes.net/Calendario/MunounaNana.jpg'
+        }
+      ])
+      done()
+    },
+    timeout
+  )
 
-  it('Should be able to return release last episodes of yayanimes.net (YayanimesProvider.getLastReleasesEpisodes)', async done => {
-    const expected = await mockYayanimesProvider.getLastReleasesEpisodes()
+  it(
+    'Should be able to return release last episodes of yayanimes.net (YayanimesProvider.getLastReleasesEpisodes)',
+    async done => {
+      const expected = await mockYayanimesProvider.getLastReleasesEpisodes()
 
-    expect(mockYayanimesProvider.getLastReleasesEpisodes).toHaveBeenCalledTimes(
-      1
-    )
-    expect(expected).toEqual([
-      {
-        title: 'Dogeza de Tanondemita – Episódio 11',
-        number: 11,
-        qualityStreaming: 'HD',
-        thumbnail: 'https://yayanimes.net/Miniaturas/2020/Dogeza/Dogeza11.jpg',
-        url: 'https://yayanimes.net/dogeza-de-tanondemita-episodio-11/'
-      }
-    ])
-    done()
-  })
+      expect(
+        mockYayanimesProvider.getLastReleasesEpisodes
+      ).toHaveBeenCalledTimes(1)
+      expect(expected).toEqual([
+        {
+          title: 'Dogeza de Tanondemita – Episódio 11',
+          number: 11,
+          qualityStreaming: 'HD',
+          thumbnail:
+            'https://yayanimes.net/Miniaturas/2020/Dogeza/Dogeza11.jpg',
+          url: 'https://yayanimes.net/dogeza-de-tanondemita-episodio-11/'
+        }
+      ])
+      done()
+    },
+    timeout
+  )
 
-  it('Should be able to return anime detail of yayanimes.net (YayanimesProvider.getAnime)', async done => {
-    const expected = await mockYayanimesProvider.getAnime('charlotte')
+  it(
+    'Should be able to return anime detail of yayanimes.net (YayanimesProvider.getAnime)',
+    async done => {
+      const expected = await mockYayanimesProvider.getAnime('charlotte')
 
-    expect(mockYayanimesProvider.getAnime).toHaveBeenCalledTimes(1)
-    expect(expected).toEqual(anime)
-    done()
-  })
+      expect(mockYayanimesProvider.getAnime).toHaveBeenCalledTimes(1)
+      expect(expected).toEqual(anime)
+      done()
+    },
+    timeout
+  )
 
-  it('Should be able to return animes recommendation of yayanimes.net (YayanimesProvider.getRecommendationAnimes)', async done => {
-    const expected = await mockYayanimesProvider.getRecommendationAnimes()
+  it(
+    'Should be able to return animes recommendation of yayanimes.net (YayanimesProvider.getRecommendationAnimes)',
+    async done => {
+      const expected = await mockYayanimesProvider.getRecommendationAnimes()
 
-    expect(mockYayanimesProvider.getAnime).toHaveBeenCalledTimes(1)
-    expect(expected).toEqual([anime])
-    done()
-  })
+      expect(mockYayanimesProvider.getAnime).toHaveBeenCalledTimes(1)
+      expect(expected).toEqual([anime])
+      done()
+    },
+    timeout
+  )
 })
