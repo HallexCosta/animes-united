@@ -1,10 +1,15 @@
 import { IYayanimesProvider } from '@providers/IYayanimesProvider'
 
+type CategoryNames = {
+  category: string
+  data: string[]
+}
+
 export class ListAnimesUseCase {
   public constructor(private yayanimesProvider: IYayanimesProvider) {}
 
   private separateByCategory(names: string[]) {
-    const namesByCategories: { category: string; data: string[] }[] = []
+    const namesByCategories: CategoryNames[] = []
 
     for (const name of names) {
       const category: string = name.match(/^[A-Z]/gi)
@@ -31,8 +36,6 @@ export class ListAnimesUseCase {
         }
       }
     }
-
-    console.log(namesByCategories)
   }
 
   public async execute(): Promise<string[]> {
