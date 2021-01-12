@@ -11,6 +11,9 @@
     "noEmit": true,
     "paths": {
       "@components/*": ["./src/components/*"],
+      "@components": ["./src/components/index.tsx"],
+      "@screens/*": ["./src/screens/*"],
+      "@screens": ["./src/screens/index.tsx"],
       "@assets/*": ["./src/assets/*"]
     },
   },
