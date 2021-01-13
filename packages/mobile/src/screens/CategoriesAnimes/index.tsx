@@ -4,9 +4,6 @@ import { api } from '@animes-united/axios-config'
 
 import {
   Container,
-  Header,
-  GoBackScreen,
-  Info,
   Main,
   Section,
   Head,
@@ -16,9 +13,8 @@ import {
 } from './styles'
 
 import animeThumbnail from '@assets/images/anime-thumbnail-default.jpg'
-import iconArrowLeft from '@assets/icons/arrow-left.png'
 
-import { Anime } from '@components'
+import { Anime, Header } from '@components'
 
 type AnimeCategory = {
   category: string
@@ -75,11 +71,7 @@ export function CategoriesAnimes(): JSX.Element {
 
   return (
     <Container>
-      <Header>
-        <GoBackScreen source={iconArrowLeft} />
-
-        <Info>Categoria A - Z</Info>
-      </Header>
+      <Header description="Categoria A - Z" />
 
       <Animes data={categoriesAnimes} />
     </Container>
