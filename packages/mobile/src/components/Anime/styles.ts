@@ -3,8 +3,6 @@ import styled from 'styled-components/native'
 export const Container = styled.View`
   width: 124px;
   height: 200px;
-
-  margin-right: 15px;
 `
 
 export const Image = styled.Image`
