@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React from 'react'
 import { ImageSourcePropType } from 'react-native'
 
@@ -7,11 +8,17 @@ export type AnimeProps = {
   image: ImageSourcePropType
   title: string
   description: string
+  style?: {}
 }
 
-export function Anime({ image, title, description }: AnimeProps): JSX.Element {
+export function Anime({
+  image,
+  title,
+  description,
+  style
+}: AnimeProps): JSX.Element {
   return (
-    <Container>
+    <Container style={style}>
       <Image source={image} />
 
       <Title numberOfLines={1} ellipsizeMode="tail">
