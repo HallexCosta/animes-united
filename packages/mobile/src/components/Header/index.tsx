@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 import { Container, Button, Image, Description } from './styles'
 
@@ -9,9 +10,15 @@ type HeaderProps = {
 }
 
 export function Header({ description }: HeaderProps): JSX.Element {
+  const navigation = useNavigation()
+
+  function handleNavigateToBackScreen() {
+    navigation.goBack()
+  }
+
   return (
     <Container>
-      <Button>
+      <Button onPress={handleNavigateToBackScreen}>
         <Image source={iconArrowLeft} />
       </Button>
 
