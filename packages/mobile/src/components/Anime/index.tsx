@@ -3,7 +3,7 @@ import { ImageSourcePropType } from 'react-native'
 
 import { Container, Image, Title, Description } from './styles'
 
-type AnimeProps = {
+export type AnimeProps = {
   image: ImageSourcePropType
   title: string
   description: string
