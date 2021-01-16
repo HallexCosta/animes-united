@@ -28,14 +28,15 @@ export const Info = styled.Text`
   line-height: 14px;
 `
 
-export const Main = styled.ScrollView``
+export const Main = styled.ScrollView`
+  margin-top: 10px;
+`
 
 export const Section = styled.View`
   margin-bottom: 16px;
 `
 
 export const Head = styled.View`
-  margin-top: 10px;
   margin-right: 10px;
 
   flex-direction: row;
