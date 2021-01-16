@@ -15,6 +15,8 @@ import {
 import animeThumbnail from '@assets/images/anime-thumbnail-default.jpg'
 
 import { Anime, Header } from '@components'
+import { TouchableOpacity, StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 type AnimeCategory = {
   category: string
@@ -26,14 +28,28 @@ type AnimesCategoriesProps = {
 }
 
 function Animes({ data }: AnimesCategoriesProps): JSX.Element {
+  const navigation = useNavigation()
+
+  function handleNavigateToCategoryAnimeScreen(currentCategory: string) {
+    navigation.navigate('CategoryAnime', {
+      category: currentCategory
+    })
+  }
+
   return (
-    <Main>
+    <>
       {data.map(animeCategory => {
         return (
           <Section key={animeCategory.category}>
             <Head>
               <Category># {animeCategory.category}</Category>
-              <ViewMore>Ver mais</ViewMore>
+              <TouchableOpacity
+                onPress={() =>
+                  handleNavigateToCategoryAnimeScreen(animeCategory.category)
+                }
+              >
+                <ViewMore>Ver mais</ViewMore>
+              </TouchableOpacity>
             </Head>
 
             <Article horizontal={true}>
@@ -44,6 +60,7 @@ function Animes({ data }: AnimesCategoriesProps): JSX.Element {
                     image={animeThumbnail}
                     title={name}
                     description="2018 - 24 eps"
+                    style={styles.anime}
                   />
                 )
               })}
@@ -51,7 +68,7 @@ function Animes({ data }: AnimesCategoriesProps): JSX.Element {
           </Section>
         )
       })}
-    </Main>
+    </>
   )
 }
 
@@ -73,7 +90,14 @@ export function CategoriesAnimes(): JSX.Element {
     <Container>
       <Header description="Categoria A - Z" />
 
-      <Animes data={categoriesAnimes} />
+      <Main>
+        <Animes data={categoriesAnimes} />
+      </Main>
     </Container>
   )
 }
+const styles = StyleSheet.create({
+  anime: {
+    marginRight: 15
+  }
+})
