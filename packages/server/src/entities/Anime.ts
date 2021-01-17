@@ -17,7 +17,7 @@ export type Anime = {
   genre: string
   status: string
   studio: string
-  sinopse: string
+  synopsis: string
   yearRelease: number
   rating: number
   streamings: Streamings
