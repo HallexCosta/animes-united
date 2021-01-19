@@ -14,10 +14,11 @@
       "@components": ["./src/components/index.tsx"],
       "@screens/*": ["./src/screens/*"],
       "@screens": ["./src/screens/index.tsx"],
-      "@assets/*": ["./src/assets/*"]
+      "@assets/*": ["./src/assets/*"],
+      "@api/*": ["./src/api/*"]
     },
   },
   "include": [
     "src/**/*"
-  ]
+, "index.d.ts"  ]
 }
