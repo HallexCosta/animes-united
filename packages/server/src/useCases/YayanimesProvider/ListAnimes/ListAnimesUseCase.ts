@@ -1,4 +1,4 @@
-import { Anime, Episode } from '@entities/Anime'
+import { Anime, Episode } from '@entities'
 import { IYayanimesProvider } from '@providers/IYayanimesProvider'
 
 type CategoryNames = {
@@ -49,23 +49,31 @@ export class ListAnimesUseCase {
   private categoryAnimesDataDefault(
     categoryNames: CategoryNames[]
   ): CategoryAnimes[] {
+    const defaultStringData = 'Unknown'
+    const defaultNumberData = 0
+    const imageURL =
+      'http://192.168.0.11:3333/static/images/anime-thumbnail-default.jpg'
+    const streamings = {
+      episodes: [] as Episode[],
+      ovas: [] as Episode[]
+    }
+
     return categoryNames.map<CategoryAnimes>(categoryData => ({
       category: categoryData.category,
-      data: categoryData.data.map<Anime>(name => ({
-        name,
-        genre: 'Unknown',
-        imageURL:
-          'http://192.168.0.11:3333/static/images/anime-thumbnail-default.jpg',
-        rating: 0,
-        synopsis: 'Unknown',
-        status: 'Unknown',
-        streamings: {
-          episodes: [] as Episode[],
-          ovas: [] as Episode[]
-        },
-        studio: 'Unknown',
-        yearRelease: 0
-      }))
+      data: categoryData.data.map<Anime>(
+        name =>
+          new Anime({
+            name,
+            genre: defaultStringData,
+            imageURL,
+            rating: defaultNumberData,
+            synopsis: defaultStringData,
+            status: defaultStringData,
+            streamings,
+            studio: defaultStringData,
+            yearRelease: defaultNumberData
+          })
+      )
     }))
   }
 
