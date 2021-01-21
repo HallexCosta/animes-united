@@ -31,9 +31,9 @@ function NoFound(): JSX.Element {
   )
 }
 
-export function CategoryAnime({
+export function CategoryAnimes({
   route
-}: ScreenProps<'CategoryAnime'>): JSX.Element {
+}: ScreenProps<'CategoryAnimes'>): JSX.Element {
   const [data, setData] = useState<AnimeComponentData[]>([])
   const [filteredData, setFilteredData] = useState<AnimeComponentData[]>([])
 
