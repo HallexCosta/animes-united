@@ -1,16 +1,51 @@
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContainer, RouteProp } from '@react-navigation/native'
+import {
+  createStackNavigator,
+  StackNavigationProp
+} from '@react-navigation/stack'
 
-import { CategoriesAnimes } from '@screens'
+import { AnimeComponentData, CategoriesAnimes, CategoryAnimes } from '@screens'
 
 const Stack = createStackNavigator()
+
+type RootStackParamList = {
+  CategoryAnimes: {
+    category: string
+    data: AnimeComponentData[]
+  }
+}
+
+type CategoryAnimeScreenRouteProp = RouteProp<
+  RootStackParamList,
+  'CategoryAnimes'
+>
+
+type CategoryAnimeScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'CategoryAnimes'
+>
+
+type ScreensProps = {
+  CategoryAnimes: {
+    route: CategoryAnimeScreenRouteProp
+    navigation: CategoryAnimeScreenNavigationProp
+  }
+}
+
+export type ScreenProps<
+  ScreenName extends keyof ScreensProps
+> = ScreensProps[ScreenName]
 
 export function Routes(): JSX.Element {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        initialRouteName="CategoriesAnimes"
+        screenOptions={{ headerShown: false }}
+      >
         <Stack.Screen name="CategoriesAnimes" component={CategoriesAnimes} />
+        <Stack.Screen name="CategoryAnimes" component={CategoryAnimes} />
       </Stack.Navigator>
     </NavigationContainer>
   )
