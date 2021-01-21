@@ -4,7 +4,7 @@ import { StatusBar } from 'react-native'
 
 import { AppLoading } from 'expo'
 
-import { Ubuntu_700Bold } from '@expo-google-fonts/ubuntu'
+import { Ubuntu_500Medium, Ubuntu_700Bold } from '@expo-google-fonts/ubuntu'
 import {
   useFonts,
   Nunito_400Regular,
@@ -23,6 +23,7 @@ export default function App(): JSX.Element {
     Nunito_700Bold,
     Poppins_700Bold,
     Poppins_800ExtraBold,
+    Ubuntu_500Medium,
     Ubuntu_700Bold
   })
 
