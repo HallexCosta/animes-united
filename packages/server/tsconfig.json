@@ -19,6 +19,7 @@
     "paths": {
       "@useCases/*": ["./src/useCases/*"],
       "@entities/*": ["./src/entities/*"],
+      "@entities": ["./src/entities/index.ts"],
       "@repositories/*": ["./src/repositories/*"],
       "@providers/*": ["./src/providers/*"],
       "@common/*": ["./src/common/*"],
