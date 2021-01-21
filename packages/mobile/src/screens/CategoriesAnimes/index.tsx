@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { TouchableOpacity, StyleSheet } from 'react-native'
 
-import { api } from '@animes-united/axios-config'
+import { useNavigation } from '@react-navigation/native'
 
 import {
   Container,
@@ -12,40 +13,47 @@ import {
   Article
 } from './styles'
 
-import animeThumbnail from '@assets/images/anime-thumbnail-default.jpg'
+import { api } from '@animes-united/axios-config'
+import { Anime, AnimeProps, Header } from '@components'
+import { CategoryAnimesResponse } from '@api/response'
 
-import { Anime, Header } from '@components'
-import { TouchableOpacity, StyleSheet } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-
-type AnimeCategory = {
+export type AnimeCategoryComponentData = {
   category: string
-  data: string[]
+  data: AnimeComponentData[]
 }
 
-type AnimesCategoriesProps = {
-  data: AnimeCategory[]
+export type AnimesCategoriesProps = {
+  data: AnimeCategoryComponentData[]
 }
+
+export type AnimeComponentData = Omit<AnimeProps, 'style'>
 
 function Animes({ data }: AnimesCategoriesProps): JSX.Element {
   const navigation = useNavigation()
 
-  function handleNavigateToCategoryAnimeScreen(currentCategory: string) {
+  function handleNavigateToCategoryAnimeScreen(
+    currentCategory: string,
+    data: AnimeComponentData[]
+  ) {
     navigation.navigate('CategoryAnime', {
-      category: currentCategory
+      category: currentCategory,
+      data
     })
   }
 
   return (
     <>
-      {data.map(animeCategory => {
+      {data.map(animeCategoryComponent => {
         return (
-          <Section key={animeCategory.category}>
+          <Section key={animeCategoryComponent.category}>
             <Head>
-              <Category># {animeCategory.category}</Category>
+              <Category># {animeCategoryComponent.category}</Category>
               <TouchableOpacity
                 onPress={() =>
-                  handleNavigateToCategoryAnimeScreen(animeCategory.category)
+                  handleNavigateToCategoryAnimeScreen(
+                    animeCategoryComponent.category,
+                    animeCategoryComponent.data
+                  )
                 }
               >
                 <ViewMore>Ver mais</ViewMore>
@@ -53,17 +61,19 @@ function Animes({ data }: AnimesCategoriesProps): JSX.Element {
             </Head>
 
             <Article horizontal={true}>
-              {animeCategory.data.map(name => {
-                return (
-                  <Anime
-                    key={name}
-                    image={animeThumbnail}
-                    title={name}
-                    description="2018 - 24 eps"
-                    style={styles.anime}
-                  />
-                )
-              })}
+              {animeCategoryComponent.data.map(
+                ({ title, imageURL, description }, index) => {
+                  return (
+                    <Anime
+                      key={index}
+                      imageURL={imageURL}
+                      title={title}
+                      description={description}
+                      style={styles.anime}
+                    />
+                  )
+                }
+              )}
             </Article>
           </Section>
         )
@@ -73,25 +83,48 @@ function Animes({ data }: AnimesCategoriesProps): JSX.Element {
 }
 
 export function CategoriesAnimes(): JSX.Element {
-  const [categoriesAnimes, setCategoriesAnimes] = useState<AnimeCategory[]>([])
+  const [categoriesAnimes, setCategoriesAnimes] = useState<
+    CategoryAnimesResponse[]
+  >([])
+
+  function viewCategoriesAnimesDataComponent(
+    data: CategoryAnimesResponse[]
+  ): AnimeCategoryComponentData[] {
+    const animeCategoryComponentData = data.map<AnimeCategoryComponentData>(
+      categoryAnime => ({
+        category: categoryAnime.category,
+        data: categoryAnime.data.map<AnimeComponentData>(
+          ({ name, yearRelease, imageURL, streamings }) => ({
+            title: name,
+            description: `${yearRelease} - ${
+              streamings.episodes.length + streamings.ovas.length
+            } eps`,
+            imageURL
+          })
+        )
+      })
+    )
+
+    return animeCategoryComponentData
+  }
 
   useEffect(() => {
     api
-      .get<AnimeCategory[]>('animes')
+      .get<CategoryAnimesResponse[]>('animes')
       .then(response => {
         const data = response.data
 
         setCategoriesAnimes(data)
       })
       .catch(e => console.log(e))
-  }, [])
+  }, [categoriesAnimes])
 
   return (
     <Container>
       <Header description="Categoria A - Z" />
 
       <Main>
-        <Animes data={categoriesAnimes} />
+        <Animes data={viewCategoriesAnimesDataComponent(categoriesAnimes)} />
       </Main>
     </Container>
   )
