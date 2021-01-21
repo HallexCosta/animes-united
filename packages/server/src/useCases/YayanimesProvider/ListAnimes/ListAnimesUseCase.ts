@@ -1,7 +1,5 @@
-import { Episode } from '@entities/Anime'
+import { Anime, Episode } from '@entities/Anime'
 import { IYayanimesProvider } from '@providers/IYayanimesProvider'
-import { AnimeDatabase } from '@repositories/implementations/AnimeRepository'
-import { ObjectId } from 'mongodb'
 
 type CategoryNames = {
   category: string
@@ -10,7 +8,7 @@ type CategoryNames = {
 
 type CategoryAnimes = {
   category: string
-  data: AnimeDatabase[]
+  data: Anime[]
 }
 
 export class ListAnimesUseCase {
@@ -53,8 +51,7 @@ export class ListAnimesUseCase {
   ): CategoryAnimes[] {
     return categoryNames.map<CategoryAnimes>(categoryData => ({
       category: categoryData.category,
-      data: categoryData.data.map<AnimeDatabase>(name => ({
-        _id: new ObjectId(),
+      data: categoryData.data.map<Anime>(name => ({
         name,
         genre: 'Unknown',
         imageURL:
