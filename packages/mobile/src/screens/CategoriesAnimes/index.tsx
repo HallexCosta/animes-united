@@ -129,6 +129,7 @@ export function CategoriesAnimes(): JSX.Element {
     </Container>
   )
 }
+
 const styles = StyleSheet.create({
   anime: {
     marginRight: 15
