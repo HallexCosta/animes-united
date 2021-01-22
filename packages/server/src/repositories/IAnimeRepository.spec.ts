@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Anime } from '@entities'
 import { ObjectId } from 'mongodb'
 import { IAnimeRepository } from './IAnimeRepository'
 import { CategoryAnime } from './implementations/AnimeRepository'
@@ -14,7 +15,8 @@ const mockAnimeRepository: jest.Mocked<IAnimeRepository> = {
   deleteByName: jest.fn()
 }
 
-const anime = {
+const anime = new Anime({
+  _id: new ObjectId(),
   name: 'Charlotte',
   imageURL: 'https://yayanimes.net/CapasAnimes/C/Charlotte.jpg',
   studio: 'P.A Works',
@@ -22,7 +24,7 @@ const anime = {
   status: 'Completo',
   yearRelease: 2015,
   rating: 9.4,
-  sinopse:
+  synopsis:
     'A história gira em torno de habilidades especiais que ocorrem entre um pequeno percentual de meninos e meninas na puberdade. Yuu Otosaka usa seu poder sem os outros saberem, e vive uma vida escolar bastante normal. Perante ele, de repente, aparece uma menina, Nao Tomori. Devido ao seu encontro com ela, o destino dos usuários de poderes especiais será exposto.',
   streamings: {
     episodes: [
@@ -142,11 +144,8 @@ const anime = {
       }
     ]
   }
-}
-const animeDatabase = {
-  ...anime,
-  _id: new ObjectId()
-}
+})
+
 const categoriesAnimes: CategoryAnime[] = [
   {
     category: 'A',
@@ -178,10 +177,11 @@ const categoriesAnimes: CategoryAnime[] = [
     ]
   }
 ]
+
 mockAnimeRepository.findAll.mockResolvedValueOnce(categoriesAnimes)
 mockAnimeRepository.category.mockReturnValueOnce(mockAnimeRepository)
 mockAnimeRepository.findByCategory.mockResolvedValue(categoriesAnimes[0])
-mockAnimeRepository.findByName.mockResolvedValue(animeDatabase)
+mockAnimeRepository.findByName.mockResolvedValue(anime)
 mockAnimeRepository.save.mockResolvedValue(true)
 mockAnimeRepository.deleteByName.mockResolvedValue(true)
 
@@ -256,7 +256,7 @@ describe('Test Anime Repository contract', () => {
       expect(mockAnimeRepository.findByName).toHaveBeenCalledTimes(1)
       expect(mockAnimeRepository.findByName).toHaveBeenCalledWith('Charlotte')
       expect(expected).toHaveProperty('_id')
-      expect(expected).toEqual(animeDatabase)
+      expect(expected).toEqual(anime)
 
       done()
     },
