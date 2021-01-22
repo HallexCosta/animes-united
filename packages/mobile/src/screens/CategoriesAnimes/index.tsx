@@ -92,7 +92,8 @@ export function CategoriesAnimes(): JSX.Element {
   ): AnimeCategoryComponentData[] {
     const animeCategoryComponentData = data.map<AnimeCategoryComponentData>(
       categoryAnime => ({
-        category: categoryAnime.category,
+        category:
+          categoryAnime.category === '1' ? 'Outros' : categoryAnime.category,
         data: categoryAnime.data.map<AnimeComponentData>(
           ({ name, yearRelease, imageURL, streamings }) => ({
             title: name,
