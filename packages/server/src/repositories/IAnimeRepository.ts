@@ -1,11 +1,11 @@
 import { Anime } from '@entities/Anime'
-import { AnimeDatabase, CategoryAnime } from './implementations/AnimeRepository'
+import { CategoryAnime } from './implementations/AnimeRepository'
 
 export interface IAnimeRepository {
   findAll(): Promise<CategoryAnime[]>
   findByCategory(category?: string): Promise<CategoryAnime>
   category(category: string): IAnimeRepository
   save(anime: Anime): Promise<boolean>
-  findByName(name: string): Promise<AnimeDatabase>
+  findByName(name: string): Promise<Anime | undefined>
   deleteByName(name: string): Promise<boolean>
 }
