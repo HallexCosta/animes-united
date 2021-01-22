@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 
@@ -7,9 +8,10 @@ import iconArrowLeft from '@assets/icons/arrow-left.png'
 
 type HeaderProps = {
   description: string
+  style?: {}
 }
 
-export function Header({ description }: HeaderProps): JSX.Element {
+export function Header({ description, style }: HeaderProps): JSX.Element {
   const navigation = useNavigation()
 
   function handleNavigateToBackScreen() {
@@ -17,7 +19,7 @@ export function Header({ description }: HeaderProps): JSX.Element {
   }
 
   return (
-    <Container>
+    <Container style={style}>
       <Button onPress={handleNavigateToBackScreen}>
         <Image source={iconArrowLeft} />
       </Button>
