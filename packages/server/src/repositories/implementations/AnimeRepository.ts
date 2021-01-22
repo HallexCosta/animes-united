@@ -1,17 +1,14 @@
-import { Collection, MongoError, ObjectId } from 'mongodb'
+import { Collection, MongoError } from 'mongodb'
 
+import { MongoDB } from './MongoDB'
 import { Anime } from '@entities/Anime'
 import { IAnimeRepository } from '@repositories/IAnimeRepository'
-import { MongoDB } from './MongoDB'
+
 import { toUpperFirstCase } from '@common/utils/text'
 
 export type CategoryAnime = {
   category: string
-  data: AnimeDatabase[]
-}
-
-export type AnimeDatabase = Anime & {
-  _id: ObjectId
+  data: Anime[]
 }
 
 export class AnimeRepository extends MongoDB implements IAnimeRepository {
@@ -24,7 +21,7 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
 
     const animes: CategoryAnime[] = []
 
-    const collections: Collection<AnimeDatabase>[] = await db.collections()
+    const collections: Collection<Anime>[] = await db.collections()
 
     for (const collection of collections) {
       animes.push({
@@ -47,7 +44,7 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
     const collection = db.collection(collectionName)
     return {
       category: collectionName,
-      data: await collection.find<AnimeDatabase>().toArray()
+      data: await collection.find<Anime>().toArray()
     }
   }
 
@@ -58,7 +55,6 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
   public async save(anime: Anime): Promise<boolean> {
     const db = await this.connect()
 
-    /// TESTAR ISSSO
     if (!this.collectionName) {
       throw new Error('Collection name not defined')
     }
@@ -92,17 +88,13 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
     return true
   }
 
-  public async findByName(name: string): Promise<AnimeDatabase> {
+  public async findByName(name: string): Promise<Anime | undefined> {
     const animes = await this.findAll()
     const animeDataFound = animes.find(anime =>
       anime.data.find(anime => anime.name === toUpperFirstCase(name))
     )
 
     const animeFound = animeDataFound?.data[0]
-
-    if (!animeFound) {
-      throw new Error(`Anime with name "${name}" not found`)
-    }
 
     return animeFound
   }
