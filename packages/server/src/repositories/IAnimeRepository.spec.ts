@@ -156,7 +156,7 @@ const categoriesAnimes: CategoryAnime[] = [
         imageURL: 'http://yayanimes.net/Capa-AkamiGaKill.jpg',
         genre: '',
         rating: 5,
-        sinopse: 'Something sinopse',
+        synopsis: 'Something sinopse',
         status: 'Completo',
         yearRelease: 2015,
         studio: "P.A Studio's",
