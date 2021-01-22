@@ -10,18 +10,43 @@ import { ILogger } from '@common/system/Logger/ILogger'
 import { saveFile } from '@common/utils/file'
 import { toUpperFirstCase } from '@common/utils/text'
 import { getCurrentDate, getCurrentTime } from '@common/utils/date'
+
+import { AnimeRepository } from '@repositories/implementations/AnimeRepository'
+
 export class ListAnimeUseCase {
   constructor(
+    private animeRepository: AnimeRepository,
     private yayanimesProvider: IYayanimesProvider,
     private monitor: ILogger
   ) {}
 
+  private async saveOnDatabase(anime: Anime): Promise<boolean> {
+    const { name } = anime
+
+    const animeAlreadyExists = await this.animeRepository.findByName(name)
+
+    if (!animeAlreadyExists) {
+      return await this.animeRepository.category(name[0]).save(anime)
+    }
+
+    return false
+  }
+
   public async execute(data: ListAnimeRequestDTO): Promise<Anime> {
+    const animeAlreadyExists = await this.animeRepository.findByName(data.name)
+
+    if (animeAlreadyExists) {
+      return new Anime(animeAlreadyExists, animeAlreadyExists._id)
+    }
+
     const anime = await this.yayanimesProvider.getAnime(data.name)
 
     if (!anime) {
       throw new Error(`Anime ${toUpperFirstCase(data.name)} not Found`)
     }
+
+    const saved = await this.saveOnDatabase(anime)
+    console.log('saveOnDatabase', saved)
 
     const directoryAnimeSave = path.join(
       __dirname,
