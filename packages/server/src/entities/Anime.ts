@@ -26,7 +26,7 @@ export type Streamings = {
 // }
 
 export class Anime {
-  public readonly id?: ObjectId
+  public readonly _id?: ObjectId
 
   public readonly name: string
   public readonly imageURL: string
@@ -39,11 +39,11 @@ export class Anime {
 
   public readonly streamings: Streamings
 
-  constructor(props: Omit<Anime, 'id'>, id?: ObjectId) {
+  constructor(props: Omit<Anime, 'id'>, _id?: ObjectId) {
     Object.assign(this, props)
 
-    if (!id) {
-      this.id = new ObjectId()
+    if (!_id) {
+      this._id = new ObjectId()
     }
   }
 }
