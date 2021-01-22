@@ -39,11 +39,13 @@ export class ListAnimeUseCase {
       return new Anime(animeAlreadyExists, animeAlreadyExists._id)
     }
 
-    const anime = await this.yayanimesProvider.getAnime(data.name)
+    const animeData = await this.yayanimesProvider.getAnime(data.name)
 
-    if (!anime) {
+    if (!animeData) {
       throw new Error(`Anime ${toUpperFirstCase(data.name)} not Found`)
     }
+
+    const anime = new Anime(animeData)
 
     const saved = await this.saveOnDatabase(anime)
     console.log('saveOnDatabase', saved)
