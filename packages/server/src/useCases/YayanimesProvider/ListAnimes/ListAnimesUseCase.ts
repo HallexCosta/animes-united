@@ -1,5 +1,6 @@
 import { Anime, Episode } from '@entities'
 import { IYayanimesProvider } from '@providers/IYayanimesProvider'
+import { AnimeRepository } from '@repositories/implementations/AnimeRepository'
 
 type CategoryNames = {
   category: string
@@ -12,7 +13,10 @@ type CategoryAnimes = {
 }
 
 export class ListAnimesUseCase {
-  public constructor(private yayanimesProvider: IYayanimesProvider) {}
+  public constructor(
+    private animeRepository: AnimeRepository,
+    private yayanimesProvider: IYayanimesProvider
+  ) {}
 
   private separateByCategory(names: string[]): CategoryNames[] {
     const namesByCategories: CategoryNames[] = []
@@ -20,7 +24,7 @@ export class ListAnimesUseCase {
     for (const name of names) {
       const category: string = name.match(/^[A-Z]/gi)
         ? name[0].toUpperCase()
-        : 'Other'
+        : '1'
 
       const categoryFound = namesByCategories.find(
         namesByCategory => namesByCategory.category === category
@@ -77,10 +81,41 @@ export class ListAnimesUseCase {
     }))
   }
 
+  private async saveManyOnDatabase(
+    categoriesAnimes: CategoryAnimes[]
+  ): Promise<boolean> {
+    for (const categoryAnime of categoriesAnimes) {
+      for (const anime of categoryAnime.data) {
+        await this.animeRepository.category(categoryAnime.category).save(anime)
+      }
+    }
+
+    return true
+  }
+
+  private verifyAllCategoryExists(animes: CategoryAnimes[]): boolean {
+    const allCategoriesLetters: string[] = []
+
+    for (const anime of animes) {
+      allCategoriesLetters.push(anime.category)
+    }
+
+    return allCategoriesLetters.length === 27
+  }
+
   public async execute(): Promise<CategoryAnimes[]> {
+    const animes = await this.animeRepository.findAll()
+
+    if (animes.length === 27) {
+      return animes
+    }
+
     const categoriesAnimes = this.categoryAnimesDataDefault(
       this.separateByCategory(await this.yayanimesProvider.getAnimeNames())
     )
+
+    const saved = await this.saveManyOnDatabase(categoriesAnimes)
+    console.log('saveManyOnDatabase', saved)
 
     if (categoriesAnimes.length === 0) {
       throw new Error('No anime found')
