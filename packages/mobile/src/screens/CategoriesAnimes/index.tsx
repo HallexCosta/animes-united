@@ -35,7 +35,7 @@ function Animes({ data }: AnimesCategoriesProps): JSX.Element {
     currentCategory: string,
     data: AnimeComponentData[]
   ) {
-    navigation.navigate('CategoryAnime', {
+    navigation.navigate('CategoryAnimes', {
       category: currentCategory,
       data
     })
