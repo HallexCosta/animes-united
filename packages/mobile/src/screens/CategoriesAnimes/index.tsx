@@ -122,7 +122,7 @@ export function CategoriesAnimes(): JSX.Element {
 
   return (
     <Container>
-      <Header description="Categoria A - Z" />
+      <Header description="Categoria A - Z" style={{ marginTop: 16 }} />
 
       <Main>
         <Animes data={viewCategoriesAnimesDataComponent(categoriesAnimes)} />
