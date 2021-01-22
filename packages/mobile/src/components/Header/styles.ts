@@ -6,7 +6,7 @@ export const Container = styled.View`
 
   margin-right: 10px;
 
-  margin-top: 16px;
+  /* margin-top: 16px; */
 `
 
 export const Button = styled.TouchableOpacity``
