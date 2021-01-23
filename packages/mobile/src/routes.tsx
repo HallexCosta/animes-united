@@ -5,7 +5,12 @@ import {
   StackNavigationProp
 } from '@react-navigation/stack'
 
-import { AnimeComponentData, CategoriesAnimes, CategoryAnimes } from '@screens'
+import {
+  AnimeComponentData,
+  CategoriesAnimes,
+  CategoryAnimes,
+  AnimeDetail
+} from '@screens'
 
 const Stack = createStackNavigator()
 
@@ -41,11 +46,12 @@ export function Routes(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="CategoriesAnimes"
+        initialRouteName="AnimeDetail"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="CategoriesAnimes" component={CategoriesAnimes} />
         <Stack.Screen name="CategoryAnimes" component={CategoryAnimes} />
+        <Stack.Screen name="AnimeDetail" component={AnimeDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   )
