@@ -4,6 +4,7 @@ import { StatusBar } from 'react-native'
 
 import { AppLoading } from 'expo'
 
+import { Archivo_700Bold } from '@expo-google-fonts/archivo'
 import { Roboto_400Regular, Roboto_500Medium } from '@expo-google-fonts/roboto'
 import { Ubuntu_500Medium, Ubuntu_700Bold } from '@expo-google-fonts/ubuntu'
 import {
@@ -21,6 +22,7 @@ import { Routes } from './src/routes'
 
 export default function App(): JSX.Element {
   const [fontsLoaded] = useFonts({
+    Archivo_700Bold,
     Nunito_400Regular,
     Nunito_700Bold,
     Poppins_500Medium,
