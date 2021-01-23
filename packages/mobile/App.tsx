@@ -12,6 +12,7 @@ import {
   Nunito_700Bold
 } from '@expo-google-fonts/nunito'
 import {
+  Poppins_500Medium,
   Poppins_700Bold,
   Poppins_800ExtraBold
 } from '@expo-google-fonts/poppins'
