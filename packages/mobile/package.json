@@ -12,6 +12,7 @@
     "postinstall": "expo-yarn-workspaces postinstall"
   },
   "dependencies": {
+    "@expo-google-fonts/archivo": "^0.1.0",
     "@expo-google-fonts/nunito": "^0.1.0",
     "@expo-google-fonts/poppins": "^0.1.0",
     "@expo-google-fonts/roboto": "^0.1.0",
