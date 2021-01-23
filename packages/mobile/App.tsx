@@ -23,6 +23,7 @@ export default function App(): JSX.Element {
   const [fontsLoaded] = useFonts({
     Nunito_400Regular,
     Nunito_700Bold,
+    Poppins_500Medium,
     Poppins_700Bold,
     Poppins_800ExtraBold,
     Ubuntu_500Medium,
