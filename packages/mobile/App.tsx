@@ -4,6 +4,7 @@ import { StatusBar } from 'react-native'
 
 import { AppLoading } from 'expo'
 
+import { Roboto_400Regular, Roboto_500Medium } from '@expo-google-fonts/roboto'
 import { Ubuntu_500Medium, Ubuntu_700Bold } from '@expo-google-fonts/ubuntu'
 import {
   useFonts,
@@ -24,7 +25,9 @@ export default function App(): JSX.Element {
     Poppins_700Bold,
     Poppins_800ExtraBold,
     Ubuntu_500Medium,
-    Ubuntu_700Bold
+    Ubuntu_700Bold,
+    Roboto_400Regular,
+    Roboto_500Medium
   })
 
   if (!fontsLoaded) {
