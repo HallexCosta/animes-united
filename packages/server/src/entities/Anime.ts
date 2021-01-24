@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb'
 import { Streamings } from './Streamings'
 
 export class Anime {
-  public readonly _id?: ObjectId
+  public readonly _id: ObjectId
 
   public readonly name: string
   public readonly imageURL: string
