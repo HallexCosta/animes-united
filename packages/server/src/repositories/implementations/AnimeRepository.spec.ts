@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { mongodbURITest } from '@common/configs/mongodb'
 import { Anime } from '@entities/Anime'
+import { ObjectId } from 'mongodb'
 import { AnimeRepository } from './AnimeRepository'
 
 // jest.mock('./AnimeRepository')
@@ -8,7 +9,7 @@ import { AnimeRepository } from './AnimeRepository'
 const timeout = 1000 * 60 * 10
 
 const category = 'C'
-const anime: Anime = {
+const anime = new Anime({
   name: 'Charlotte',
   imageURL: 'https://yayanimes.net/CapasAnimes/C/Charlotte.jpg',
   studio: 'P.A Works',
@@ -40,7 +41,7 @@ const anime: Anime = {
       }
     ]
   }
-}
+})
 
 describe('Test Anime Repository', () => {
   it(
@@ -69,8 +70,50 @@ describe('Test Anime Repository', () => {
     async done => {
       const animeRepository = new AnimeRepository(mongodbURITest)
       const expected = await animeRepository.category(category).save(anime)
+      console.log('ID salvo', anime._id)
+      expect(expected).toBeTruthy()
+      done()
+    },
+    timeout
+  )
 
-      expect(expected).toEqual(true)
+  it(
+    'Should be able to throw error if not update anime by id (AnimeRepository.updateById)',
+    async done => {
+      const animeRepository = new AnimeRepository(mongodbURITest)
+
+      let error
+
+      try {
+        await animeRepository
+          .category(category)
+          .updateById(anime, new ObjectId('abcabcabcabcabcabcabcabc'))
+      } catch (e) {
+        error = e
+      }
+
+      expect(error.name).toBe('Error')
+      expect(error.message).toBe('Failed to update anime by id')
+      done()
+    },
+    timeout
+  )
+
+  it(
+    'Should be able to updateById an anime with successfully (AnimeRepository.updateById)',
+    async done => {
+      const animeRepository = new AnimeRepository(mongodbURITest)
+
+      console.log('ID que Vou atualizar', anime._id)
+      const expected = await animeRepository.category(category).updateById(
+        {
+          ...anime,
+          name: 'Charlotte Atualizado'
+        },
+        anime._id
+      )
+
+      expect(expected).toBeTruthy()
       done()
     },
     timeout
