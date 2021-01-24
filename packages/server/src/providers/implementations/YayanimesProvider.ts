@@ -1,5 +1,6 @@
 import * as config from '@common/configs/puppeteer'
 import { Anime, Episode } from '@entities'
+import { Streamings } from '@entities/Streamings'
 import { IYayanimesProvider } from '@providers/IYayanimesProvider'
 import puppeteer, { Browser, Page } from 'puppeteer'
 
@@ -159,10 +160,10 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
         yearRelease: about[7] ? Number(about[7].innerText.trim()) : 0,
         rating: rating ? Number(rating.innerText.trim()) : 0,
         synopsis: synopsis ? synopsis[13].innerText.trim() : 'Without sinopse',
-        streamings: {
+        streamings: new Streamings({
           episodes: streamings.episodes ? streamings.episodes.reverse() : [],
           ovas: streamings.ovas ? streamings.ovas.reverse() : []
-        }
+        })
       }
 
       console.log(anime)
@@ -219,10 +220,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
           synopsis: '',
           yearRelease: 0,
           rating: 0,
-          streamings: {
-            episodes: [] as Episode[],
-            ovas: [] as Episode[]
-          }
+          streamings: new Streamings()
         }
       })
 
