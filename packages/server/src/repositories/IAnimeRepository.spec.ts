@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Anime } from '@entities'
+import { Anime, Episode, Streamings } from '@entities'
 import { ObjectId } from 'mongodb'
 import { IAnimeRepository } from './IAnimeRepository'
 import { CategoryAnime } from './implementations/AnimeRepository'
@@ -12,11 +12,11 @@ const mockAnimeRepository: jest.Mocked<IAnimeRepository> = {
   findByCategory: jest.fn(),
   findByName: jest.fn(),
   save: jest.fn(),
+  updateById: jest.fn(),
   deleteByName: jest.fn()
 }
 
 const anime = new Anime({
-  _id: new ObjectId(),
   name: 'Charlotte',
   imageURL: 'https://yayanimes.net/CapasAnimes/C/Charlotte.jpg',
   studio: 'P.A Works',
@@ -26,132 +26,35 @@ const anime = new Anime({
   rating: 9.4,
   synopsis:
     'A história gira em torno de habilidades especiais que ocorrem entre um pequeno percentual de meninos e meninas na puberdade. Yuu Otosaka usa seu poder sem os outros saberem, e vive uma vida escolar bastante normal. Perante ele, de repente, aparece uma menina, Nao Tomori. Devido ao seu encontro com ela, o destino dos usuários de poderes especiais será exposto.',
-  streamings: {
+  streamings: new Streamings({
     episodes: [
-      {
+      new Episode({
         title: 'Charlotte – Episódio 01',
         number: 1,
         thumbnail:
           'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte01.jpg',
         qualityStreaming: 'HD',
         url: 'https://yayanimes.net/charlotte-episodio-1/'
-      },
-      {
-        title: 'Charlotte – Episódio 02',
-        number: 2,
-        thumbnail:
-          'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte02.jpg',
-        qualityStreaming: 'HD',
-        url: 'https://yayanimes.net/charlotte-episodio-2/'
-      },
-      {
-        title: 'Charlotte – Episódio 03',
-        number: 3,
-        thumbnail:
-          'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte03.jpg',
-        qualityStreaming: 'HD',
-        url: 'https://yayanimes.net/charlotte-episodio-3/'
-      },
-      {
-        title: 'Charlotte – Episódio 04',
-        number: 4,
-        thumbnail:
-          'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte04.jpg',
-        qualityStreaming: 'HD',
-        url: 'https://yayanimes.net/charlotte-episodio-4/'
-      },
-      {
-        title: 'Charlotte – Episódio 05',
-        number: 5,
-        thumbnail:
-          'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte05.jpg',
-        qualityStreaming: 'HD',
-        url: 'https://yayanimes.net/charlotte-episodio-5/'
-      },
-      {
-        title: 'Charlotte – Episódio 06',
-        number: 6,
-        thumbnail:
-          'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte06.jpg',
-        qualityStreaming: 'HD',
-        url: 'https://yayanimes.net/charlotte-episodio-6/'
-      },
-      {
-        title: 'Charlotte – Episódio 07',
-        number: 7,
-        thumbnail:
-          'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte07.jpg',
-        qualityStreaming: 'HD',
-        url: 'https://yayanimes.net/charlotte-episodio-7/'
-      },
-      {
-        title: 'Charlotte – Episódio 08',
-        number: 8,
-        thumbnail:
-          'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte08.jpg',
-        qualityStreaming: 'HD',
-        url: 'https://yayanimes.net/charlotte-episodio-8/'
-      },
-      {
-        title: 'Charlotte – Episódio 09',
-        number: 9,
-        thumbnail:
-          'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte09.jpg',
-        qualityStreaming: 'HD',
-        url: 'https://yayanimes.net/charlotte-episodio-9/'
-      },
-      {
-        title: 'Charlotte – Episódio 10',
-        number: 10,
-        thumbnail:
-          'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte10.jpg',
-        qualityStreaming: 'HD',
-        url: 'https://yayanimes.net/charlotte-episodio-10/'
-      },
-      {
-        title: 'Charlotte – Episódio 11',
-        number: 11,
-        thumbnail:
-          'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte11.jpg',
-        qualityStreaming: 'HD',
-        url: 'https://yayanimes.net/charlotte-episodio-11/'
-      },
-      {
-        title: 'Charlotte – Episódio 12',
-        number: 12,
-        thumbnail:
-          'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte12.jpg',
-        qualityStreaming: 'HD',
-        url: 'https://yayanimes.net/charlotte-episodio-12/'
-      },
-      {
-        title: 'Charlotte – Episódio 13',
-        number: 13,
-        thumbnail:
-          'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte13.jpg',
-        qualityStreaming: 'HD',
-        url: 'https://yayanimes.net/charlotte-episodio-13/'
-      }
+      })
     ],
     ovas: [
-      {
+      new Episode({
         title: 'Charlotte – OVA 01',
         number: 1,
         thumbnail:
           'https://yayanimes.net/Miniaturas/2015/Charlotte/CharlotteOVA.jpg',
         qualityStreaming: 'HD',
         url: 'https://yayanimes.net/charlotte-ova-1/'
-      }
+      })
     ]
-  }
+  })
 })
 
 const categoriesAnimes: CategoryAnime[] = [
   {
     category: 'A',
     data: [
-      {
-        _id: new ObjectId(),
+      new Anime({
         name: 'Akami Ga Kill!',
         imageURL: 'http://yayanimes.net/Capa-AkamiGaKill.jpg',
         genre: '',
@@ -160,21 +63,13 @@ const categoriesAnimes: CategoryAnime[] = [
         status: 'Completo',
         yearRelease: 2015,
         studio: "P.A Studio's",
-        streamings: {
-          ovas: [],
-          episodes: []
-        }
-      }
+        streamings: new Streamings()
+      })
     ]
   },
   {
     category: 'C',
-    data: [
-      {
-        ...anime,
-        _id: new ObjectId()
-      }
-    ]
+    data: [new Anime(anime)]
   }
 ]
 
@@ -183,6 +78,7 @@ mockAnimeRepository.category.mockReturnValueOnce(mockAnimeRepository)
 mockAnimeRepository.findByCategory.mockResolvedValue(categoriesAnimes[0])
 mockAnimeRepository.findByName.mockResolvedValue(anime)
 mockAnimeRepository.save.mockResolvedValue(true)
+mockAnimeRepository.updateById.mockResolvedValue(true)
 mockAnimeRepository.deleteByName.mockResolvedValue(true)
 
 describe('Test Anime Repository contract', () => {
@@ -293,6 +189,43 @@ describe('Test Anime Repository contract', () => {
 
       expect(mockAnimeRepository.save).toBeCalledTimes(2)
       expect(mockAnimeRepository.save).toBeCalledWith(anime)
+      expect(expected).toBeTruthy()
+
+      done()
+    },
+    timeout
+  )
+
+  it(
+    'Should be able to throw error if not update anime by id (Yayanimes.updateById)',
+    async done => {
+      mockAnimeRepository.updateById.mockRejectedValueOnce(
+        new Error('Failed to update anime by id')
+      )
+
+      let error
+
+      try {
+        await mockAnimeRepository.updateById(anime, anime._id)
+      } catch (e) {
+        error = e
+      }
+
+      expect(error.name).toBe('Error')
+      expect(error.message).toBe('Failed to update anime by id')
+
+      done()
+    },
+    timeout
+  )
+
+  it(
+    'Should be able to update anime by id (Yayanimes.updateById)',
+    async done => {
+      const expected = await mockAnimeRepository.updateById(anime, anime._id)
+
+      expect(mockAnimeRepository.updateById).toBeCalledTimes(2)
+      expect(mockAnimeRepository.updateById).toBeCalledWith(anime, anime._id)
       expect(expected).toBeTruthy()
 
       done()
