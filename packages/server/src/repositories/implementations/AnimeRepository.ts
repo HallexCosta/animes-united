@@ -1,4 +1,4 @@
-import { Collection, MongoError } from 'mongodb'
+import { Collection, MongoError, ObjectId } from 'mongodb'
 
 import { MongoDB } from './MongoDB'
 import { Anime } from '@entities/Anime'
@@ -67,6 +67,33 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
     }
 
     throw new Error('Failed to save anime')
+  }
+
+  public async updateById(
+    anime: Omit<Anime, '_id'>,
+    _id: ObjectId
+  ): Promise<boolean> {
+    const db = await this.connect()
+
+    if (!this.collectionName) {
+      throw new Error('Collection name not defined')
+    }
+
+    const collection = db.collection(this.collectionName)
+    const updated = await collection.updateOne(
+      {
+        _id
+      },
+      {
+        $set: anime
+      }
+    )
+
+    if (updated.modifiedCount) {
+      return true
+    }
+
+    throw new Error('Failed to update anime by id')
   }
 
   public async deleteByName(name: string): Promise<boolean> {
