@@ -21,5 +21,7 @@ export class Anime {
     if (!_id) {
       this._id = new ObjectId()
     }
+
+    Object.freeze(this)
   }
 }
