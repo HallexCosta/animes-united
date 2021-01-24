@@ -107,7 +107,7 @@ describe('Test Anime Repository contract', () => {
   )
 
   it(
-    'Should be able to throw error if not find anime by category (Yayanimes.findByCategory)',
+    'Should be able to throw error if not find anime by category (AnimeRepository.findByCategory)',
     async done => {
       mockAnimeRepository.findByCategory.mockRejectedValueOnce(
         new Error('Collection name not defined')
@@ -129,7 +129,7 @@ describe('Test Anime Repository contract', () => {
   )
 
   it(
-    'Should be able to find anime by category (Yayanimes.findByCategory)',
+    'Should be able to find anime by category (AnimeRepository.findByCategory)',
     async done => {
       const expected = await mockAnimeRepository.findByCategory('C')
 
@@ -144,7 +144,7 @@ describe('Test Anime Repository contract', () => {
   )
 
   it(
-    'Should be able to find anime by name (Yayanimes.findByName)',
+    'Should be able to find anime by name (AnimeRepository.findByName)',
     async done => {
       const expected = await mockAnimeRepository.findByName('Charlotte')
 
@@ -159,7 +159,7 @@ describe('Test Anime Repository contract', () => {
   )
 
   it(
-    'Should be able to throw error if not save anime (Yayanimes.save)',
+    'Should be able to throw error if not save anime (AnimeRepository.save)',
     async done => {
       mockAnimeRepository.save.mockRejectedValueOnce(
         new Error('Failed to save anime')
@@ -182,7 +182,7 @@ describe('Test Anime Repository contract', () => {
   )
 
   it(
-    'Should be able to save anime (Yayanimes.save)',
+    'Should be able to save anime (AnimeRepository.save)',
     async done => {
       const expected = await mockAnimeRepository.save(anime)
 
@@ -196,7 +196,7 @@ describe('Test Anime Repository contract', () => {
   )
 
   it(
-    'Should be able to throw error if not update anime by id (Yayanimes.updateById)',
+    'Should be able to throw error if not update anime by id (AnimeRepository.updateById)',
     async done => {
       mockAnimeRepository.updateById.mockRejectedValueOnce(
         new Error('Failed to update anime by id')
@@ -219,7 +219,7 @@ describe('Test Anime Repository contract', () => {
   )
 
   it(
-    'Should be able to update anime by id (Yayanimes.updateById)',
+    'Should be able to update anime by id (AnimeRepository.updateById)',
     async done => {
       const expected = await mockAnimeRepository.updateById(anime, anime._id)
 
@@ -233,7 +233,7 @@ describe('Test Anime Repository contract', () => {
   )
 
   it(
-    'Should be able to throw error if not delete anime by name (Yayanimes.deleteByName)',
+    'Should be able to throw error if not delete anime by name (AnimeRepository.deleteByName)',
     async done => {
       mockAnimeRepository.deleteByName.mockRejectedValueOnce(
         new Error(`Failed to delete anime by name ${anime.name}`)
@@ -257,7 +257,7 @@ describe('Test Anime Repository contract', () => {
   )
 
   it(
-    'Should be able to delete anime by name (Yayanimes.deleteByName)',
+    'Should be able to delete anime by name (AnimeRepository.deleteByName)',
     async done => {
       const expected = await mockAnimeRepository.deleteByName('Charlotte')
 
