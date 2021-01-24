@@ -1,5 +1,5 @@
 import * as config from '@common/configs/puppeteer'
-import { Anime, Episode } from '@entities/Anime'
+import { Anime, Episode } from '@entities'
 import { IYayanimesProvider } from '@providers/IYayanimesProvider'
 import puppeteer, { Browser, Page } from 'puppeteer'
 
@@ -143,7 +143,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
       const about = document.querySelectorAll<HTMLTableRowElement>(
         'table > tbody > tr > td'
       )
-      const sinopse = document.querySelectorAll<HTMLDivElement>('.single div')
+      const synopsis = document.querySelectorAll<HTMLDivElement>('.single div')
       const rating = document.querySelector<HTMLSpanElement>('#rmp-rating')
 
       const allEpisodes = [...document.querySelectorAll('div.box-episodio3')]
@@ -158,7 +158,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
         status: about[5] ? about[5].innerText.trim() : 'Without release data',
         yearRelease: about[7] ? Number(about[7].innerText.trim()) : 0,
         rating: rating ? Number(rating.innerText.trim()) : 0,
-        sinopse: sinopse ? sinopse[13].innerText.trim() : 'Without sinopse',
+        synopsis: synopsis ? synopsis[13].innerText.trim() : 'Without sinopse',
         streamings: {
           episodes: streamings.episodes ? streamings.episodes.reverse() : [],
           ovas: streamings.ovas ? streamings.ovas.reverse() : []
@@ -216,7 +216,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
           genre: '',
           status: '',
           studio: '',
-          sinopse: '',
+          synopsis: '',
           yearRelease: 0,
           rating: 0,
           streamings: {
