@@ -20,13 +20,15 @@ export class ListAnimeUseCase {
     private monitor: ILogger
   ) {}
 
-  private async saveOnDatabase(anime: Anime): Promise<boolean> {
+  private async updateOnDatabase(anime: Anime): Promise<boolean> {
     const { name } = anime
 
     const animeAlreadyExists = await this.animeRepository.findByName(name)
 
     if (!animeAlreadyExists) {
-      return await this.animeRepository.category(name[0]).save(anime)
+      return await this.animeRepository
+        .category(name[0])
+        .updateById(anime, anime._id)
     }
 
     return false
@@ -47,8 +49,8 @@ export class ListAnimeUseCase {
 
     const anime = new Anime(animeData)
 
-    const saved = await this.saveOnDatabase(anime)
-    console.log('saveOnDatabase', saved)
+    const updated = await this.updateOnDatabase(anime)
+    console.log('updatedOnDatabase', updated)
 
     const directoryAnimeSave = path.join(
       __dirname,
