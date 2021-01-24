@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "@animes-united/axios-config": "*",
-    "@animes-united/eslint-config": "*"
+    "@animes-united/eslint-config": "*",
+    "@animes-united/hash-generator": "*"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.8",
