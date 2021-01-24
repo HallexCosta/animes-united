@@ -1,4 +1,4 @@
-import { Anime, Episode } from '@entities'
+import { Anime, Streamings } from '@entities'
 import { IYayanimesProvider } from '@providers/IYayanimesProvider'
 import { AnimeRepository } from '@repositories/implementations/AnimeRepository'
 
@@ -56,11 +56,8 @@ export class ListAnimesUseCase {
     const defaultStringData = 'Unknown'
     const defaultNumberData = 0
     const imageURL =
-      'http://192.168.0.11:3333/static/images/anime-thumbnail-default.jpg'
-    const streamings = {
-      episodes: [] as Episode[],
-      ovas: [] as Episode[]
-    }
+      'http://192.168.0.9:3333/static/images/anime-thumbnail-default.jpg'
+    const streamings = new Streamings()
 
     return categoryNames.map<CategoryAnimes>(categoryData => ({
       category: categoryData.category,
