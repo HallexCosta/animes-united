@@ -140,14 +140,19 @@ describe('Test Anime Repository', () => {
   )
 
   it(
-    'Should be able to return undefined if not find anime by name',
+    'Should be able to throw error if not find anime by name',
     async done => {
       const animeRepository = new AnimeRepository(mongodbURITest)
       const animeName = 'QUALQUER NOME'
+      let error
+      try {
+        await animeRepository.findByName(animeName)
+      } catch (e) {
+        error = e
+      }
 
-      const received = await animeRepository.findByName(animeName)
-
-      expect(received).toBe(undefined)
+      expect(error.name).toBe('Error')
+      expect(error.message).toBe(`Anime with name "${animeName}" not found`)
       done()
     },
     timeout
