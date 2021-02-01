@@ -5,6 +5,11 @@ const request = supertest(app)
 
 const timeout = 1000 * 60 * 10
 
+const params = {
+  category: 'C',
+  name: 'charlotte'
+}
+
 describe('Test routes', () => {
   it(
     'Should be able to list animes (http://localhost:3333/animes)',
@@ -56,8 +61,9 @@ describe('Test routes', () => {
   it(
     'Should be able to throw error if not received param name (http://localhost:3333/animes/:name)',
     async done => {
-      const param = 'INVALID ANIME NAME'
-      const response = await request.get(`/animes/${param}`).send()
+      const response = await request
+        .get(`/animes/${params.category}/${params.name}123`)
+        .send()
 
       expect(response.status).toEqual(400)
       expect(response.body).toBeTruthy()
@@ -72,8 +78,9 @@ describe('Test routes', () => {
   it(
     'Should be able to list anime by name (http://localhost:3333/animes/:name)',
     async done => {
-      const param = 'charlotte'
-      const response = await request.get(`/animes/${param}`).send()
+      const response = await request
+        .get(`/animes/${params.category}/${params.name}`)
+        .send()
 
       expect(response.status).toEqual(200)
       expect(response.body).toBeTruthy()

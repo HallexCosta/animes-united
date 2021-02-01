@@ -24,7 +24,7 @@ routes
   .get('/animes/calendar', (request: Request, response: Response) => {
     return listAnimesCalendarController.handle(request, response)
   })
-  .get('/animes/:name', (request: Request, response: Response) => {
+  .get('/animes/:category/:name', (request: Request, response: Response) => {
     return listAnimeController.handle(request, response)
   })
 
