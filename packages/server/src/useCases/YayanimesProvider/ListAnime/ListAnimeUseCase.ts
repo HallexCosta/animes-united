@@ -35,7 +35,9 @@ export class ListAnimeUseCase {
   }
 
   public async execute(data: ListAnimeRequestDTO): Promise<Anime> {
-    const animeAlreadyExists = await this.animeRepository.findByName(data.name)
+    const animeAlreadyExists = await this.animeRepository
+      .category(data.category)
+      .findByName(data.name)
 
     if (animeAlreadyExists) {
       return new Anime(animeAlreadyExists, animeAlreadyExists._id)
