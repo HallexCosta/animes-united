@@ -5,14 +5,15 @@ export class ListAnimeController {
   public constructor(private listAnimeUseCase: ListAnimeUseCase) {}
 
   public async handle(request: Request, response: Response): Promise<Response> {
-    const { name } = request.params
+    const { category, name } = request.params
 
     try {
-      const animeTextData = await this.listAnimeUseCase.execute({
+      const anime = await this.listAnimeUseCase.execute({
+        category,
         name
       })
 
-      return response.status(200).json(animeTextData)
+      return response.status(200).json(anime)
     } catch (e) {
       return response.status(400).json({
         message: e.message || 'Unexpected error'
