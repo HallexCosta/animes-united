@@ -20,7 +20,8 @@
   "dependencies": {
     "@animes-united/axios-config": "*",
     "@animes-united/eslint-config": "*",
-    "@animes-united/hash-generator": "*"
+    "@animes-united/hash-generator": "*",
+    "@animes-united/lintcommit-config": "*"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.8",
