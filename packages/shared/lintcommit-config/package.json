@@ -1,11 +1,8 @@
 {
   "name": "@animes-united/lintcommit-config",
   "version": "1.0.0",
-  "main": "cli.ts",
-  "repository": "git@github.com:HallexCosta/lintcommit.git",
-  "author": "HallexCosta <hallex.costa@hotmail.com>",
+  "main": "commitlint.config.js",
   "license": "MIT",
-  "bin": "./cli.js",
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
@@ -15,14 +12,7 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
-    "commitizen": "^4.2.3",
     "commitlint-config-monorepo": "^1.0.2",
-    "cz-conventional-changelog": "3.3.0",
     "husky": "^4.3.8"
-  },
-  "config": {
-    "commitizen": {
-      "path": "../../../node_modules/cz-conventional-changelog"
-    }
   }
 }
