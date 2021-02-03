@@ -37,6 +37,7 @@
     "ts-jest": "^26.4.4",
     "tsconfig-paths": "^3.9.0",
     "tsconfig-paths-jest": "^0.0.1",
-    "typescript": "^4.1.2"
+    "typescript": "^4.1.2",
+    "husky": "^4.3.8"
   }
 }
