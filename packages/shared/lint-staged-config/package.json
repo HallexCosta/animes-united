@@ -1,0 +1,13 @@
+{
+  "name": "@animes-united/lint-staged-config",
+  "version": "1.0.0",
+  "main": ".lintstagedrc.js",
+  "author": "HallexCosta <hallex.costa@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "lint-staged": "^10.5.3"
+  }
+}
