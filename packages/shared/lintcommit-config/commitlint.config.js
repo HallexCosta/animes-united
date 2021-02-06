@@ -7,9 +7,19 @@ const packageDirNames = readDirectory(
   { withFileTypes: true }
 )
   .filter(entry => entry.isDirectory())
+  .map(dir => (dir.name === 'shared' ? null : dir.name))
+  .filter(name => name != null)
+
+const packagesSharedDirNames = readDirectory(
+  join(__dirname, '..', '..', '..', 'packages', 'shared'),
+  { withFileTypes: true }
+)
+  .filter(entry => entry.isDirectory())
   .map(dir => dir.name)
 
-const scopes = DEFAULT_SCOPES.concat(packageDirNames)
+const allPackagesDIrNames = packageDirNames.concat(packagesSharedDirNames)
+
+const scopes = DEFAULT_SCOPES.concat(allPackagesDIrNames)
 
 module.exports = {
   extends: ['monorepo'],
