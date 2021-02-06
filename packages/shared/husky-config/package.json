@@ -1,0 +1,9 @@
+{
+  "name": "@animes-united/husky-config",
+  "version": "1.0.0",
+  "main": ".huskyrc.js",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^4.3.8"
+  }
+}
