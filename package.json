@@ -11,6 +11,7 @@
     ]
   },
   "scripts": {
+    "ci": "yarn install --frozen-lockfile",
     "test": "jest",
     "test:watch": "jest --watch --detectOpenHandles",
     "build:server": "babel packages/server/src --extensions \".js,.ts\" --out-dir dist/server --copy-files --no-copy-ignored",
@@ -19,11 +20,13 @@
   },
   "dependencies": {
     "@animes-united/axios-config": "*",
-    "@animes-united/eslint-config": "*",
-    "@animes-united/hash-generator": "*",
-    "@animes-united/lintcommit-config": "*"
+    "@animes-united/hash-generator": "*"
   },
   "devDependencies": {
+    "@animes-united/eslint-config": "*",
+    "@animes-united/lintcommit-config": "*",
+    "@animes-united/lint-staged-config": "*",
+    "@animes-united/husky-config": "*",
     "@babel/cli": "^7.12.8",
     "@babel/core": "^7.12.9",
     "@babel/preset-env": "^7.12.7",
@@ -37,7 +40,6 @@
     "ts-jest": "^26.4.4",
     "tsconfig-paths": "^3.9.0",
     "tsconfig-paths-jest": "^0.0.1",
-    "typescript": "^4.1.2",
-    "husky": "^4.3.8"
+    "typescript": "^4.1.3"
   }
 }
