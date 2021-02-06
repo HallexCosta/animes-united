@@ -1,6 +1,6 @@
 const { join } = require('path')
 const { readdirSync: readDirectory } = require('fs')
-const DEFAULT_SCOPES = ['repo']
+const DEFAULT_SCOPES = ['global']
 
 const packageDirNames = readDirectory(
   join(__dirname, '..', '..', '..', 'packages'),
