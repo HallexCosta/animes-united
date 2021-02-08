@@ -1,7 +1,7 @@
 import { guid } from '@animes-united/hash-generator'
 
 export class Episode {
-  public readonly id?: string
+  public readonly id: string
 
   public readonly title: string
   public readonly number: number
