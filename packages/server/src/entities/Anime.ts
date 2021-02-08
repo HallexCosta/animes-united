@@ -1,5 +1,4 @@
 import { ObjectId } from 'mongodb'
-import { Episode } from './Episode'
 import { Streamings } from './Streamings'
 
 export class Anime {
