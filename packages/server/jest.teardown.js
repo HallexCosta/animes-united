@@ -22,7 +22,7 @@ async function connection() {
   return db
 }
 
-module.exports = async () => {
+module.exports = async function setup() {
   const db = await connection()
   const drops = []
   for (const collection of await db.collections()) {
