@@ -6,8 +6,8 @@ export class Streamings {
 
   constructor(
     props: Streamings = {
-      episodes: [] as Episode[],
-      ovas: [] as Episode[]
+      episodes: [],
+      ovas: []
     }
   ) {
     Object.assign(this, props)
