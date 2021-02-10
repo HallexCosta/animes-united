@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir ../../dist/server --copy-files --no-copy-ignored",
-    "start:development": "tsnd -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
+    "start:development": "ts-node -r tsconfig-paths/register --transpile-only src/server.ts",
+    "start:development:watch": "tsnd -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
     "start:production": "node ../../dist/server/src/server.js"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
     "@types/puppeteer": "^5.4.2",
     "@types/supertest": "^2.0.10",
     "supertest": "^6.0.1",
+    "ts-node": "^9.1.1",
     "ts-node-dev": "^1.0.0"
   },
   "private": true
