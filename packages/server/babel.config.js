@@ -4,6 +4,7 @@ module.exports = {
       'module-resolver',
       {
         alias: {
+          '@adapters': './src/adapters',
           '@useCases': './src/useCases',
           '@entities': './src/entities',
           '@repositories': './src/repositories',

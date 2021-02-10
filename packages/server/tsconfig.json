@@ -17,6 +17,8 @@
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
+      "@adapters/*": ["./src/adapters/*"],
+      "@adapters": ["./src/adapters/index.ts"],
       "@useCases/*": ["./src/useCases/*"],
       "@entities/*": ["./src/entities/*"],
       "@entities": ["./src/entities/index.ts"],
