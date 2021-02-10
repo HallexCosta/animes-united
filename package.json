@@ -12,8 +12,10 @@
   },
   "scripts": {
     "ci": "yarn install --frozen-lockfile",
-    "test": "jest",
-    "test:watch": "jest --watch --detectOpenHandles",
+    "test": "jest --passWithNoTests --no-cache --runInBand --detectOpenHandles",
+    "test:watch": "yarn test --watch",
+    "test:staged": "yarn test --bail --findRelatedTests --forceExit",
+    "test:ci": "yarn test --coverage",
     "build:server": "babel packages/server/src --extensions \".js,.ts\" --out-dir dist/server --copy-files --no-copy-ignored",
     "start:server:production": "node dist/server/server.js",
     "start:mobile:development": "expo start packages/mobile"
