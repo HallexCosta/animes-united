@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { mongodbURITest } from '@common/configs/mongodb'
+import { Episode } from '@entities'
 import { Anime } from '@entities/Anime'
 import { ObjectId } from 'mongodb'
 import { AnimeRepository } from './AnimeRepository'
@@ -21,24 +22,24 @@ const anime = new Anime({
     'A história gira em torno de habilidades especiais que ocorrem entre um pequeno percentual de meninos e meninas na puberdade. Yuu Otosaka usa seu poder sem os outros saberem, e vive uma vida escolar bastante normal. Perante ele, de repente, aparece uma menina, Nao Tomori. Devido ao seu encontro com ela, o destino dos usuários de poderes especiais será exposto.',
   streamings: {
     episodes: [
-      {
+      new Episode({
         title: 'Charlotte – Episódio 01',
         number: 1,
         thumbnail:
           'https://yayanimes.net/Miniaturas/2015/Charlotte/Charlotte01.jpg',
         qualityStreaming: 'HD',
         url: 'https://yayanimes.net/charlotte-episodio-1/'
-      }
+      })
     ],
     ovas: [
-      {
+      new Episode({
         title: 'Charlotte – OVA 01',
         number: 1,
         thumbnail:
           'https://yayanimes.net/Miniaturas/2015/Charlotte/CharlotteOVA.jpg',
         qualityStreaming: 'HD',
         url: 'https://yayanimes.net/charlotte-ova-1/'
-      }
+      })
     ]
   }
 })
@@ -70,7 +71,7 @@ describe('Test Anime Repository', () => {
     async done => {
       const animeRepository = new AnimeRepository(mongodbURITest)
       const expected = await animeRepository.category(category).save(anime)
-      console.log('ID salvo', anime._id)
+
       expect(expected).toBeTruthy()
       done()
     },
@@ -104,7 +105,6 @@ describe('Test Anime Repository', () => {
     async done => {
       const animeRepository = new AnimeRepository(mongodbURITest)
 
-      console.log('ID que Vou atualizar', anime._id)
       const expected = await animeRepository.category(category).updateById(
         {
           ...anime,
@@ -183,10 +183,12 @@ describe('Test Anime Repository', () => {
   )
 
   it(
-    'Should be able to return undefined if not find anime by name',
+    'Should be able to throw error if not find anime by name',
     async done => {
       const animeRepository = new AnimeRepository(mongodbURITest)
-      const expected = await animeRepository.findByName('QUALQUER NOME')
+      const expected = await animeRepository
+        .category('C')
+        .findByName('QUALQUER NOME')
 
       expect(expected).toBe(undefined)
       done()
@@ -198,7 +200,9 @@ describe('Test Anime Repository', () => {
     'Should be able to find anime by name',
     async done => {
       const animeRepository = new AnimeRepository(mongodbURITest)
-      const expected = await animeRepository.findByName('Charlotte')
+      const expected = await animeRepository
+        .category('c')
+        .findByName('Charlotte Atualizado')
 
       expect(expected).toHaveProperty('_id')
       done()

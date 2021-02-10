@@ -4,8 +4,6 @@ import { MongoDB } from './MongoDB'
 import { Anime } from '@entities/Anime'
 import { IAnimeRepository } from '@repositories/IAnimeRepository'
 
-import { toUpperFirstCase } from '@common/utils/text'
-
 export type CategoryAnime = {
   category: string
   data: Anime[]
@@ -117,13 +115,16 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
 
   public async findByName(name: string): Promise<Anime | undefined> {
     const animes = await this.findAll()
-    const animeDataFound = animes.find(anime =>
-      anime.data.find(anime => anime.name === toUpperFirstCase(name))
+
+    const animesCategory = animes.find(
+      anime => anime.category === this.collectionName
     )
 
-    const animeFound = animeDataFound?.data[0]
+    if (!animesCategory) {
+      throw new Error('Category no found')
+    }
 
-    return animeFound
+    return animesCategory.data.find(anime => anime.name === name)
   }
 
   private orderByAlphabetical(categories: CategoryAnime[]): CategoryAnime[] {
