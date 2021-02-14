@@ -7,7 +7,7 @@ import { Container, Button, Image, Description } from './styles'
 import iconArrowLeft from '@assets/icons/arrow-left.png'
 
 type HeaderProps = {
-  description: string
+  description?: string
   style?: {}
 }
 
@@ -24,7 +24,7 @@ export function Header({ description, style }: HeaderProps): JSX.Element {
         <Image source={iconArrowLeft} />
       </Button>
 
-      <Description>{description}</Description>
+      <Description>{description && ""}</Description>
     </Container>
   )
 }
