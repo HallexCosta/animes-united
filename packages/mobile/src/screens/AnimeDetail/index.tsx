@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { Text } from 'react-native'
-
+import { StyleSheet } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
 import {
@@ -23,29 +22,83 @@ import {
   SynopsisDescription,
   MoreButton,
   MoreText,
+  EpisodesScrollView,
   Episodes,
-  Episode,
-  EpisodeThumbnail,
-  EpisodePlayIcon,
-  EpisodeWatched,
-  EpisodeInfo,
-  EpisodeDetail,
-  EpisodeTitle,
-  EpisodeDescription,
-  QualityStreaming,
-  QualityStreamingText,
   FavoriteButton,
   FavoriteButtonText
 } from './styles'
 
-import animeThumbnail from '../../assets/images/darling-in-the-fran-xx.jpg'
-import animeBackground from '../../assets/images/anime-thumbnail-default.jpg'
-import episodeThumbnail from '../../assets/images/DarlingintheFranXX01.jpg'
-import episodePlayIcon from '../../assets/icons/play-icon.png'
+import animeThumbnail from '@assets/images/darling-in-the-fran-xx.jpg'
+import animeBackground from '@assets/images/anime-thumbnail-default.jpg'
 
-import { Header } from '@components'
+import { Util } from '@util'
+import { Header, EpisodeProps, Episode } from '@components'
+import { Episode as EpisodeResponseAPI } from '@api/response'
+
+type EpisodeDataComponent = Omit<EpisodeProps, 'style'>
+
+type EpisodesRenderProps = {
+  data: EpisodeDataComponent[]
+}
+
+function EpisodesRender({ data }: EpisodesRenderProps) {
+  return (
+    <Episodes>
+      {Array.from(data).map(
+        ({ title, number, qualityStreaming, thumbnail, videoURL }) => (
+          <Episode
+            key={number}
+            title={title}
+            number={number}
+            qualityStreaming={qualityStreaming}
+            thumbnail={thumbnail}
+            videoURL={videoURL}
+            style={styles.episodeItem}
+          />
+        )
+      )}
+    </Episodes>
+  )
+}
 
 export function AnimeDetail(): JSX.Element {
+  const [episodes, setEpisodes] = useState<EpisodeResponseAPI[]>([])
+
+  function viewEpisodesDataComponent(
+    episodes: EpisodeResponseAPI[]
+  ): EpisodeDataComponent[] {
+    return episodes.map(episode => ({
+      title: episode.title,
+      number: episode.number,
+      thumbnail: episode.thumbnail,
+      qualityStreaming: episode.qualityStreaming,
+      videoURL: episode.url
+    }))
+  }
+
+  useEffect(() => {
+    function renderAnimes(): EpisodeResponseAPI[] {
+      const episodes = []
+      for (let i = 1; i <= 24; i++) {
+        episodes.push({
+          title: 'Darling in the fran xx',
+          number: i,
+          qualityStreaming: 'HD',
+          thumbnail: `https://yayanimes.net/Miniaturas/2018/DarlingintheFranXX/DarlingintheFranXX${Util.pad(
+            i
+          )}.jpg`,
+          url: 'https://testing-video.com.br'
+        })
+      }
+
+      return episodes
+    }
+
+    const episodes = renderAnimes()
+    setEpisodes(episodes)
+    console.log('List Episodes', episodes)
+  }, [])
+
   return (
     <Container>
       <HeaderBackground source={animeBackground} />
@@ -109,27 +162,9 @@ export function AnimeDetail(): JSX.Element {
           </MoreButton>
         </Synopsis>
 
-        <Episodes>
-          <Episode>
-            <EpisodeThumbnail source={episodeThumbnail} />
-
-            <EpisodeInfo>
-              <EpisodeWatched>Assistido</EpisodeWatched>
-              <QualityStreaming>
-                <QualityStreamingText>HD</QualityStreamingText>
-              </QualityStreaming>
-
-              <EpisodePlayIcon source={episodePlayIcon} />
-
-              <EpisodeDetail>
-                <EpisodeTitle numberOfLines={1} ellipsizeMode="tail">
-                  Darling in the fran xx
-                </EpisodeTitle>
-                <EpisodeDescription>EP - 01</EpisodeDescription>
-              </EpisodeDetail>
-            </EpisodeInfo>
-          </Episode>
-        </Episodes>
+        <EpisodesScrollView>
+          <EpisodesRender data={viewEpisodesDataComponent(episodes)} />
+        </EpisodesScrollView>
       </Main>
 
       <FavoriteButton>
@@ -138,3 +173,10 @@ export function AnimeDetail(): JSX.Element {
     </Container>
   )
 }
+
+const styles = StyleSheet.create({
+  episodeItem: {
+    width: 'auto',
+    marginBottom: 10
+  }
+})
