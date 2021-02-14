@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/mobile",
-    "rootDir": "./src", 
+    "rootDir": "./src",
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
     "jsx": "react-native",
@@ -15,10 +15,10 @@
       "@screens/*": ["./src/screens/*"],
       "@screens": ["./src/screens/index.tsx"],
       "@assets/*": ["./src/assets/*"],
-      "@api/*": ["./src/api/*"]
-    },
+      "@api/*": ["./src/api/*"],
+      "@util/*": ["./src/util/*"],
+      "@util": ["./src/util/index.ts"]
+    }
   },
-  "include": [
-    "src/**/*"
-, "index.d.ts"  ]
+  "include": ["src/**/*", "index.d.ts"]
 }
