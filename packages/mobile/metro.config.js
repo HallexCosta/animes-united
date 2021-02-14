@@ -4,7 +4,7 @@ const configuration = createMetroConfiguration(__dirname)
 
 module.exports = (async () => {
   const {
-    resolver: { sourceExts, assetExts }
+    resolver: { sourceExts }
   } = await getDefaultConfig()
 
   return {
