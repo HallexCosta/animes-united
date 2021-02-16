@@ -1,5 +1,3 @@
-import { ObjectId } from 'mongodb'
-
 export type Episode = {
   title: string
   number: number
@@ -14,7 +12,7 @@ export type Streamings = {
 }
 
 export type AnimeResponse = {
-  _id: ObjectId
+  _id: string
   name: string
   imageURL: string
   genre: string
