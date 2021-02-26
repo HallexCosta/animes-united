@@ -1,4 +1,4 @@
-export type Episode = {
+export type EpisodeResponse = {
   title: string
   number: number
   thumbnail: string
@@ -7,8 +7,8 @@ export type Episode = {
 }
 
 export type Streamings = {
-  episodes: Episode[]
-  ovas: Episode[]
+  episodes: EpisodeResponse[]
+  ovas: EpisodeResponse[]
 }
 
 export type AnimeResponse = {
