@@ -28,12 +28,13 @@ import {
   FavoriteButtonText
 } from './styles'
 
-import animeThumbnail from '@assets/images/darling-in-the-fran-xx.jpg'
 import animeBackground from '@assets/images/anime-thumbnail-default.jpg'
 
 import { Util } from '@util'
 import { Header, EpisodeProps, Episode } from '@components'
-import { Episode as EpisodeResponseAPI } from '@api/response'
+import { EpisodeResponse } from '@api/response'
+
+import { ScreenProps } from 'src/routes'
 
 type EpisodeDataComponent = Omit<EpisodeProps, 'style'>
 
@@ -61,11 +62,14 @@ function EpisodesRender({ data }: EpisodesRenderProps) {
   )
 }
 
-export function AnimeDetail(): JSX.Element {
-  const [episodes, setEpisodes] = useState<EpisodeResponseAPI[]>([])
+export function AnimeDetail({
+  route,
+  navigation
+}: ScreenProps<'AnimeDetail'>): JSX.Element {
+  const [episodes, setEpisodes] = useState<EpisodeResponse[]>([])
 
   function viewEpisodesDataComponent(
-    episodes: EpisodeResponseAPI[]
+    episodes: EpisodeResponse[]
   ): EpisodeDataComponent[] {
     return episodes.map(episode => ({
       title: episode.title,
@@ -77,7 +81,7 @@ export function AnimeDetail(): JSX.Element {
   }
 
   useEffect(() => {
-    function renderAnimes(): EpisodeResponseAPI[] {
+    function renderAnimes(): EpisodeResponse[] {
       const episodes = []
       for (let i = 1; i <= 24; i++) {
         episodes.push({
@@ -106,7 +110,12 @@ export function AnimeDetail(): JSX.Element {
       <Header description="" style={{ marginTop: 10, paddingLeft: 10 }} />
 
       <Section>
-        <Thumbnail source={animeThumbnail} />
+        <Thumbnail
+          source={{
+            uri:
+              'http://static.tvmaze.com/uploads/images/original_untouched/138/346431.jpg'
+          }}
+        />
 
         <Info>
           <Title>Darling in the fran xx 1nd Season</Title>

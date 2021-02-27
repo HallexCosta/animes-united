@@ -37,24 +37,6 @@ export type CategoriesAnimesProps = {
   data: CategoryAnimesResponse[]
 }
 
-function renderAnime({
-  item: {
-    name: title,
-    imageURL: url,
-    yearRelease: year,
-    streamings: { episodes, ovas }
-  }
-}: ListRenderItemInfo<AnimeResponse>): JSX.Element {
-  return (
-    <AnimeItem
-      imageURL={url}
-      title={title}
-      description={`${year} - ${episodes.length + ovas.length} eps`}
-      style={styles.anime}
-    />
-  )
-}
-
 function Animes({ data }: AnimesProps) {
   const renderItem = ({
     item: {
