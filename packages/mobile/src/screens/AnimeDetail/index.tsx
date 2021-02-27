@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
-import { StyleSheet } from 'react-native'
+import {
+  StyleSheet,
+  FlatList as Article,
+  ListRenderItemInfo
+} from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
 import {
@@ -22,8 +26,7 @@ import {
   SynopsisDescription,
   MoreButton,
   MoreText,
-  EpisodesScrollView,
-  Episodes,
+  EpisodesContainer,
   FavoriteButton,
   FavoriteButtonText
 } from './styles'
@@ -31,34 +34,41 @@ import {
 import animeBackground from '@assets/images/anime-thumbnail-default.jpg'
 
 import { Util } from '@util'
-import { Header, EpisodeProps, Episode } from '@components'
+import { Header, Episode as EpisodeItem } from '@components'
 import { EpisodeResponse } from '@api/response'
 
 import { ScreenProps } from 'src/routes'
 
-type EpisodeDataComponent = Omit<EpisodeProps, 'style'>
-
 type EpisodesRenderProps = {
-  data: EpisodeDataComponent[]
+  data: EpisodeResponse[]
 }
 
-function EpisodesRender({ data }: EpisodesRenderProps) {
+function Episodes({ data }: EpisodesRenderProps) {
+  const renderItem = ({
+    item: { title, thumbnail, number, url, qualityStreaming }
+  }: ListRenderItemInfo<EpisodeResponse>) => (
+    <EpisodeItem
+      key={number}
+      title={title}
+      number={number}
+      qualityStreaming={qualityStreaming}
+      thumbnail={thumbnail}
+      videoURL={url}
+      style={styles.episodeItem}
+    />
+  )
+
   return (
-    <Episodes>
-      {Array.from(data).map(
-        ({ title, number, qualityStreaming, thumbnail, videoURL }) => (
-          <Episode
-            key={number}
-            title={title}
-            number={number}
-            qualityStreaming={qualityStreaming}
-            thumbnail={thumbnail}
-            videoURL={videoURL}
-            style={styles.episodeItem}
-          />
-        )
-      )}
-    </Episodes>
+    <Article
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={item => item.number.toString()}
+      numColumns={2}
+      showsVerticalScrollIndicator={false}
+      maxToRenderPerBatch={5}
+      initialNumToRender={3}
+      style={styles.article}
+    />
   )
 }
 
@@ -67,18 +77,6 @@ export function AnimeDetail({
   navigation
 }: ScreenProps<'AnimeDetail'>): JSX.Element {
   const [episodes, setEpisodes] = useState<EpisodeResponse[]>([])
-
-  function viewEpisodesDataComponent(
-    episodes: EpisodeResponse[]
-  ): EpisodeDataComponent[] {
-    return episodes.map(episode => ({
-      title: episode.title,
-      number: episode.number,
-      thumbnail: episode.thumbnail,
-      qualityStreaming: episode.qualityStreaming,
-      videoURL: episode.url
-    }))
-  }
 
   useEffect(() => {
     function renderAnimes(): EpisodeResponse[] {
@@ -171,9 +169,9 @@ export function AnimeDetail({
           </MoreButton>
         </Synopsis>
 
-        <EpisodesScrollView>
-          <EpisodesRender data={viewEpisodesDataComponent(episodes)} />
-        </EpisodesScrollView>
+        <EpisodesContainer>
+          <Episodes data={episodes} />
+        </EpisodesContainer>
       </Main>
 
       <FavoriteButton>
@@ -186,6 +184,12 @@ export function AnimeDetail({
 const styles = StyleSheet.create({
   episodeItem: {
     width: 'auto',
-    marginBottom: 10
+    marginBottom: 10,
+    marginRight: 10
+  },
+  article: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   }
 })

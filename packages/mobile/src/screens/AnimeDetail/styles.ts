@@ -137,9 +137,7 @@ export const MoreText = styled.Text`
   color: #8f8f8f;
 `
 
-export const EpisodesScrollView = styled.ScrollView``
-
-export const Episodes = styled.View`
+export const EpisodesContainer = styled.View`
   flex: 1;
   flex-direction: row;
   flex-wrap: wrap;
