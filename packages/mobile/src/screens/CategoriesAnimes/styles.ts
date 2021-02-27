@@ -62,8 +62,4 @@ export const ViewMore = styled.Text`
   line-height: 18px;
 `
 
-export const Article = styled.ScrollView`
-  height: 205px;
-  margin-top: 5px;
-  flex-direction: row;
-`
+// export const Article = styled.FlatList``
