@@ -28,6 +28,10 @@ export const Info = styled.Text`
   line-height: 14px;
 `
 
+export const Main = styled.View`
+  margin-top: 10px;
+`
+
 export const Section = styled.View`
   margin-bottom: 16px;
 `
