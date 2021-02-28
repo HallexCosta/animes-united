@@ -9,6 +9,7 @@
     "lib": ["dom", "esnext"],
     "moduleResolution": "node",
     "noEmit": true,
+    "strictPropertyInitialization": false,
     "paths": {
       "@components/*": ["./src/components/*"],
       "@components": ["./src/components/index.tsx"],
