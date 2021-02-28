@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import {
-  TouchableOpacity,
-  StyleSheet,
-  ListRenderItemInfo,
-  View,
-  Text,
-  Button
-} from 'react-native'
-
-import { useNavigation } from '@react-navigation/native'
-
-import { Container, Head, Category, ViewMore } from './styles'
-
 import { api } from '@animes-united/axios-config'
-import { Anime as AnimeItem, Header } from '@components'
 import { AnimeResponse, CategoryAnimesResponse } from '@api/response'
+import { Anime as AnimeItem, Header } from '@components'
+
+import React, { memo, useEffect, useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { ListRenderItemInfo, StyleSheet, TouchableOpacity } from 'react-native'
 import {
   FlatList as Article,
   FlatList as Section
 } from 'react-native-gesture-handler'
+
+import { Category, Container, Head, Main, ViewMore } from './styles'
 
 export type AnimesProps = {
   data: AnimeResponse[]
@@ -28,7 +20,7 @@ export type CategoriesAnimesProps = {
   data: CategoryAnimesResponse[]
 }
 
-function Animes({ data }: AnimesProps) {
+const Animes = memo(function Animes({ data }: AnimesProps) {
   const renderItem = ({
     item: {
       name: title,
@@ -57,9 +49,11 @@ function Animes({ data }: AnimesProps) {
       initialNumToRender={3}
     />
   )
-}
+})
 
-function CategoriesAnimes({ data }: CategoriesAnimesProps): JSX.Element {
+const CategoriesAnimes = memo(function CategoriesAnimes({
+  data
+}: CategoriesAnimesProps): JSX.Element {
   const navigation = useNavigation()
 
   function handleNavigateToCategoryAnimeScreen(
@@ -90,13 +84,17 @@ function CategoriesAnimes({ data }: CategoriesAnimesProps): JSX.Element {
   )
 
   return (
-    <Section
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={item => item.category}
-    />
+    <Main>
+      <Section
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={item => item.category}
+        maxToRenderPerBatch={3}
+        initialNumToRender={3}
+      />
+    </Main>
   )
-}
+})
 
 export function CategoriesAnimesScreen(): JSX.Element {
   const [categoriesAnimes, setCategoriesAnimes] = useState<
