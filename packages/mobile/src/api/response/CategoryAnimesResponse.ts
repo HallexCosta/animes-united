@@ -1,6 +1,11 @@
 import { AnimeResponse } from './AnimeResponse'
 
-export type CategoryAnimesResponse = {
-  category: string
-  data: AnimeResponse[]
+export class CategoryAnimesResponse {
+  public readonly category: string
+  public readonly data: AnimeResponse[]
+
+  public constructor(props: CategoryAnimesResponse) {
+    Object.assign(this, props)
+    Object.freeze(this)
+  }
 }
