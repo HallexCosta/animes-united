@@ -16,7 +16,7 @@ export class EpisodeResponse {
       this.id = guid()
     }
 
-    Object.freeze(props)
+    Object.freeze(this)
   }
 }
 
