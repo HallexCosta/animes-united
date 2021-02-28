@@ -43,7 +43,7 @@ export class AnimeResponse {
   public readonly streamings: StreamingsResponse
 
   public constructor(props: Omit<AnimeResponse, '_id'>, id?: string) {
-    Object.assign(props, this)
+    Object.assign(this, props)
 
     if (!id) {
       this._id = guid()
