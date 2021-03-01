@@ -9,9 +9,10 @@ type PuppeteerLaunchConfig = {
 }
 
 const debug: boolean = process.env.PUPPETEER_DEBUG === 'true'
+const chromeExecutablePath = process.env.PUPPETEER_CHROME_EXECUTABLE_PATH
 
 export const launch: PuppeteerLaunchConfig = {
-  executablePath: path.join('/', 'mnt', 'c', 'chrome-win', 'chrome.exe'),
+  executablePath: String(chromeExecutablePath),
   headless: !debug,
   args: ['--no-sandbox']
 }
