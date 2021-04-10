@@ -1,7 +1,3 @@
-module.exports = {
-  clearMocks: true,
-  preset: 'ts-jest',
-  projects: ['<rootDir>/packages/**/jest.config.js'],
-  testEnvironment: 'node',
-  testMatch: ['*.spec.ts', '*.spec.tsx']
-}
+const { config } = require('@animes-united/jest-config')
+
+module.exports = config.monorepo
