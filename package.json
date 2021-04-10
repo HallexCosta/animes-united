@@ -18,7 +18,8 @@
     "test:ci": "yarn test --coverage",
     "build:server": "babel packages/server/src --extensions \".js,.ts\" --out-dir dist/server --copy-files --no-copy-ignored",
     "start:server:production": "node dist/server/server.js",
-    "start:mobile:development": "expo start packages/mobile"
+    "start:mobile:development": "expo start packages/mobile",
+    "lerna:build": "rimraf ./packages/**/dist && lerna run build"
   },
   "dependencies": {
     "@animes-united/axios-config": "*",
