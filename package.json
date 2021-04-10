@@ -11,7 +11,7 @@
     ]
   },
   "scripts": {
-    "ci": "yarn install --frozen-lockfile",
+    "install:ci": "yarn install --fronzen-lockfile",
     "test": "jest --passWithNoTests --no-cache --runInBand --detectOpenHandles",
     "test:watch": "yarn test --watch",
     "test:staged": "yarn test --bail --findRelatedTests --forceExit",
