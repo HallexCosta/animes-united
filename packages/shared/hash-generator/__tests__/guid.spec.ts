@@ -1,4 +1,4 @@
-import { guid } from '.'
+import { guid } from '@src'
 
 describe('Hash Generator', () => {
   it('Should be able generate a unique id with length 24', () => {

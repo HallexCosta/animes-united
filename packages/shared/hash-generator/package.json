@@ -1,6 +1,11 @@
 {
   "name": "@animes-united/hash-generator",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "sucrase ./src -d ./dist --transforms typescript,imports",
+    "test": "jest --passWithNoTests --no-cache --runInBand --detectOpenHandles --colors",
+    "test:ci": "yarn test --coverage"
+  }
 }

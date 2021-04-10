@@ -1,6 +1,21 @@
 {
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/shared/hash-generator",
-  }
+    "target": "es2020",
+    "module": "commonjs",
+    "strict": true,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "baseUrl": ".",
+    "rootDirs": ["./src", "__tests__"],
+    "paths": {
+      "@src": ["./src"]
+    }
+  },
+  "include": ["src/**/*", "__tests__/**/*"],
+  "exclude": ["node_modules/**/*"]
 }
+
