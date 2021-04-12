@@ -1,4 +1,4 @@
-import { YayanimesProvider } from './YayanimesProvider'
+import { YayanimesProvider } from '@providers/implementations/YayanimesProvider'
 
 const timeout = 1000 * 60 * 10
 
