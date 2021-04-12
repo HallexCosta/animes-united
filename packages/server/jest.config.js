@@ -1,10 +1,11 @@
+const { ModuleMapper, config } = require('@animes-united/jest-config')
 const tsconfig = require('./tsconfig.json')
 const { name } = require('./package.json')
-const moduleNameMapper = require('tsconfig-paths-jest')(tsconfig)
 
 module.exports = {
+  ...config.base,
   displayName: name,
   name,
-  moduleNameMapper,
+  moduleNameMapper: ModuleMapper.pathsToModuleNameMapper(tsconfig),
   globalTeardown: '<rootDir>/jest.teardown.js'
 }
