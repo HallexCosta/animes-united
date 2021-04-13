@@ -10,7 +10,7 @@
     "start:development": "ts-node -r tsconfig-paths/register --transpile-only src/server.ts",
     "start:development:watch": "tsnd -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
     "start:production": "node ../../dist/server/src/server.js",
-    "test": "jest --passWithNoTests --no-cache --runInBand --detectOpenHandles --colors",
+    "test": "jest --passWithNoTests --no-cache --runInBand --detectOpenHandles --colors --forceExit",
     "test:ci": "yarn test --coverage"
   },
   "dependencies": {
