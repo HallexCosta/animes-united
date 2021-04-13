@@ -39,7 +39,7 @@ jobs:
       - name: Run tests
         run: yarn test
         env:
-          MONGODB_URI_TEST: ${{ secrects.MONGODB_URI_TEST }}
+          MONGODB_URI_TEST: ${{ secrets.MONGODB_URI_TEST }}
 
   deploy-development:
     runs-on: ubuntu-latest
