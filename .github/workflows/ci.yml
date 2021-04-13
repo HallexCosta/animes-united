@@ -31,7 +31,11 @@ jobs:
           sudo apt-get install -y libgbm1
 
       - name: Install dependencies
+        uses: mujo-code/puppeteer-headful@master
         run: yarn install:ci
+        env:
+          CI: 'true'
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
 
       - name: Building...
         run: yarn lerna:build
