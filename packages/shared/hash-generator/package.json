@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "sucrase ./src -d ./dist --transforms typescript,imports",
-    "test": "jest --passWithNoTests --no-cache --runInBand --detectOpenHandles --colors",
+    "test": "jest --passWithNoTests --no-cache --runInBand --detectOpenHandles --colors --forceExit",
     "test:ci": "yarn test --coverage"
   }
 }
