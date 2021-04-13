@@ -37,7 +37,7 @@ jobs:
         run: yarn lerna:build
 
       - name: Run tests
-        run: yarn test
+        run: yarn lerna:test
         env:
           MONGODB_URI_TEST: ${{ secrets.MONGODB_URI_TEST }}
 
