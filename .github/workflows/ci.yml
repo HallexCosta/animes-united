@@ -31,21 +31,17 @@ jobs:
           sudo apt-get install -y libgbm1
 
       - name: Install dependencies
-        uses: mujo-code/puppeteer-headful@master
+        run: yarn install:ci
         env:
-          CI: 'true'
-          PUPPETEER_PRODUCT: 'firefox'
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
-        with:
-          args: yarn install:ci
-
-      - name: Building...
-        run: yarn lerna:build
 
       - name: Run tests
-        run: yarn lerna:test
+        uses: djp3/puppeteer-headful@master
         env:
           MONGODB_URI_TEST: ${{ secrets.MONGODB_URI_TEST }}
+          PUPPETEER_DEBUG: 'false'
+        with:
+          args: yarn lerna:test
 
   deploy-development:
     runs-on: ubuntu-latest
