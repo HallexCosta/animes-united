@@ -10,7 +10,7 @@ import {
 
 import { ScreenProps } from 'src/routes'
 import { Header, Anime } from '@components'
-import { AnimeComponentData } from '@screens/CategoriesAnimes'
+import { AnimeResponse } from '@api/response'
 
 import {
   Container,
@@ -34,8 +34,8 @@ function NoFound(): JSX.Element {
 export function CategoryAnimes({
   route
 }: ScreenProps<'CategoryAnimes'>): JSX.Element {
-  const [data, setData] = useState<AnimeComponentData[]>([])
-  const [filteredData, setFilteredData] = useState<AnimeComponentData[]>([])
+  const [data, setData] = useState<AnimeResponse[]>([])
+  const [filteredData, setFilteredData] = useState<AnimeResponse[]>([])
 
   const [searchText, setSearchText] = useState('')
 
@@ -48,7 +48,7 @@ export function CategoryAnimes({
     const digits = String.raw`${text}`
     const regex = new RegExp(`^(${digits})`, 'gi')
 
-    setFilteredData(data.filter(anime => anime.title.match(regex)))
+    setFilteredData(data.filter(anime => regex.test(anime.name)))
   }
 
   function handleResetData(text: string) {
@@ -57,14 +57,12 @@ export function CategoryAnimes({
     }
 
     setSearchText(text)
-
-    // handleFilterAnimes(text)
   }
 
   useEffect(() => {
     setData(route.params.data)
     setFilteredData(route.params.data)
-  }, [])
+  }, [route.params.data])
 
   return (
     <Container>
@@ -94,12 +92,12 @@ export function CategoryAnimes({
               renderItem={({ item }) => (
                 <Anime
                   imageURL={item.imageURL}
-                  title={item.title}
-                  description={item.description}
+                  title={item.name}
+                  description={item.synopsis}
                   style={styles.anime}
                 />
               )}
-              keyExtractor={item => item.title}
+              keyExtractor={item => item._id}
             />
           ) : (
             <NoFound />
