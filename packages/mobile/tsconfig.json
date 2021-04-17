@@ -11,6 +11,7 @@
     "noEmit": true,
     "strictPropertyInitialization": false,
     "paths": {
+      "@presentations/atoms": ["./src/presentations/atoms/index.ts"],
       "@components/*": ["./src/components/*"],
       "@components": ["./src/components/index.tsx"],
       "@screens/*": ["./src/screens/*"],
