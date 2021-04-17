@@ -32,7 +32,7 @@ export const Main = styled.View`
   margin-top: 10px;
 `
 
-export const Section = styled.View`
+export const SectionItem = styled.View`
   margin-bottom: 16px;
 `
 

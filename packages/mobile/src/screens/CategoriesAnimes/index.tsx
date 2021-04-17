@@ -10,7 +10,14 @@ import {
   FlatList as Section
 } from 'react-native-gesture-handler'
 
-import { Category, Container, Head, Main, ViewMore } from './styles'
+import {
+  Category,
+  Container,
+  SectionItem,
+  Head,
+  Main,
+  ViewMore
+} from './styles'
 
 export type AnimesProps = {
   data: AnimeResponse[]
@@ -69,7 +76,7 @@ const CategoriesAnimes = memo(function CategoriesAnimes({
   const renderItem = ({
     item: { category, data }
   }: ListRenderItemInfo<CategoryAnimesResponse>) => (
-    <>
+    <SectionItem>
       <Head>
         <Category># {category}</Category>
         <TouchableOpacity
@@ -80,7 +87,7 @@ const CategoriesAnimes = memo(function CategoriesAnimes({
       </Head>
 
       <Animes data={data} />
-    </>
+    </SectionItem>
   )
 
   return (
@@ -128,8 +135,5 @@ const styles = StyleSheet.create({
     height: 205,
     marginTop: 5,
     flexDirection: 'row'
-  },
-  section: {
-    marginBottom: 16
   }
 })
