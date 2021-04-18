@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
-import {
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text
-} from 'react-native'
+import { FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { ScreenProps } from 'src/routes'
 import { Header, Anime } from '@components'
+
 import { AnimeResponse } from '@api/response'
+
+import { NoFound } from '@presentation/atoms'
 
 import {
   Container,
@@ -22,14 +19,6 @@ import {
 } from './styles'
 
 import searchIcon from '@assets/icons/search.png'
-
-function NoFound(): JSX.Element {
-  return (
-    <View style={styles.noFoundContainer}>
-      <Text style={styles.noFoundText}>No Found</Text>
-    </View>
-  )
-}
 
 export function CategoryAnimes({
   route
@@ -112,17 +101,5 @@ const styles = StyleSheet.create({
   anime: {
     marginRight: 20,
     marginBottom: 15
-  },
-  noFoundContainer: {
-    marginTop: 85
-  },
-  noFoundText: {
-    fontFamily: 'Ubuntu_700Bold',
-    fontSize: 50,
-    lineHeight: 57,
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
-    color: '#EEEEEE85'
   }
 })
