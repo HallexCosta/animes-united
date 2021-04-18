@@ -11,14 +11,11 @@
     "noEmit": true,
     "strictPropertyInitialization": false,
     "paths": {
-      "@presentation/atoms": ["./src/presentation/atoms/index.ts"],
-      "@components/*": ["./src/components/*"],
+      "@presentation/atoms": ["./src/presentation/atoms/index.tsx"],
       "@components": ["./src/components/index.tsx"],
-      "@screens/*": ["./src/screens/*"],
       "@screens": ["./src/screens/index.tsx"],
       "@assets/*": ["./src/assets/*"],
-      "@api/*": ["./src/api/*"],
-      "@util/*": ["./src/util/*"],
+      "@api/response": ["./src/api/response/index.ts"],
       "@util": ["./src/util/index.ts"]
     }
   },
