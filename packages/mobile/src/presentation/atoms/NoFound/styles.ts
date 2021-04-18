@@ -1,15 +1,15 @@
 import styled from 'styled-components/native'
 
 export const Container = styled.View`
-  margin-top: 85;
+  margin-top: 85px;
 `
 
 export const Title = styled.Text`
-  font-family: 'Ubuntu_700Bold';
-  font-size: 50;
-  line-height: 57;
-  display: 'flex';
-  align-items: 'center';
-  text-align: 'center';
-  color: '#EEEEEE85';
+  font-family: Ubuntu_700Bold;
+  font-size: 50px;
+  line-height: 57px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #eeeeee85;
 `
