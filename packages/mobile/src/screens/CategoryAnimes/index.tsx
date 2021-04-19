@@ -28,25 +28,24 @@ export function CategoryAnimes({
   const [filteredData, setFilteredData] = useState<AnimeResponse[]>([])
 
   const [searchText, setSearchText] = useState('')
+  const [timeout] = useState(250)
 
-  function handleFilterAnimes(text: string) {
-    if (text === '') {
-      setFilteredData(data)
-      return
-    }
+  function handleUpdateAnimesSearch() {
+    const newFilteredData = data.filter(
+      anime => anime.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1
+    )
 
-    const digits = String.raw`${text}`
-    const regex = new RegExp(`^(${digits})`, 'gi')
-
-    setFilteredData(data.filter(anime => regex.test(anime.name)))
+    setFilteredData(newFilteredData)
   }
 
-  function handleResetData(text: string) {
+  function handleSearchText(text: string) {
     if (text === '') {
       setFilteredData(data)
     }
 
     setSearchText(text)
+
+    return setTimeout.bind(null, handleUpdateAnimesSearch, timeout)
   }
 
   useEffect(() => {
@@ -64,17 +63,22 @@ export function CategoryAnimes({
           <SearchInput
             placeholder="Filtre os animes"
             placeholderTextColor="#00000040"
-            onChangeText={handleResetData}
+            onChangeText={text => {
+              const updateAnimesSearch = handleSearchText(text)
+              updateAnimesSearch()
+            }}
             value={searchText}
           />
 
-          <TouchableOpacity onPress={() => handleFilterAnimes(searchText)}>
+          <TouchableOpacity
+            onPress={handleUpdateAnimesSearch.bind(null, searchText)}
+          >
             <SearchIcon source={searchIcon} />
           </TouchableOpacity>
         </Section>
 
         <Article>
-          {filteredData.length >= 1 ? (
+          {filteredData.length > 0 ? (
             <FlatList
               horizontal={false}
               showsVerticalScrollIndicator={false}
