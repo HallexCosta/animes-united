@@ -24,7 +24,7 @@ export function Header({ description, style }: HeaderProps): JSX.Element {
         <Image source={iconArrowLeft} />
       </Button>
 
-      <Description>{description && ""}</Description>
+      {description ? <Description>{description}</Description> : null}
     </Container>
   )
 }

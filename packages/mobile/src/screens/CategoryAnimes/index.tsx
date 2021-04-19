@@ -23,6 +23,7 @@ import searchIcon from '@assets/icons/search.png'
 export function CategoryAnimes({
   route
 }: ScreenProps<'CategoryAnimes'>): JSX.Element {
+  const [category, setCategory] = useState<string>('')
   const [data, setData] = useState<AnimeResponse[]>([])
   const [filteredData, setFilteredData] = useState<AnimeResponse[]>([])
 
@@ -49,13 +50,14 @@ export function CategoryAnimes({
   }
 
   useEffect(() => {
+    setCategory(route.params.category)
     setData(route.params.data)
     setFilteredData(route.params.data)
-  }, [route.params.data])
+  }, [route.params.data, route.params.category])
 
   return (
     <Container>
-      <Header description={`Categoria ${route.params.category}`} />
+      <Header description={`Categoria ${category}`} />
 
       <Main>
         <Section>
