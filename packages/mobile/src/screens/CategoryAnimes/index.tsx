@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
-import { FlatList, StyleSheet, TouchableOpacity } from 'react-native'
+import {
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native'
 
 import { ScreenProps } from 'src/routes'
 import { Header, Anime } from '@components'
@@ -48,6 +53,10 @@ export function CategoryAnimes({
     return setTimeout.bind(null, handleUpdateAnimesSearch, timeout)
   }
 
+  const renderItem = ({ item: data }: ListRenderItemInfo<AnimeResponse>) => (
+    <Anime data={data} style={styles.anime} />
+  )
+
   useEffect(() => {
     setCategory(route.params.category)
     setData(route.params.data)
@@ -84,14 +93,10 @@ export function CategoryAnimes({
               showsVerticalScrollIndicator={false}
               numColumns={2}
               data={filteredData}
-              renderItem={({ item }) => (
-                <Anime
-                  imageURL={item.imageURL}
-                  title={item.name}
-                  description={item.synopsis}
-                  style={styles.anime}
-                />
-              )}
+              maxToRenderPerBatch={6}
+              initialNumToRender={6}
+              updateCellsBatchingPeriod={30}
+              renderItem={renderItem}
               keyExtractor={item => item._id}
             />
           ) : (
