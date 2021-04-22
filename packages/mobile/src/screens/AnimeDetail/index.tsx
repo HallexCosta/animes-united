@@ -5,6 +5,7 @@ import {
   FlatList as Article,
   ListRenderItemInfo
 } from 'react-native'
+
 import { Feather } from '@expo/vector-icons'
 
 import {
@@ -81,15 +82,17 @@ export function AnimeDetail({
   useEffect(() => {
     function renderAnimes(): EpisodeResponse[] {
       const episodes = []
+
       for (let i = 1; i <= 24; i++) {
         episodes.push({
+          id: Math.random().toString(),
           title: 'Darling in the fran xx',
           number: i,
           qualityStreaming: 'HD',
           thumbnail: `https://yayanimes.net/Miniaturas/2018/DarlingintheFranXX/DarlingintheFranXX${Util.pad(
             i
           )}.jpg`,
-          url: 'https://testing-video.com.br'
+          url: 'https://dump.video/i/7BQ1FX.mp4'
         })
       }
 
@@ -98,7 +101,6 @@ export function AnimeDetail({
 
     const episodes = renderAnimes()
     setEpisodes(episodes)
-    console.log('List Episodes', episodes)
   }, [])
 
   return (
