@@ -1,3 +1,3 @@
-export * from './CategoriesAnimes'
-export * from './CategoryAnimes'
+export * from './AnimesCategories'
+export * from './AnimesCategory'
 export * from './AnimeDetail'
