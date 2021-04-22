@@ -28,20 +28,8 @@ export type CategoriesAnimesProps = {
 }
 
 const Animes = memo(function Animes({ data }: AnimesProps) {
-  const renderItem = ({
-    item: {
-      name: title,
-      imageURL: url,
-      yearRelease: year,
-      streamings: { episodes, ovas }
-    }
-  }: ListRenderItemInfo<AnimeResponse>) => (
-    <AnimeItem
-      imageURL={url}
-      title={title}
-      description={`${year} - ${episodes.length + ovas.length} eps`}
-      style={styles.anime}
-    />
+  const renderItem = ({ item }: ListRenderItemInfo<AnimeResponse>) => (
+    <AnimeItem data={item} style={styles.anime} />
   )
 
   return (
@@ -80,7 +68,11 @@ const CategoriesAnimes = memo(function CategoriesAnimes({
       <Head>
         <Category># {category}</Category>
         <TouchableOpacity
-          onPress={() => handleNavigateToCategoryAnimeScreen(category, data)}
+          onPress={handleNavigateToCategoryAnimeScreen.bind(
+            null,
+            category,
+            data
+          )}
         >
           <ViewMore>Ver mais</ViewMore>
         </TouchableOpacity>
@@ -98,6 +90,7 @@ const CategoriesAnimes = memo(function CategoriesAnimes({
         keyExtractor={item => item.category}
         maxToRenderPerBatch={3}
         initialNumToRender={3}
+        updateCellsBatchingPeriod={30}
       />
     </Main>
   )

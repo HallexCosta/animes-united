@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
-import { FlatList, StyleSheet, TouchableOpacity } from 'react-native'
+import {
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native'
+
+import { AppLoading } from 'expo'
 
 import { ScreenProps } from 'src/routes'
 import { Header, Anime } from '@components'
@@ -23,14 +30,20 @@ import searchIcon from '@assets/icons/search.png'
 export function CategoryAnimes({
   route
 }: ScreenProps<'CategoryAnimes'>): JSX.Element {
+  const [loaded, setLoaded] = useState(false)
   const [category, setCategory] = useState<string>('')
   const [data, setData] = useState<AnimeResponse[]>([])
   const [filteredData, setFilteredData] = useState<AnimeResponse[]>([])
 
   const [searchText, setSearchText] = useState('')
-  const [timeout] = useState(250)
+  const [delay] = useState(500)
+  const [timerId, setTimerId] = useState<NodeJS.Timeout>(
+    setTimeout(() => {
+      // do nothing.
+    }, 0)
+  )
 
-  function handleUpdateAnimesSearch() {
+  function updateAnimesList() {
     const newFilteredData = data.filter(
       anime => anime.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1
     )
@@ -44,17 +57,30 @@ export function CategoryAnimes({
     }
 
     setSearchText(text)
-
-    return setTimeout.bind(null, handleUpdateAnimesSearch, timeout)
   }
+
+  function updateAnimesOnSearch() {
+    setTimerId(setTimeout(updateAnimesList, delay))
+    clearTimeout(timerId)
+  }
+
+  function onSearch(text: string) {
+    handleSearchText(text)
+    updateAnimesOnSearch()
+  }
+
+  const renderItem = ({ item: data }: ListRenderItemInfo<AnimeResponse>) => (
+    <Anime data={data} style={styles.anime} />
+  )
 
   useEffect(() => {
     setCategory(route.params.category)
     setData(route.params.data)
     setFilteredData(route.params.data)
-  }, [route.params.data, route.params.category])
+    setLoaded(true)
+  }, [route.params])
 
-  return (
+  return loaded ? (
     <Container>
       <Header description={`Categoria ${category}`} />
 
@@ -63,16 +89,11 @@ export function CategoryAnimes({
           <SearchInput
             placeholder="Filtre os animes"
             placeholderTextColor="#00000040"
-            onChangeText={text => {
-              const updateAnimesSearch = handleSearchText(text)
-              updateAnimesSearch()
-            }}
+            onChangeText={onSearch.bind(null)}
             value={searchText}
           />
 
-          <TouchableOpacity
-            onPress={handleUpdateAnimesSearch.bind(null, searchText)}
-          >
+          <TouchableOpacity onPress={updateAnimesList.bind(null, searchText)}>
             <SearchIcon source={searchIcon} />
           </TouchableOpacity>
         </Section>
@@ -84,14 +105,10 @@ export function CategoryAnimes({
               showsVerticalScrollIndicator={false}
               numColumns={2}
               data={filteredData}
-              renderItem={({ item }) => (
-                <Anime
-                  imageURL={item.imageURL}
-                  title={item.name}
-                  description={item.synopsis}
-                  style={styles.anime}
-                />
-              )}
+              maxToRenderPerBatch={6}
+              initialNumToRender={6}
+              updateCellsBatchingPeriod={30}
+              renderItem={renderItem}
               keyExtractor={item => item._id}
             />
           ) : (
@@ -100,6 +117,8 @@ export function CategoryAnimes({
         </Article>
       </Main>
     </Container>
+  ) : (
+    <AppLoading />
   )
 }
 
