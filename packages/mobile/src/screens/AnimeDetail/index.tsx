@@ -5,6 +5,7 @@ import {
   FlatList as Article,
   ListRenderItemInfo
 } from 'react-native'
+
 import { Feather } from '@expo/vector-icons'
 
 import {
@@ -35,7 +36,7 @@ import animeBackground from '@assets/images/anime-thumbnail-default.jpg'
 
 import { Util } from '@util'
 import { Header, Episode as EpisodeItem } from '@components'
-import { EpisodeResponse } from '@api/response'
+import { AnimeResponse, EpisodeResponse } from '@api/response'
 
 import { ScreenProps } from 'src/routes'
 
@@ -76,30 +77,31 @@ export function AnimeDetail({
   route,
   navigation
 }: ScreenProps<'AnimeDetail'>): JSX.Element {
-  const [episodes, setEpisodes] = useState<EpisodeResponse[]>([])
+  const [data, setData] = useState<AnimeResponse[]>([])
 
-  useEffect(() => {
-    function renderAnimes(): EpisodeResponse[] {
-      const episodes = []
-      for (let i = 1; i <= 24; i++) {
-        episodes.push({
-          title: 'Darling in the fran xx',
-          number: i,
-          qualityStreaming: 'HD',
-          thumbnail: `https://yayanimes.net/Miniaturas/2018/DarlingintheFranXX/DarlingintheFranXX${Util.pad(
-            i
-          )}.jpg`,
-          url: 'https://testing-video.com.br'
-        })
-      }
+  function renderAnimes(): EpisodeResponse[] {
+    const episodes = []
 
-      return episodes
+    for (let i = 1; i <= 24; i++) {
+      episodes.push({
+        id: Math.random().toString(),
+        title: 'Darling in the fran xx',
+        number: i,
+        qualityStreaming: 'HD',
+        thumbnail: `https://yayanimes.net/Miniaturas/2018/DarlingintheFranXX/DarlingintheFranXX${Util.pad(
+          i
+        )}.jpg`,
+        url: 'https://dump.video/i/7BQ1FX.mp4'
+      })
     }
 
-    const episodes = renderAnimes()
-    setEpisodes(episodes)
-    console.log('List Episodes', episodes)
-  }, [])
+    return episodes
+  }
+
+  useEffect(() => {
+    setData(route.params.data)
+    console.log(`Anime data: ${route.params.data}`)
+  }, [route.params.data])
 
   return (
     <Container>
@@ -158,7 +160,7 @@ export function AnimeDetail({
         </DetailNavigation>
 
         <Synopsis>
-          <SynopsisDescription>
+          <SynopsisDescription numberOfLines={3} ellipsizeMode="tail">
             “Eles sonham em um dia voarem pelo céu sem fim, mesmo que estejam
             dolorosamente cientes de quão longe é o céu além da redoma que
             bloqueia o seu …
@@ -170,7 +172,7 @@ export function AnimeDetail({
         </Synopsis>
 
         <EpisodesContainer>
-          <Episodes data={episodes} />
+          <Episodes data={renderAnimes()} />
         </EpisodesContainer>
       </Main>
 
