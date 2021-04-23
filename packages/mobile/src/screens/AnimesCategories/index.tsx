@@ -55,7 +55,7 @@ const CategoriesAnimes = memo(function CategoriesAnimes({
     category: string,
     data: AnimeResponse[]
   ) {
-    navigation.navigate('CategoryAnimes', {
+    navigation.navigate('AnimesCategory', {
       category,
       data
     })
@@ -96,7 +96,7 @@ const CategoriesAnimes = memo(function CategoriesAnimes({
   )
 })
 
-export function CategoriesAnimesScreen(): JSX.Element {
+export function AnimesCategoriesScreen(): JSX.Element {
   const [categoriesAnimes, setCategoriesAnimes] = useState<
     CategoryAnimesResponse[]
   >([])

@@ -12,7 +12,7 @@ import { AnimeResponse } from '@api/response'
 const Stack = createStackNavigator()
 
 type RootStackParamList = {
-  CategoryAnimes: {
+  AnimesCategory: {
     category: string
     data: AnimeResponse[]
   }
@@ -21,14 +21,14 @@ type RootStackParamList = {
   }
 }
 
-type CategoryAnimeScreenRouteProp = RouteProp<
+type AnimesCategoryScreenRouteProp = RouteProp<
   RootStackParamList,
-  'CategoryAnimes'
+  'AnimesCategory'
 >
 
-type CategoryAnimeScreenNavigationProp = StackNavigationProp<
+type AnimesCategoryScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  'CategoryAnimes'
+  'AnimesCategory'
 >
 
 type AnimeDetailScreenRouteProp = RouteProp<RootStackParamList, 'AnimeDetail'>
@@ -39,9 +39,9 @@ type AnimeDetailScreenNavigationProp = StackNavigationProp<
 >
 
 type ScreensProps = {
-  CategoryAnimes: {
-    route: CategoryAnimeScreenRouteProp
-    navigation: CategoryAnimeScreenNavigationProp
+  AnimesCategory: {
+    route: AnimesCategoryScreenRouteProp
+    navigation: AnimesCategoryScreenNavigationProp
   }
   AnimeDetail: {
     route: AnimeDetailScreenRouteProp
@@ -57,14 +57,14 @@ export function Routes(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="CategoriesAnimesScreen"
+        initialRouteName="AnimesCategoriesScreen"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
-          name="CategoriesAnimesScreen"
-          component={CategoriesAnimesScreen}
+          name="AnimesCategoriesScreen"
+          component={AnimesCategoriesScreen}
         />
-        <Stack.Screen name="CategoryAnimes" component={CategoryAnimes} />
+        <Stack.Screen name="AnimesCategory" component={AnimesCategoryScreen} />
         <Stack.Screen name="AnimeDetail" component={AnimeDetail} />
       </Stack.Navigator>
     </NavigationContainer>
