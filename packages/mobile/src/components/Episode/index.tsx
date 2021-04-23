@@ -23,6 +23,7 @@ export type EpisodeProps = {
   thumbnail: string
   qualityStreaming: string
   videoURL: string
+  // eslint-disable-next-line @typescript-eslint/ban-types
   style?: {}
 }
 
@@ -35,7 +36,7 @@ export function Episode({
   style
 }: EpisodeProps): JSX.Element {
   return (
-    <Container key={number} style={style} activeOpacity={.65} >
+    <Container key={number} style={style} activeOpacity={0.65}>
       <Thumbnail source={{ uri: thumbnail }} />
 
       <Info>
