@@ -5,13 +5,9 @@ import {
   StackNavigationProp
 } from '@react-navigation/stack'
 
-import {
-  AnimesCategoriesScreen,
-  AnimesCategoryScreen,
-  AnimeDetail
-} from '@screens'
+import { CategoriesAnimesScreen, CategoryAnimes, AnimeDetail } from '@screens'
 
-import { AnimeResponse, EpisodeResponse } from '@api/response'
+import { AnimeResponse } from '@api/response'
 
 const Stack = createStackNavigator()
 
@@ -21,9 +17,7 @@ type RootStackParamList = {
     data: AnimeResponse[]
   }
   AnimeDetail: {
-    category: string
-    name: string
-    data: EpisodeResponse[]
+    data: AnimeResponse[]
   }
 }
 
