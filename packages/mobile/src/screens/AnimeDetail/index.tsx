@@ -67,9 +67,11 @@ export function AnimeDetail({
 }: ScreenProps<'AnimeDetail'>): JSX.Element {
   const [data, setData] = useState<AnimeResponse[]>([])
   const [loadMoreSynopsis, setLoadMoreSynopsis] = useState(false)
+  const [chevronDirection, setChevronDirection] = useState('down')
 
   function handleLoadMoreSynopsis() {
     setLoadMoreSynopsis(!loadMoreSynopsis)
+    setChevronDirection(loadMoreSynopsis ? 'down' : 'up')
   }
 
   function renderAnimes(): EpisodeResponse[] {
@@ -209,7 +211,11 @@ export function AnimeDetail({
             )}
             <MoreButton onPress={handleLoadMoreSynopsis}>
               <MoreText>More</MoreText>
-              <Feather name="chevron-down" size={24} color="#8F8F8F" />
+              <Feather
+                name={`chevron-${chevronDirection}`}
+                size={24}
+                color="#8F8F8F"
+              />
             </MoreButton>
           </Synopsis>
 
