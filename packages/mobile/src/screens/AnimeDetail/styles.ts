@@ -72,6 +72,8 @@ export const Main = styled.View`
   flex: 1;
 `
 
+export const Aside = styled.ScrollView``
+
 export const DetailNavigation = styled.View`
   margin-top: 15px;
   margin-bottom: 15px;
@@ -115,6 +117,8 @@ export const SynopsisDescription = styled.Text`
   letter-spacing: 0.1px;
 
   color: #ffffff;
+
+  text-align: center;
 `
 
 export const MoreButton = styled.TouchableOpacity`
@@ -143,6 +147,12 @@ export const EpisodesContainer = styled.View`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
+  padding: 0 10px;
+`
+
+export const EpisodeText = styled.Text`
+  font-size: 30px;
+  color: #fff;
 `
 
 export const FavoriteButton = styled.TouchableOpacity`
