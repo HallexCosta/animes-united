@@ -5,7 +5,11 @@ import {
   StackNavigationProp
 } from '@react-navigation/stack'
 
-import { CategoriesAnimesScreen, CategoryAnimes, AnimeDetail } from '@screens'
+import {
+  AnimesCategoriesScreen,
+  AnimesCategoryScreen,
+  AnimeDetail
+} from '@screens'
 
 import { AnimeResponse } from '@api/response'
 
@@ -64,7 +68,10 @@ export function Routes(): JSX.Element {
           name="AnimesCategoriesScreen"
           component={AnimesCategoriesScreen}
         />
-        <Stack.Screen name="AnimesCategory" component={AnimesCategoryScreen} />
+        <Stack.Screen
+          name="AnimesCategoryScreen"
+          component={AnimesCategoryScreen}
+        />
         <Stack.Screen name="AnimeDetail" component={AnimeDetail} />
       </Stack.Navigator>
     </NavigationContainer>

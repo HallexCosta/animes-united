@@ -55,7 +55,7 @@ const CategoriesAnimes = memo(function CategoriesAnimes({
     category: string,
     data: AnimeResponse[]
   ) {
-    navigation.navigate('AnimesCategory', {
+    navigation.navigate('AnimesCategoryScreen', {
       category,
       data
     })
