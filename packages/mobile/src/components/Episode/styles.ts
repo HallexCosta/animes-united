@@ -2,8 +2,10 @@ import styled from 'styled-components/native'
 
 export const Container = styled.TouchableOpacity`
   width: 165px;
-
   height: 78px;
+
+  justify-content: center;
+  align-items: center;
 `
 
 export const Info = styled.View`
