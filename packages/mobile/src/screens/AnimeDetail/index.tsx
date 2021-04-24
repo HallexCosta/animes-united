@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import {
-  StyleSheet,
-  FlatList as Article,
-  ListRenderItemInfo
-} from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { Feather } from '@expo/vector-icons'
 
@@ -20,6 +16,7 @@ import {
   DescribeText,
   DescribeValue,
   Main,
+  Aside,
   DetailNavigation,
   NavigationButton,
   NavigationText,
@@ -46,8 +43,12 @@ type EpisodesRenderProps = {
 
 function Episodes({ data }: EpisodesRenderProps) {
   const renderItem = ({
-    item: { title, thumbnail, number, url, qualityStreaming }
-  }: ListRenderItemInfo<EpisodeResponse>) => (
+    title,
+    thumbnail,
+    number,
+    url,
+    qualityStreaming
+  }: EpisodeResponse) => (
     <EpisodeItem
       key={number}
       title={title}
@@ -58,29 +59,16 @@ function Episodes({ data }: EpisodesRenderProps) {
       style={styles.episodeItem}
     />
   )
-
-  return (
-    <Article
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={item => item.number.toString()}
-      numColumns={2}
-      showsVerticalScrollIndicator={false}
-      maxToRenderPerBatch={5}
-      initialNumToRender={3}
-      style={styles.article}
-    />
-  )
+  return <>{data.map(renderItem)}</>
 }
 
 export function AnimeDetail({
-  route,
-  navigation
+  route
 }: ScreenProps<'AnimeDetail'>): JSX.Element {
   const [data, setData] = useState<AnimeResponse[]>([])
   const [loadMoreSynopsis, setLoadMoreSynopsis] = useState(false)
 
-  function handleLoadMoreSysnopsis() {
+  function handleLoadMoreSynopsis() {
     setLoadMoreSynopsis(!loadMoreSynopsis)
   }
 
@@ -164,69 +152,71 @@ export function AnimeDetail({
           </NavigationButton>
         </DetailNavigation>
 
-        <Synopsis>
-          {loadMoreSynopsis ? (
-            <SynopsisDescription>
-              &ldquo;Eles sonham em um dia voarem pelo céu sem fim, mesmo que
-              estejam dolorosamente cientes de quão longe é o céu além da redoma
-              que bloqueia o seu voo. {'\n\n'}
-              Em um futuro distante a humanidade se estabeleceu em cidades-forte
-              móveis, chamadas de Plantações, para viverem pelas terras
-              desérticas e a civilização floresceu. Dentro da cidade há o
-              alojamento dos pilotos chamado de Mistilteinn, também conhecido
-              como gaiola. É aí que as crianças vivem... Sem saber de nada do
-              mundo exterior nem do vasto céu. A única missão da vida deles era
-              o voo.{'\n\n'}
-              Seus inimigos são os organismos gigantes e misteriosos conhecidos
-              como Estridossauros. As crianças pilotam robôs chamados de FRANXX
-              para enfrentar esses monstros desconhecidos porque eles acreditam
-              que esse é o seu propósito na vida. Em meio a eles havia um garoto
-              que uma vez foi chamado de criança prodígio: Código n° 016, Hiro.
-              Contudo, agora ele é um fracassado e é considerado dispensável.
-              Aqueles que não conseguem pilotar os FRANXX basicamente não
-              existem.
-              {'\n\n'}
-              Um dia, uma garota misteriosa chamada Zero Two aparece na frente
-              de Hiro. Da cabeça dela cresciam dois chifres fascinantes.
-              {'\n\n'}
-              &ldquo;Eu te achei, meu Darling&rdquo;&rdquo;.
-            </SynopsisDescription>
-          ) : (
-            <SynopsisDescription numberOfLines={3} ellipsizeMode="tail">
-              &ldquo;Eles sonham em um dia voarem pelo céu sem fim, mesmo que
-              estejam dolorosamente cientes de quão longe é o céu além da redoma
-              que bloqueia o seu voo. {'\n\n'}
-              Em um futuro distante a humanidade se estabeleceu em cidades-forte
-              móveis, chamadas de Plantações, para viverem pelas terras
-              desérticas e a civilização floresceu. Dentro da cidade há o
-              alojamento dos pilotos chamado de Mistilteinn, também conhecido
-              como gaiola. É aí que as crianças vivem... Sem saber de nada do
-              mundo exterior nem do vasto céu. A única missão da vida deles era
-              o voo.{'\n\n'}
-              Seus inimigos são os organismos gigantes e misteriosos conhecidos
-              como Estridossauros. As crianças pilotam robôs chamados de FRANXX
-              para enfrentar esses monstros desconhecidos porque eles acreditam
-              que esse é o seu propósito na vida. Em meio a eles havia um garoto
-              que uma vez foi chamado de criança prodígio: Código n° 016, Hiro.
-              Contudo, agora ele é um fracassado e é considerado dispensável.
-              Aqueles que não conseguem pilotar os FRANXX basicamente não
-              existem.
-              {'\n\n'}
-              Um dia, uma garota misteriosa chamada Zero Two aparece na frente
-              de Hiro. Da cabeça dela cresciam dois chifres fascinantes.
-              {'\n\n'}
-              &ldquo;Eu te achei, meu Darling&rdquo;&rdquo;.
-            </SynopsisDescription>
-          )}
-          <MoreButton onPress={handleLoadMoreSysnopsis}>
-            <MoreText>More</MoreText>
-            <Feather name="chevron-down" size={24} color="#8F8F8F" />
-          </MoreButton>
-        </Synopsis>
+        <Aside>
+          <Synopsis>
+            {loadMoreSynopsis ? (
+              <SynopsisDescription>
+                &ldquo;Eles sonham em um dia voarem pelo céu sem fim, mesmo que
+                estejam dolorosamente cientes de quão longe é o céu além da
+                redoma que bloqueia o seu voo. {'\n\n'}
+                Em um futuro distante a humanidade se estabeleceu em
+                cidades-forte móveis, chamadas de Plantações, para viverem pelas
+                terras desérticas e a civilização floresceu. Dentro da cidade há
+                o alojamento dos pilotos chamado de Mistilteinn, também
+                conhecido como gaiola. É aí que as crianças vivem... Sem saber
+                de nada do mundo exterior nem do vasto céu. A única missão da
+                vida deles era o voo.{'\n\n'}
+                Seus inimigos são os organismos gigantes e misteriosos
+                conhecidos como Estridossauros. As crianças pilotam robôs
+                chamados de FRANXX para enfrentar esses monstros desconhecidos
+                porque eles acreditam que esse é o seu propósito na vida. Em
+                meio a eles havia um garoto que uma vez foi chamado de criança
+                prodígio: Código n° 016, Hiro. Contudo, agora ele é um
+                fracassado e é considerado dispensável. Aqueles que não
+                conseguem pilotar os FRANXX basicamente não existem.
+                {'\n\n'}
+                Um dia, uma garota misteriosa chamada Zero Two aparece na frente
+                de Hiro. Da cabeça dela cresciam dois chifres fascinantes.
+                {'\n\n'}
+                &ldquo;Eu te achei, meu Darling&rdquo;&rdquo;.
+              </SynopsisDescription>
+            ) : (
+              <SynopsisDescription numberOfLines={3} ellipsizeMode="tail">
+                &ldquo;Eles sonham em um dia voarem pelo céu sem fim, mesmo que
+                estejam dolorosamente cientes de quão longe é o céu além da
+                redoma que bloqueia o seu voo. {'\n\n'}
+                Em um futuro distante a humanidade se estabeleceu em
+                cidades-forte móveis, chamadas de Plantações, para viverem pelas
+                terras desérticas e a civilização floresceu. Dentro da cidade há
+                o alojamento dos pilotos chamado de Mistilteinn, também
+                conhecido como gaiola. É aí que as crianças vivem... Sem saber
+                de nada do mundo exterior nem do vasto céu. A única missão da
+                vida deles era o voo.{'\n\n'}
+                Seus inimigos são os organismos gigantes e misteriosos
+                conhecidos como Estridossauros. As crianças pilotam robôs
+                chamados de FRANXX para enfrentar esses monstros desconhecidos
+                porque eles acreditam que esse é o seu propósito na vida. Em
+                meio a eles havia um garoto que uma vez foi chamado de criança
+                prodígio: Código n° 016, Hiro. Contudo, agora ele é um
+                fracassado e é considerado dispensável. Aqueles que não
+                conseguem pilotar os FRANXX basicamente não existem.
+                {'\n\n'}
+                Um dia, uma garota misteriosa chamada Zero Two aparece na frente
+                de Hiro. Da cabeça dela cresciam dois chifres fascinantes.
+                {'\n\n'}
+                &ldquo;Eu te achei, meu Darling&rdquo;&rdquo;.
+              </SynopsisDescription>
+            )}
+            <MoreButton onPress={handleLoadMoreSynopsis}>
+              <MoreText>More</MoreText>
+              <Feather name="chevron-down" size={24} color="#8F8F8F" />
+            </MoreButton>
+          </Synopsis>
 
-        <EpisodesContainer>
-          <Episodes data={renderAnimes()} />
-        </EpisodesContainer>
+          <EpisodesContainer>
+            <Episodes data={renderAnimes()} />
+          </EpisodesContainer>
+        </Aside>
       </Main>
 
       <FavoriteButton>
@@ -238,9 +228,8 @@ export function AnimeDetail({
 
 const styles = StyleSheet.create({
   episodeItem: {
-    width: 'auto',
-    marginBottom: 10,
-    marginRight: 10
+    width: '45%',
+    marginBottom: 10
   },
   article: {
     flex: 1,
