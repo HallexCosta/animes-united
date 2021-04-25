@@ -8,7 +8,8 @@ import {
 import {
   AnimesCategoriesScreen,
   AnimesCategoryScreen,
-  AnimeDetail
+  AnimeDetail,
+  WatchEpisode
 } from '@screens'
 
 import { AnimeResponse } from '@api/response'
@@ -22,6 +23,9 @@ type RootStackParamList = {
   }
   AnimeDetail: {
     data: AnimeResponse[]
+  }
+  WatchEpisode: {
+    data: string
   }
 }
 
@@ -42,6 +46,13 @@ type AnimeDetailScreenNavigationProp = StackNavigationProp<
   'AnimeDetail'
 >
 
+type WatchEpisodeScreenRouteProp = RouteProp<RootStackParamList, 'WatchEpisode'>
+
+export type WatchEpisodeScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'WatchEpisode'
+>
+
 type ScreensProps = {
   AnimesCategory: {
     route: AnimesCategoryScreenRouteProp
@@ -50,6 +61,10 @@ type ScreensProps = {
   AnimeDetail: {
     route: AnimeDetailScreenRouteProp
     navigation: AnimeDetailScreenNavigationProp
+  }
+  WatchEpisode: {
+    route: WatchEpisodeScreenRouteProp
+    navigation: WatchEpisodeScreenNavigationProp
   }
 }
 
@@ -73,6 +88,7 @@ export function Routes(): JSX.Element {
           component={AnimesCategoryScreen}
         />
         <Stack.Screen name="AnimeDetail" component={AnimeDetail} />
+        <Stack.Screen name="WatchEpisode" component={WatchEpisode} />
       </Stack.Navigator>
     </NavigationContainer>
   )
