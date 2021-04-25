@@ -16,7 +16,8 @@
       "@screens": ["./src/screens/index.tsx"],
       "@assets/*": ["./src/assets/*"],
       "@api/response": ["./src/api/response/index.ts"],
-      "@util": ["./src/util/index.ts"]
+      "@util": ["./src/util/index.ts"],
+      "@routes": ["./src/routes.tsx"]
     }
   },
   "include": ["src/**/*", "index.d.ts"]
