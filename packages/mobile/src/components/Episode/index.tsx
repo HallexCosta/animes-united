@@ -48,7 +48,12 @@ export function Episode({
   }
 
   return (
-    <Container key={number} style={style} activeOpacity={0.65}>
+    <Container
+      key={number}
+      onPress={handleNavigateToWatchEpisode.bind(null, videoURL)}
+      style={style}
+      activeOpacity={0.65}
+    >
       <Thumbnail source={{ uri: thumbnail }} />
 
       <Info>
