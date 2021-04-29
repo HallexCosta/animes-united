@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { useNavigation } from '@react-navigation/native'
+
 import {
   Container,
   Thumbnail,
@@ -12,6 +14,8 @@ import {
   Description,
   IconContainer
 } from './styles'
+
+import { WatchEpisodeScreenNavigationProp } from '@routes'
 
 import { Util } from '@util'
 
@@ -35,8 +39,21 @@ export function Episode({
   videoURL,
   style
 }: EpisodeProps): JSX.Element {
+  const navigation = useNavigation<WatchEpisodeScreenNavigationProp>()
+
+  function handleNavigateToWatchEpisode(url: string) {
+    navigation.navigate('WatchEpisode', {
+      data: url
+    })
+  }
+
   return (
-    <Container key={number} style={style} activeOpacity={0.65}>
+    <Container
+      key={number}
+      onPress={handleNavigateToWatchEpisode.bind(null, videoURL)}
+      style={style}
+      activeOpacity={0.65}
+    >
       <Thumbnail source={{ uri: thumbnail }} />
 
       <Info>
