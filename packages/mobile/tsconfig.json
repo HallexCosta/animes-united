@@ -17,7 +17,7 @@
       "@assets/*": ["./src/assets/*"],
       "@api/response": ["./src/api/response/index.ts"],
       "@util": ["./src/util/index.ts"],
-      "@routes": ["./src/routes.tsx"]
+      "@routes": ["./src/routes/index.tsx"]
     }
   },
   "include": ["src/**/*", "index.d.ts"]
