@@ -19,7 +19,8 @@
     "start:server:production": "node dist/server/server.js",
     "start:mobile:development": "expo start packages/mobile",
     "lerna:build": "rimraf ./packages/**/dist && lerna run build",
-    "lerna:test": "lerna run test"
+    "lerna:test": "lerna run test",
+    "lerna:start": "lerna run start:development --parallel"
   },
   "dependencies": {
     "@animes-united/axios-config": "*",
