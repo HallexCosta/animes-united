@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "mobile",
+    "name": "Animes United",
     "slug": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,7 +20,8 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#0c0c0c"
-      }
+      },
+      "package": "com.hallexcosta.animesunited"
     },
     "packagerOpts": { "config": "metro.config.js",
       "sourceExts": [
