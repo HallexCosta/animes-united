@@ -15,7 +15,7 @@ import {
   IconContainer
 } from './styles'
 
-import { WatchEpisodeScreenNavigationProp } from '@routes'
+import { WatchEpisodeNavigationProp } from '@routes'
 
 import { Util } from '@util'
 
@@ -39,7 +39,7 @@ export function Episode({
   videoURL,
   style
 }: EpisodeProps): JSX.Element {
-  const navigation = useNavigation<WatchEpisodeScreenNavigationProp>()
+  const navigation = useNavigation<WatchEpisodeNavigationProp>()
 
   function handleNavigateToWatchEpisode(url: string) {
     navigation.navigate('WatchEpisode', {
