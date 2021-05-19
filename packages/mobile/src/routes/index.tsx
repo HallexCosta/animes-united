@@ -6,8 +6,8 @@ import {
 } from '@react-navigation/stack'
 
 import {
-  AnimesCategoriesScreen,
-  AnimesCategoryScreen,
+  AnimesCategories,
+  AnimesCategory,
   AnimeDetail,
   WatchEpisode
 } from '@screens'
@@ -29,42 +29,42 @@ type RootStackParamList = {
   }
 }
 
-type AnimesCategoryScreenRouteProp = RouteProp<
+type AnimesCategoryRouteProp = RouteProp<
   RootStackParamList,
   'AnimesCategory'
 >
 
-type AnimesCategoryScreenNavigationProp = StackNavigationProp<
+type AnimesCategoryNavigationProp = StackNavigationProp<
   RootStackParamList,
   'AnimesCategory'
 >
 
-type AnimeDetailScreenRouteProp = RouteProp<RootStackParamList, 'AnimeDetail'>
+type AnimeDetailRouteProp = RouteProp<RootStackParamList, 'AnimeDetail'>
 
-type AnimeDetailScreenNavigationProp = StackNavigationProp<
+type AnimeDetailNavigationProp = StackNavigationProp<
   RootStackParamList,
   'AnimeDetail'
 >
 
-type WatchEpisodeScreenRouteProp = RouteProp<RootStackParamList, 'WatchEpisode'>
+type WatchEpisodeRouteProp = RouteProp<RootStackParamList, 'WatchEpisode'>
 
-export type WatchEpisodeScreenNavigationProp = StackNavigationProp<
+export type WatchEpisodeNavigationProp = StackNavigationProp<
   RootStackParamList,
   'WatchEpisode'
 >
 
 type ScreensProps = {
   AnimesCategory: {
-    route: AnimesCategoryScreenRouteProp
-    navigation: AnimesCategoryScreenNavigationProp
+    route: AnimesCategoryRouteProp
+    navigation: AnimesCategoryNavigationProp
   }
   AnimeDetail: {
-    route: AnimeDetailScreenRouteProp
-    navigation: AnimeDetailScreenNavigationProp
+    route: AnimeDetailRouteProp
+    navigation: AnimeDetailNavigationProp
   }
   WatchEpisode: {
-    route: WatchEpisodeScreenRouteProp
-    navigation: WatchEpisodeScreenNavigationProp
+    route: WatchEpisodeRouteProp
+    navigation: WatchEpisodeNavigationProp
   }
 }
 
@@ -76,16 +76,16 @@ export function Routes(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="AnimesCategoriesScreen"
+        initialRouteName="AnimesCategories"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
-          name="AnimesCategoriesScreen"
-          component={AnimesCategoriesScreen}
+          name="AnimesCategories"
+          component={AnimesCategories}
         />
         <Stack.Screen
-          name="AnimesCategoryScreen"
-          component={AnimesCategoryScreen}
+          name="AnimesCategory"
+          component={AnimesCategory}
         />
         <Stack.Screen name="AnimeDetail" component={AnimeDetail} />
         <Stack.Screen name="WatchEpisode" component={WatchEpisode} />
