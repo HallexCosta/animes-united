@@ -51,11 +51,11 @@ const CategoriesAnimes = memo(function CategoriesAnimes({
 }: CategoriesAnimesProps): JSX.Element {
   const navigation = useNavigation()
 
-  function handleNavigateToCategoryAnimeScreen(
+  function handleNavigateToCategoryAnime(
     category: string,
     data: AnimeResponse[]
   ) {
-    navigation.navigate('AnimesCategoryScreen', {
+    navigation.navigate('AnimesCategory', {
       category,
       data
     })
@@ -68,7 +68,7 @@ const CategoriesAnimes = memo(function CategoriesAnimes({
       <Head>
         <Category># {category}</Category>
         <TouchableOpacity
-          onPress={handleNavigateToCategoryAnimeScreen.bind(
+          onPress={handleNavigateToCategoryAnime.bind(
             null,
             category,
             data
@@ -96,7 +96,7 @@ const CategoriesAnimes = memo(function CategoriesAnimes({
   )
 })
 
-export function AnimesCategoriesScreen(): JSX.Element {
+export function AnimesCategories(): JSX.Element {
   const [categoriesAnimes, setCategoriesAnimes] = useState<
     CategoryAnimesResponse[]
   >([])

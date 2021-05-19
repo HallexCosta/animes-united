@@ -27,7 +27,7 @@ import {
 
 import searchIcon from '@assets/icons/search.png'
 
-export function AnimesCategoryScreen({
+export function AnimesCategory({
   route
 }: ScreenProps<'AnimesCategory'>): JSX.Element {
   const [loaded, setLoaded] = useState(false)
