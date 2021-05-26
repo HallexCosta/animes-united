@@ -3,22 +3,18 @@ import dotenv from 'dotenv'
 dotenv.config({ path: path.join(__dirname, '..', '..', '..', '.env') })
 
 type PuppeteerLaunchConfig = {
-  executablePath: string
+  executablePath?: string
   headless: boolean
   args: string[]
 }
 
 const debug: boolean = process.env.PUPPETEER_DEBUG === 'true'
-const chromeExecutablePath = process.env.PUPPETEER_EXEC_PATH
+const executablePath = process.env.PUPPETEER_EXEC_PATH
 
 const launch: PuppeteerLaunchConfig = {
-  executablePath: String(chromeExecutablePath),
+  executablePath,
   headless: !debug,
-  args: [
-    '--no-sandbox',
-    `--disable-extensions-except=${chromeExecutablePath}`,
-    `--load-extension=${chromeExecutablePath}`
-  ]
+  args: ['--no-sandbox']
 }
 
 export { launch }
