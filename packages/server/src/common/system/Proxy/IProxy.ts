@@ -1,6 +1,7 @@
 export interface IProxy {
   build(): string
-  setWSEndPoint(wsEndPoint: string): void
+  unBuild(): void
+  setWSEndPoint(wsEndPoint: string): IProxy
   setOnConnected(onConnected: () => void): IProxy
   setOnDisconnected(onDisconnected: () => void): IProxy
 }
