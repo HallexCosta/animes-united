@@ -27,7 +27,9 @@ export class Proxy implements IProxy {
     this.connection = httpProxy.createServer(configs)
 
     this.connection.on('open', this.onConnected)
-    this.connection.on('close', this.onDisconnected)
+    this.connection.on('close', () =>
+      console.log('> Client proxy disconencted')
+    )
 
     this.connection.listen(this.port)
 
@@ -36,8 +38,13 @@ export class Proxy implements IProxy {
     return this.customWSEndpoint
   }
 
-  public setWSEndPoint(wsEndPoint: string): void {
+  public unBuild(): void {
+    this.connection.close()
+  }
+
+  public setWSEndPoint(wsEndPoint: string): IProxy {
     this.wsEndPoint = wsEndPoint
+    return this
   }
 
   public setOnConnected(onConnected: () => void): IProxy {
