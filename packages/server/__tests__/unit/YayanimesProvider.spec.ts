@@ -4,6 +4,7 @@ const timeout = 1000 * 60 * 10
 
 function factoryYayanimesProvider() {
   const yayanimesProvider = new YayanimesProvider()
+
   return { yayanimesProvider }
 }
 
