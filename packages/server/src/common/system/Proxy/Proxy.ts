@@ -27,9 +27,7 @@ export class Proxy implements IProxy {
     this.connection = httpProxy.createServer(configs)
 
     this.connection.on('open', this.onConnected)
-    this.connection.on('close', () =>
-      console.log('> Client proxy disconencted')
-    )
+    this.connection.on('close', this.onDisconnected)
 
     this.connection.listen(this.port)
 
