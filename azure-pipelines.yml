@@ -3,7 +3,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- azure-pipelines11
+- azure-pipelines
 
 strategy:
   matrix:
