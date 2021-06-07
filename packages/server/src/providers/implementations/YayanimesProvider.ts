@@ -22,6 +22,10 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
   private static baseURL = 'https://yayanimes.net'
   public getBaseURL: () => string = () => YayanimesProvider.baseURL
 
+  public constructor() {
+    super()
+  }
+
   public async getAnimeNames(): Promise<string[]> {
     const { browser, page } = await this.initPage()
 
@@ -40,8 +44,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
       return anchors.map(anchor => String(anchor.textContent))
     })
 
-    await this.closePages(browser)
-    await browser.close()
+    await this.closeBrowser(browser)
 
     return names
   }
@@ -258,8 +261,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
 
     const animes = evaluateAnimes.map(evaluateAnime => new Anime(evaluateAnime))
 
-    await this.closePages(browser)
-    await browser.close()
+    await this.closeBrowser(browser)
 
     return animes
   }
@@ -358,8 +360,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
       evaluateEpisode => new Episode(evaluateEpisode)
     )
 
-    await this.closePages(browser)
-    await browser.close()
+    await this.closeBrowser(browser)
 
     return episodes
   }
@@ -408,8 +409,7 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
       return animesCalendar
     })
 
-    await this.closePages(browser)
-    await browser.close()
+    await this.closeBrowser(browser)
 
     return animesCalendar
   }
