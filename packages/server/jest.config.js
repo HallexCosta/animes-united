@@ -7,5 +7,6 @@ module.exports = {
   displayName: name,
   name,
   moduleNameMapper: ModuleMapper.pathsToModuleNameMapper(tsconfig),
-  globalTeardown: '<rootDir>/jest.teardown.js'
+  globalTeardown: '<rootDir>/jest.teardown.js',
+  preset: 'ts-jest'
 }
