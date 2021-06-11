@@ -11,13 +11,7 @@ export abstract class Puppeteer {
   private proxy: IProxy
   private configs: ProxyConfigs
 
-  protected constructor(private withProxy: () => boolean = () => false) {
-    this.configs = {
-      host: getIPv4(),
-      port: ProxyConfigsEnum.PORT,
-      ws: !!ProxyConfigsEnum.WS
-    }
-  }
+  protected constructor(private withProxy: () => boolean = () => false) {}
 
   private buildNewProxy(configs: ProxyConfigs) {
     this.proxy = new Proxy(configs)
@@ -31,22 +25,24 @@ export abstract class Puppeteer {
     return customWSEndpoint
   }
 
-  public enableProxy(): this {
-    this.withProxy = () => true
-    return this
-  }
-
   private async newBrowser(): Promise<Browser> {
     let browser = await puppeteer.launch(launch)
-    console.log('Hello World')
 
     if (this.withProxy()) {
+      this.configs = {
+        host: getIPv4(),
+        port: ProxyConfigsEnum.PORT,
+        ws: !!ProxyConfigsEnum.WS
+      }
+
       this.buildNewProxy(this.configs)
+
       const customWSEndpoint = await this.buildWSEndPoint(browser)
       browser = await puppeteer.connect({
         ignoreHTTPSErrors: true,
         browserWSEndpoint: customWSEndpoint
       })
+
       this.closeProxy()
     }
 
