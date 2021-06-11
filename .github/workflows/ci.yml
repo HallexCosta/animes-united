@@ -33,13 +33,13 @@ jobs:
       - name: Install dependencies
         run: yarn install:ci
 
-      # - name: Run tests
-      #   uses: djp3/puppeteer-headful@master
-      #   env:
-      #     MONGODB_URI_TEST: ${{ secrets.MONGODB_URI_TEST }}
-      #     PUPPETEER_DEBUG: 'false'
-      #   with:
-      #     args: yarn lerna:test
+      - name: Run tests
+        uses: djp3/puppeteer-headful@master
+        env:
+          MONGODB_URI_TEST: ${{ secrets.MONGODB_URI_TEST }}
+          PUPPETEER_DEBUG: 'false'
+        with:
+          args: yarn lerna:test
 
   deploy-development:
     runs-on: ubuntu-latest
