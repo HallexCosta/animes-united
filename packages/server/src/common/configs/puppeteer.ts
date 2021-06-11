@@ -14,13 +14,8 @@ const executablePath = process.env.PUPPETEER_EXEC_PATH
 
 const launch: PuppeteerLaunchConfig = {
   executablePath,
-  headless: !debug,
-  args: [
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-    `--disable-extensions-except=${executablePath}`,
-    `--load-extension=${executablePath}`
-  ]
+  headless: false,
+  args: ['--no-sandbox']
 }
 
 export function getIPv4(): string {
