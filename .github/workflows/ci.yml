@@ -22,8 +22,11 @@ jobs:
 
       - name: Use Node.js ${{ matrix.node_version }}
         uses: actions/setup-node@v1
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
         with:
           node-version: ${{ matrix.node_version }}
+          args: install
 
       - name: install puppeteer libraries
         run: |
