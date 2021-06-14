@@ -33,17 +33,17 @@ jobs:
       #     sudo apt-get update
       #     sudo apt-get install -y libgbm1
 
-      - name: Install dependencies
+      - name: Install dependencies...
         run: yarn install:ci
 
-      - name: Test Code
+      - name: Testing server...
         uses: mujo-code/puppeteer-headful@master
         env:
           MONGODB_URI_TEST: ${{ secrets.MONGODB_URI_TEST }}
           PUPPETEER_DEBUG: 'false'
           CI: 'true'
         with:
-          args: yarn lerna:test
+          args: yarn workspace @animes-united/server run test
 
   deploy-development:
     runs-on: ubuntu-latest
