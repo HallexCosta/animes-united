@@ -36,8 +36,8 @@ jobs:
       - name: Install dependencies
         run: yarn install:ci
 
-      - name: Run tests
-        uses: djp3/puppeteer-headful@master
+      - name: Test Code
+        uses: mujo-code/puppeteer-headful@master
         env:
           MONGODB_URI_TEST: ${{ secrets.MONGODB_URI_TEST }}
           PUPPETEER_DEBUG: 'false'
