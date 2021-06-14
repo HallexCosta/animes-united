@@ -14,7 +14,7 @@ const executablePath = process.env.PUPPETEER_EXEC_PATH
 
 const launch: PuppeteerLaunchConfig = {
   executablePath,
-  headless: false,
+  headless: true,
   args: ['--no-sandbox']
 }
 
