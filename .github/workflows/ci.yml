@@ -26,12 +26,12 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
         with:
           node-version: ${{ matrix.node_version }}
-          args: install
+          args: install:ci
 
-      - name: install puppeteer libraries
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgbm1
+      # - name: install puppeteer libraries
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y libgbm1
 
       - name: Install dependencies
         run: yarn install:ci
@@ -41,6 +41,7 @@ jobs:
         env:
           MONGODB_URI_TEST: ${{ secrets.MONGODB_URI_TEST }}
           PUPPETEER_DEBUG: 'false'
+          CI: 'true'
         with:
           args: yarn lerna:test
 
