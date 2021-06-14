@@ -1,68 +1,44 @@
+import { expect } from 'chai'
 import { YayanimesProvider } from '@providers/implementations/YayanimesProvider'
+import { factoryYayanimesProvider } from './factories'
 
-const timeout = 1000 * 60 * 10
+describe('Mocha', () => {
+  describe('Test YayanimesProvider implementation', () => {
+    let yayanimesProvider: YayanimesProvider
 
-function factoryYayanimesProvider() {
-  const yayanimesProvider = new YayanimesProvider()
+    before(() => {
+      yayanimesProvider = factoryYayanimesProvider()
 
-  return { yayanimesProvider }
-}
+      expect(yayanimesProvider).to.be.instanceof(YayanimesProvider)
+    })
 
-describe('Test YayanimesProvider implementation', () => {
-  beforeAll(() => {
-    const { yayanimesProvider } = factoryYayanimesProvider()
-
-    expect(yayanimesProvider).toBeInstanceOf(YayanimesProvider)
-  }, timeout)
-
-  it(
-    'Should be able to return array with all animes names (YayanimesProvider.getAnimeNames)',
-    async done => {
-      const { yayanimesProvider } = factoryYayanimesProvider()
+    it('Should be able to return array with all animes names (YayanimesProvider.getAnimeNames)', async () => {
       const expected = await yayanimesProvider.getAnimeNames()
 
-      expect(typeof expected).toEqual('object')
-      expect(expected.length).not.toEqual(0)
+      expect(typeof expected).to.equal('object')
+      expect(expected.length).not.to.equal(0)
+    })
 
-      done()
-    },
-    timeout
-  )
-
-  it(
-    'Should be able to return base URL of yayanimes.net (YayanimesProvider.getBaseURL)',
-    () => {
-      const { yayanimesProvider } = factoryYayanimesProvider()
+    it('Should be able to return base URL of yayanimes.net (YayanimesProvider.getBaseURL)', () => {
       const expected = yayanimesProvider.getBaseURL()
 
-      expect(expected).toBe('https://yayanimes.net')
-    },
-    timeout
-  )
+      expect(expected).to.be.equal('https://yayanimes.net')
+    })
 
-  it(
-    'Should be able to return calendar of animes from yayanimes.net (Yayanimes.getAnimesCalendar)',
-    async done => {
-      const { yayanimesProvider } = factoryYayanimesProvider()
+    it('Should be able to return calendar of animes from yayanimes.net (Yayanimes.getAnimesCalendar)', async () => {
       const expected = await yayanimesProvider.getAnimesCalendar()
 
-      expect(expected.length).not.toEqual(0)
+      expect(expected.length).not.to.equal(0)
+    })
 
-      done()
-    },
-    timeout
-  )
-
-  it(
-    'Should be able to return release last episodes of yayanimes.net (YayanimesProvider.getLastReleasesEpisodes)',
-    async done => {
-      const { yayanimesProvider } = factoryYayanimesProvider()
-      const expected = await yayanimesProvider.getLastReleasesEpisodes()
-
-      expect(expected.length).not.toEqual(0)
-
-      done()
-    },
-    timeout
-  )
+    it('Should be able to return release last episodes of yayanimes.net (YayanimesProvider.getLastReleasesEpisodes)', done => {
+      yayanimesProvider
+        .getLastReleasesEpisodes()
+        .then(expected => {
+          expect(expected.length).not.to.equal(0)
+          done()
+        })
+        .catch(done)
+    })
+  })
 })
