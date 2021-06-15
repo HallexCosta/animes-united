@@ -38,6 +38,7 @@
     "@babel/preset-typescript": "^7.12.7",
     "@sucrase/jest-plugin": "^2.0.0",
     "@types/chai": "^4.2.18",
+    "@types/http-proxy": "^1.17.6",
     "@types/jest": "^26.0.19",
     "@types/mocha": "^8.2.2",
     "babel-core": "7.0.0-bridge.0",
@@ -48,6 +49,8 @@
     "lerna": "^3.22.1",
     "mocha": "^9.0.0",
     "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
+    "ts-node-dev": "^1.0.0",
     "tsconfig-paths": "^3.9.0",
     "tsconfig-paths-jest": "^0.0.1",
     "typescript": "^4.1.3"
