@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches: [main]
+    branches: [main, rewrite-jest-to-chai]
   pull_request:
-    branches: [main]
+    branches: [main, rewrite-jest-to-chai]
   workflow_dispatch:
 
 jobs:
@@ -43,7 +43,7 @@ jobs:
           PUPPETEER_DEBUG: 'false'
           CI: 'true'
         with:
-          args: yarn workspace @animes-united/server run test
+          args: yarn workspace @animes-united/server test:mocha
 
   deploy-development:
     runs-on: ubuntu-latest
