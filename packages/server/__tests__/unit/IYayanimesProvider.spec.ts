@@ -1,5 +1,5 @@
-import { IYayanimesProvider } from './IYayanimesProvider'
-import { AnimeCalendar } from './implementations/YayanimesProvider'
+import { IYayanimesProvider } from '@providers/IYayanimesProvider'
+import { AnimeCalendar } from '@providers/implementations/YayanimesProvider'
 import { Anime, Episode } from '@entities'
 
 const timeout = 1000 * 60 * 10

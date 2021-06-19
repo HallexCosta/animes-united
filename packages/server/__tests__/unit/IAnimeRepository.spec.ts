@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Anime, Episode, Streamings } from '@entities'
-import { IAnimeRepository } from './IAnimeRepository'
-import { CategoryAnime } from './implementations/AnimeRepository'
+import { IAnimeRepository } from '@repositories/IAnimeRepository'
+import { CategoryAnime } from '@repositories/implementations/AnimeRepository'
 
 const timeout = 1000 * 60 * 10
 

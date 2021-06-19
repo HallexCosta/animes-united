@@ -2,8 +2,8 @@
 import { mongodbURITest } from '@common/configs/mongodb'
 import { Episode } from '@entities'
 import { Anime } from '@entities/Anime'
+import { AnimeRepository } from '@repositories/implementations/AnimeRepository'
 import { ObjectId } from 'mongodb'
-import { AnimeRepository } from './AnimeRepository'
 
 // jest.mock('./AnimeRepository')
 
