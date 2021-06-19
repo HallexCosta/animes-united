@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint no-unused-expressions: "off" */
+
+import { expect } from 'chai'
 import { mongodbURITest } from '@common/configs/mongodb'
 import { Episode } from '@entities'
 import { Anime } from '@entities/Anime'
 import { AnimeRepository } from '@repositories/implementations/AnimeRepository'
 import { ObjectId } from 'mongodb'
-
-// jest.mock('./AnimeRepository')
-
-const timeout = 1000 * 60 * 10
 
 const category = 'C'
 const anime = new Anime({
@@ -45,182 +44,124 @@ const anime = new Anime({
 })
 
 describe('Test Anime Repository', () => {
-  it(
-    'Should be able to generate a new instance of class AnimeRepository',
-    () => {
-      const animeRepository = new AnimeRepository(mongodbURITest)
+  it('Should be able to generate a new instance of class AnimeRepository', () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
 
-      expect(animeRepository).toBeInstanceOf(AnimeRepository)
-    },
-    timeout
-  )
+    expect(animeRepository).to.be.instanceOf(AnimeRepository)
+  })
 
-  it(
-    'Should be able return IAnimeRepository contract in method AnimeRepository.category',
-    () => {
-      const animeRepository = new AnimeRepository(mongodbURITest)
-      const expected = animeRepository.category(category)
+  it('Should be able return IAnimeRepository contract in method AnimeRepository.category', () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+    const expected = animeRepository.category(category)
 
-      expect(expected).toBeInstanceOf(AnimeRepository)
-    },
-    timeout
-  )
+    expect(expected).to.be.instanceOf(AnimeRepository)
+  })
 
-  it(
-    'Should be able to save an anime with successfully',
-    async done => {
-      const animeRepository = new AnimeRepository(mongodbURITest)
-      const expected = await animeRepository.category(category).save(anime)
+  it('Should be able to save an anime with successfully', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+    const expected = await animeRepository.category(category).save(anime)
 
-      expect(expected).toBeTruthy()
-      done()
-    },
-    timeout
-  )
+    expect(expected).to.be.true
+  })
 
-  it(
-    'Should be able to throw error if not update anime by id (AnimeRepository.updateById)',
-    async done => {
-      const animeRepository = new AnimeRepository(mongodbURITest)
+  it('Should be able to throw error if not update anime by id (AnimeRepository.updateById)', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
 
-      let error
+    let error
 
-      try {
-        await animeRepository
-          .category(category)
-          .updateById(anime, new ObjectId('abcabcabcabcabcabcabcabc'))
-      } catch (e) {
-        error = e
-      }
-
-      expect(error.name).toBe('Error')
-      expect(error.message).toBe('Failed to update anime by id')
-      done()
-    },
-    timeout
-  )
-
-  it(
-    'Should be able to updateById an anime with successfully (AnimeRepository.updateById)',
-    async done => {
-      const animeRepository = new AnimeRepository(mongodbURITest)
-
-      const expected = await animeRepository.category(category).updateById(
-        {
-          ...anime,
-          name: 'Charlotte Atualizado'
-        },
-        anime._id
-      )
-
-      expect(expected).toBeTruthy()
-      done()
-    },
-    timeout
-  )
-
-  it(
-    'Should be able to throw error if findByCategory method does not have a parameter',
-    async done => {
-      const animeRepository = new AnimeRepository(mongodbURITest)
-      let error
-      try {
-        await animeRepository.findByCategory()
-      } catch (e) {
-        error = e
-      }
-      expect(error.name).toBe('Error')
-      expect(error.message).toBe('Collection name not defined')
-      done()
-    },
-    timeout
-  )
-
-  it(
-    'Should be able to find animes by category',
-    async done => {
-      const animeRepository = new AnimeRepository(mongodbURITest)
-      const expected = await animeRepository.findByCategory(category)
-
-      expect(expected).not.toBeUndefined()
-      expect(expected).toHaveProperty('data')
-      expect(expected).toHaveProperty('category')
-      expect(expected.data[0]).toHaveProperty('_id')
-      done()
-    },
-    timeout
-  )
-
-  it(
-    'Should be able to find all categories animes',
-    async done => {
-      const animeRepository = new AnimeRepository(mongodbURITest)
-      const expected = await animeRepository.findAll()
-
-      expect(expected).not.toBeUndefined()
-      expect(expected[0]).toHaveProperty('data')
-      expect(expected[0]).toHaveProperty('category')
-      done()
-    },
-    timeout
-  )
-
-  it(
-    'Should be able to throw error if the collectionName is not defined when executing the method deleteByName',
-    async done => {
-      const animeRepository = new AnimeRepository(mongodbURITest)
-      let error
-      try {
-        await animeRepository.deleteByName('Charlotte')
-      } catch (e) {
-        error = e
-      }
-      expect(error.name).toBe('Error')
-      expect(error.message).toBe('Collection name not defined')
-      done()
-    },
-    timeout
-  )
-
-  it(
-    'Should be able to throw error if not find anime by name',
-    async done => {
-      const animeRepository = new AnimeRepository(mongodbURITest)
-      const expected = await animeRepository
-        .category('C')
-        .findByName('QUALQUER NOME')
-
-      expect(expected).toBe(undefined)
-      done()
-    },
-    timeout
-  )
-
-  it(
-    'Should be able to find anime by name',
-    async done => {
-      const animeRepository = new AnimeRepository(mongodbURITest)
-      const expected = await animeRepository
-        .category('c')
-        .findByName('Charlotte Atualizado')
-
-      expect(expected).toHaveProperty('_id')
-      done()
-    },
-    timeout
-  )
-
-  it(
-    'Should be able to delete anime by name',
-    async done => {
-      const animeRepository = new AnimeRepository(mongodbURITest)
-      const expected = await animeRepository
+    try {
+      await animeRepository
         .category(category)
-        .deleteByName('Charlotte')
+        .updateById(anime, new ObjectId('abcabcabcabcabcabcabcabc'))
+    } catch (e) {
+      error = e
+    }
 
-      expect(expected).toEqual(true)
-      done()
-    },
-    timeout
-  )
+    expect(error.name).to.be.equal('Error')
+    expect(error.message).to.be.equal('Failed to update anime by id')
+  })
+
+  it('Should be able to updateById an anime with successfully (AnimeRepository.updateById)', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+
+    const expected = await animeRepository.category(category).updateById(
+      {
+        ...anime,
+        name: 'Charlotte Atualizado'
+      },
+      anime._id
+    )
+
+    expect(expected).to.be.true
+  })
+
+  it('Should be able to throw error if findByCategory method does not have a parameter', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+    let error
+    try {
+      await animeRepository.findByCategory()
+    } catch (e) {
+      error = e
+    }
+    expect(error.name).to.be.equal('Error')
+    expect(error.message).to.be.equal('Collection name not defined')
+  })
+
+  it('Should be able to find animes by category', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+    const expected = await animeRepository.findByCategory(category)
+
+    expect(expected).not.to.be.undefined
+    expect(expected).to.have.property('data')
+    expect(expected).to.have.property('category')
+    expect(expected.data[0]).to.have.property('_id')
+  })
+
+  it('Should be able to find all categories animes', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+    const expected = await animeRepository.findAll()
+
+    expect(expected).not.to.be.undefined
+    expect(expected[0]).to.have.property('data')
+    expect(expected[0]).to.have.property('category')
+  })
+
+  it('Should be able to throw error if the collectionName is not defined when executing the method deleteByName', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+    let error
+    try {
+      await animeRepository.deleteByName('Charlotte')
+    } catch (e) {
+      error = e
+    }
+    expect(error.name).to.be.equal('Error')
+    expect(error.message).to.be.equal('Collection name not defined')
+  })
+
+  it('Should be able to throw error if not find anime by name', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+    const expected = await animeRepository
+      .category('C')
+      .findByName('QUALQUER NOME')
+
+    expect(expected).to.be.undefined
+  })
+
+  it('Should be able to find anime by name', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+    const expected = await animeRepository
+      .category('c')
+      .findByName('Charlotte Atualizado')
+
+    expect(expected).to.have.property('_id')
+  })
+
+  it('Should be able to delete anime by name', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+    const expected = await animeRepository
+      .category(category)
+      .deleteByName('Charlotte')
+
+    expect(expected).to.be.true
+  })
 })
