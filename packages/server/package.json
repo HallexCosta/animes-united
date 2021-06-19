@@ -10,7 +10,8 @@
     "start:development": "ts-node -r tsconfig-paths/register --transpile-only src/server.ts",
     "start:development:watch": "tsnd -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
     "start:production": "node ../../dist/server/src/server.js",
-    "test": "jest --passWithNoTests --no-cache --runInBand --detectOpenHandles --colors --forceExit",
+    "test:jest": "jest --passWithNoTests --no-cache --runInBand --detectOpenHandles --colors --forceExit",
+    "test": "mocha -r ts-node/register -r tsconfig-paths/register --timeout 0 '__tests__/unit/**/*.spec.ts'",
     "test:ci": "yarn test --coverage",
     "install:ci": "yarn install --fronzen-lockfile"
   },
