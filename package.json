@@ -20,6 +20,7 @@
     "start:mobile:development": "expo start packages/mobile",
     "lerna:build": "rimraf ./packages/**/dist && lerna run build",
     "lerna:test": "lerna run test",
+    "lerna:test:ci": "lerna run test:ci",
     "lerna:start": "lerna run start:development --parallel"
   },
   "dependencies": {
