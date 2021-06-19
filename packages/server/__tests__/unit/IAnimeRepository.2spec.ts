@@ -1,19 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { expect } from 'chai'
+import { mock, SinonMockStatic, SinonMock } from 'sinon'
 import { Anime, Episode, Streamings } from '@entities'
 import { IAnimeRepository } from '@repositories/IAnimeRepository'
 import { CategoryAnime } from '@repositories/implementations/AnimeRepository'
 
 const timeout = 1000 * 60 * 10
 
-const mockAnimeRepository: jest.Mocked<IAnimeRepository> = {
-  findAll: jest.fn(),
-  category: jest.fn(),
-  findByCategory: jest.fn(),
-  findByName: jest.fn(),
-  save: jest.fn(),
-  updateById: jest.fn(),
-  deleteByName: jest.fn()
-}
+const mockAnimeRepository: SinonMock = mock({})
+
+// {
+//   findAll: jest.fn(),
+//   category: jest.fn(),
+//   findByCategory: jest.fn(),
+//   findByName: jest.fn(),
+//   save: jest.fn(),
+//   updateById: jest.fn(),
+//   deleteByName: jest.fn()
+// }
 
 const anime = new Anime({
   name: 'Charlotte',
