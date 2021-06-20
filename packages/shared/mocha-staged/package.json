@@ -1,0 +1,20 @@
+{
+  "name": "@animes-united/mocha-staged",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "bin": {
+    "mocha-staged": "dist/index.js"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start:production": "node dist/index.js",
+    "start:development": "ts-node src/index.ts",
+    "start:development:watch": "nodemon --watch src/**/* -e ts --exec ts-node ./src/index.ts",
+    "test": "mocha --config .mocharc.js",
+    "test:watch": "yarn test --watch",
+    "build": "rimraf dist && sucrase ./src -d ./dist --transforms typescript,imports"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
