@@ -43,7 +43,7 @@ jobs:
           PUPPETEER_DEBUG: 'false'
           CI: 'true'
         with:
-          args: yarn workspace @animes-united/server run test
+          args: yarn lerna:test:ci
 
   deploy-development:
     runs-on: ubuntu-latest
