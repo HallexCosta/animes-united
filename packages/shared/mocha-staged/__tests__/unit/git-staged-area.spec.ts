@@ -41,10 +41,8 @@ describe('Git Staged Area', () => {
 
     const expected = separateByScope(simpleStageFiles)
     expect(expected[0].scope).to.be.equal('mocha-staged')
-    expect(expected[0].files).to.be.equal([
-      '__tests__/unit/testing.spec.ts',
-      '__tests__/unit/testing2.spec.ts'
-    ])
+    expect(expected[0].files[0]).to.be.equal('__tests__/unit/testing.spec.ts')
+    expect(expected[0].files[1]).to.be.equal('__tests__/unit/testing2.spec.ts')
   })
 
   it('Should be able to separate SimpleStageFile and merge files with the different scopes', () => {
@@ -60,11 +58,12 @@ describe('Git Staged Area', () => {
     ]
 
     const expected = separateByScope(simpleStageFiles)
+    console.log(expected)
 
     expect(expected[0].scope).to.be.equal('server')
-    expect(expected[0].files).to.be.equal(['__tests__/unit/testing.spec.ts'])
+    expect(expected[0].files[0]).to.be.equal('__tests__/unit/testing.spec.ts')
     expect(expected[1].scope).to.be.equal('mocha-staged')
-    expect(expected[1].files).to.be.equal(['__tests__/unit/testing.spec.ts'])
+    expect(expected[1].files[0]).to.be.equal('__tests__/unit/testing.spec.ts')
   })
 
   it('Should be able to all spec files for each scope', () => {
@@ -78,6 +77,7 @@ describe('Git Staged Area', () => {
       }
     ]
 
-    runTests(stageFiles)
+    const success = runTests(stageFiles)
+    expect(success).to.be.true
   })
 })
