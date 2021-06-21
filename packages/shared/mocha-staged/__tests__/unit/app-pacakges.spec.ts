@@ -53,7 +53,8 @@ describe('App Packages', () => {
   it('Should be able to an app or shared package.', () => {
     const expected = preapareStagedFiles(sharedSpecFile)
 
-    expect(expected).to.be.equal('__tests__/unit/testing.spec.ts')
+    expect(expected.scope).to.be.equal('mocha-staged')
+    expect(expected.file).to.be.equal('__tests__/unit/testing.spec.ts')
   })
 
   it('Should be able to throw an error for not is an app or shared package.', () => {
