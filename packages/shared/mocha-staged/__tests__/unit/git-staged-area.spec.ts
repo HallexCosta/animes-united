@@ -1,6 +1,12 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from 'chai'
-import { getGitStagedAreaFiles } from '../../src/git-staged-area'
+import {
+  SimpleStageFile,
+  StageFile,
+  getGitStagedAreaFiles,
+  separateByScope,
+  runTests
+} from '../../src/git-staged-area'
 
 describe('Git Staged Area', () => {
   it('Should be able to get git staged area files', () => {
@@ -19,5 +25,59 @@ describe('Git Staged Area', () => {
     }
 
     expect(expectedToThrow).to.be.throw
+  })
+
+  it('Should be able to separate SimpleStageFile and merge files with the same scope', () => {
+    const simpleStageFiles: SimpleStageFile[] = [
+      {
+        scope: 'mocha-staged',
+        file: '__tests__/unit/testing.spec.ts'
+      },
+      {
+        scope: 'mocha-staged',
+        file: '__tests__/unit/testing2.spec.ts'
+      }
+    ]
+
+    const expected = separateByScope(simpleStageFiles)
+    expect(expected[0].scope).to.be.equal('mocha-staged')
+    expect(expected[0].files).to.be.equal([
+      '__tests__/unit/testing.spec.ts',
+      '__tests__/unit/testing2.spec.ts'
+    ])
+  })
+
+  it('Should be able to separate SimpleStageFile and merge files with the different scopes', () => {
+    const simpleStageFiles: SimpleStageFile[] = [
+      {
+        scope: 'server',
+        file: '__tests__/unit/testing.spec.ts'
+      },
+      {
+        scope: 'mocha-staged',
+        file: '__tests__/unit/testing.spec.ts'
+      }
+    ]
+
+    const expected = separateByScope(simpleStageFiles)
+
+    expect(expected[0].scope).to.be.equal('server')
+    expect(expected[0].files).to.be.equal(['__tests__/unit/testing.spec.ts'])
+    expect(expected[1].scope).to.be.equal('mocha-staged')
+    expect(expected[1].files).to.be.equal(['__tests__/unit/testing.spec.ts'])
+  })
+
+  it('Should be able to all spec files for each scope', () => {
+    const stageFiles: StageFile[] = [
+      {
+        scope: 'server',
+        files: [
+          '__tests__/unit/testing.spec.ts',
+          '__tests__/unit/testing2.spec.ts'
+        ]
+      }
+    ]
+
+    runTests(stageFiles)
   })
 })
