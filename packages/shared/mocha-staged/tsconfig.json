@@ -1,9 +1,9 @@
 {
-  "extends": "../../../../tsconfig.json",
+  "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "target": "es2017",
     "lib": ["es2017"],
-    "outDir": "../../../../dist/mocha-staged",
+    "outDir": "../../../dist/mocha-staged",
     "rootDirs": ["./src", "./__tests__"],
     "removeComments": true,
     "experimentalDecorators": true,
