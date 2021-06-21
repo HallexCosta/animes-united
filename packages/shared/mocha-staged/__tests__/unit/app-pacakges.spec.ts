@@ -50,7 +50,7 @@ describe('App Packages', () => {
     expect(expected).to.be.true
   })
 
-  it('Should be able to an app or shared package.', () => {
+  it('Should be able to an app or shared package and return SimpleStageFile.', () => {
     const expected = preapareStagedFiles(sharedSpecFile)
 
     expect(expected.scope).to.be.equal('mocha-staged')
