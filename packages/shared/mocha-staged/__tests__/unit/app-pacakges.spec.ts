@@ -1,13 +1,13 @@
 /* eslint no-unused-expressions: "off" */
 import { expect } from 'chai'
-import { preapareStagedFiles } from '../../src/index'
 import {
+  preapareStagedFiles,
   checkForIsAppPackage,
   checkForIsSharedPackage,
   getAppPackages,
   getSharedPackages,
   mergePacakges
-} from '../../src/app-packages'
+} from '@src'
 
 describe('App Packages', () => {
   const sharedSpecFile =

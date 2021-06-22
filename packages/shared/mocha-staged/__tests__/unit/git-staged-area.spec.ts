@@ -6,7 +6,7 @@ import {
   getGitStagedAreaFiles,
   separateByScope,
   runTests
-} from '../../src/git-staged-area'
+} from '@src'
 
 describe('Git Staged Area', () => {
   it('Should be able to get git staged area files', () => {
