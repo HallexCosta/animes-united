@@ -10,11 +10,14 @@ import {
 
 describe('Git Staged Area', () => {
   it('Should be able to get git staged area files', () => {
-    const expression = 'testing\\.spec\\.ts$'
+    const expression = "'testing\\.spec.ts$\\|testing2\\.spec\\.ts$'"
     const expected = getGitStagedAreaFiles(expression)
 
     expect(expected[0]).to.be.equal(
       'packages/shared/mocha-staged/__tests__/unit/testing.spec.ts'
+    )
+    expect(expected[1]).to.be.equal(
+      'packages/shared/mocha-staged/__tests__/unit/testing2.spec.ts'
     )
   })
 
@@ -68,15 +71,16 @@ describe('Git Staged Area', () => {
   it('Should be able to all spec files for each scope', () => {
     const stageFiles: StageFile[] = [
       {
-        scope: 'server',
+        scope: 'mocha-staged',
         files: [
+          '--no-config',
           '__tests__/unit/testing.spec.ts',
           '__tests__/unit/testing2.spec.ts'
         ]
       }
     ]
 
-    const success = runTests(stageFiles)
-    expect(success).to.be.true
+    const expected = runTests(stageFiles)
+    expect(expected).to.be.equal('')
   })
 })
