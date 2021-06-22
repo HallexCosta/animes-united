@@ -1,4 +1,5 @@
 import { execSync } from 'child_process'
+import { checkForIsAppPackage, checkForIsSharedPackage } from './app-packages'
 
 export type SimpleStageFile = {
   scope: string
@@ -10,9 +11,9 @@ export type StageFile = {
   files: string[]
 }
 
-export function getGitStagedAreaFiles(regex = '\\.spec\\.ts$'): string[] {
+export function getGitStagedAreaFiles(expression = '\\.spec\\.ts$'): string[] {
   const specs = execSync(
-    `git diff --cached --name-only --diff-filter=ACM | grep ${regex}`
+    `git diff --cached --name-only --diff-filter=ACM | grep ${expression}`
   ).toString()
 
   if (specs.indexOf('') === -1) {
@@ -22,9 +23,29 @@ export function getGitStagedAreaFiles(regex = '\\.spec\\.ts$'): string[] {
   return specs.split('\n').filter(specFile => specFile !== '')
 }
 
-export function getStagedFiles(
-  preapareStagedFiles: (specFile: string) => SimpleStageFile
-): SimpleStageFile[] {
+export function preapareStagedFiles(specFilePath: string): SimpleStageFile {
+  if (checkForIsSharedPackage(specFilePath)) {
+    const scope = specFilePath.split('/')[2]
+    const file = specFilePath.split('/').slice(3).join('/')
+
+    return {
+      scope,
+      file
+    }
+  } else if (checkForIsAppPackage(specFilePath)) {
+    const scope = specFilePath.split('/')[1]
+    const file = specFilePath.split('/').slice(2).join('/')
+
+    return {
+      scope,
+      file
+    }
+  }
+
+  throw new Error(`ERROR: ${specFilePath} no is an app or shared package`)
+}
+
+export function getStagedFiles(): SimpleStageFile[] {
   return getGitStagedAreaFiles().map(preapareStagedFiles)
 }
 
