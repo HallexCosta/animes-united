@@ -18503,18 +18503,6 @@ sucrase@^3.0.0, sucrase@^3.17.1:
     pirates "^4.0.1"
     ts-interface-checker "^0.1.9"
 
-sucrase@^3.18.2:
-  version "3.18.2"
-  resolved "https://registry.yarnpkg.com/sucrase/-/sucrase-3.18.2.tgz#d9f16f1dd4f91e0293ad6f692867772eda301e4b"
-  integrity sha512-xCFP35OA6uAtBUVB8jPSftiR2Udjh0d9JkQnUOYppILpN4rBSk0yxiy67GVzD3XsFGIB6LlyIfhCABtwlopMSw==
-  dependencies:
-    commander "^4.0.0"
-    glob "7.1.6"
-    lines-and-columns "^1.1.6"
-    mz "^2.7.0"
-    pirates "^4.0.1"
-    ts-interface-checker "^0.1.9"
-
 sudo-prompt@9.1.1:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/sudo-prompt/-/sudo-prompt-9.1.1.tgz#73853d729770392caec029e2470db9c221754db0"
