@@ -29,6 +29,16 @@ export function preapareStagedFiles(specFilePath: string): SimpleStageFile {
   throw new Error(`ERROR: ${specFilePath} no is an app or shared package`)
 }
 
-const simpleStageFiles = getStagedFiles(preapareStagedFiles)
-const stageFiles = separateByScope(simpleStageFiles)
-runTests(stageFiles)
+function app() {
+  try {
+    const simpleStageFiles = getStagedFiles(preapareStagedFiles)
+    const stageFiles = separateByScope(simpleStageFiles)
+
+    const output = runTests(stageFiles)
+    console.log(output)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+app()
