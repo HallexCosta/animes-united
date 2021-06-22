@@ -12,7 +12,7 @@
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
-      "@src": ["./src/index.tsx"],
+      "@src": ["./src/index.ts"],
     }
   },
   "include": ["src/**/*", "__tests__/**/*"],
