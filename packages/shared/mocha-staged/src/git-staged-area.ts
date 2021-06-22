@@ -50,10 +50,24 @@ export function separateByScope(stages: SimpleStageFile[]): StageFile[] {
   return stagedFiles
 }
 
-export function runTests(stageFiles: StageFile[]): boolean {
+export function runTests(stageFiles: StageFile[]): string {
+  const outputs = []
+  const commands = []
+
   for (const { scope, files } of stageFiles) {
     const specs = files.join(' ')
-    // execSync(`yarn workspace @animes-united/${scope} test ${specs}`)
+    const command = `yarn workspace @animes-united/${scope} test ${specs}`
+
+    commands.push(command)
   }
-  return true
+
+  for (const command of commands) {
+    const output = execSync(command, {
+      stdio: 'inherit'
+    })
+
+    outputs.push(output)
+  }
+
+  return outputs.join('\n')
 }
