@@ -58,7 +58,6 @@ describe('Git Staged Area', () => {
     ]
 
     const expected = separateByScope(simpleStageFiles)
-    console.log(expected)
 
     expect(expected[0].scope).to.be.equal('server')
     expect(expected[0].files[0]).to.be.equal('__tests__/unit/testing.spec.ts')
