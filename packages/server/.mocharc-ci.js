@@ -9,5 +9,6 @@ module.exports = {
   require: ['ts-node/register', 'tsconfig-paths/register'],
   timeout: 0,
   spec: ['__tests__/unit/**/*.spec.ts'],
-  ui: 'bdd'
+  ui: 'bdd',
+  exclude: ['__tests__/unit/isolate/*.spec.ts']
 }
