@@ -1,6 +1,8 @@
-import { open, unlink } from 'fs/promises'
+import { promises } from 'fs'
 import { execSync } from 'child_process'
 import { promisify } from 'util'
+
+const { open, unlink } = promises
 
 const exec = promisify(execSync)
 
