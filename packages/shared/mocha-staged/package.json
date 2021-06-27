@@ -1,0 +1,25 @@
+{
+  "name": "@animes-united/mocha-staged",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": {
+    "mocha-staged": "dist/app.js"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start:production": "node dist/app.js",
+    "start:development": "ts-node -r tsconfig-paths/register src/app.ts",
+    "start:development:watch": "nodemon --watch src/**/* -e ts --exec ts-node ./src/app.ts",
+    "test": "mocha --config .mocharc.js",
+    "test:ci": "mocha --config .mocharc-ci.js",
+    "test:watch": "yarn test --watch",
+    "build": "sucrase ./src -d ./dist --transforms typescript,imports",
+    "clean": "rimraf dist",
+    "permission-allowed": "chmod 775 ../../../node_modules/.bin/mocha-staged",
+    "preinstall": "yarn clean",
+    "postinstall": "yarn build && yarn permission-allowed"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
