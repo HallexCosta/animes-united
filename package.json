@@ -13,7 +13,7 @@
   "scripts": {
     "install:ci": "yarn install --fronzen-lockfile",
     "test:watch": "yarn jest --watch",
-    "test:staged": "yarn jest --bail --findRelatedTests --forceExit",
+    "test:staged": "yarn mocha-staged",
     "test:ci": "yarn test --coverage",
     "build:server": "babel packages/server/src --extensions \".js,.ts\" --out-dir dist/server --copy-files --no-copy-ignored",
     "start:server:production": "node dist/server/server.js",
@@ -28,6 +28,7 @@
     "@animes-united/hash-generator": "*"
   },
   "devDependencies": {
+    "@animes-united/mocha-staged": "*",
     "@animes-united/eslint-config": "*",
     "@animes-united/husky-config": "*",
     "@animes-united/jest-config": "*",
