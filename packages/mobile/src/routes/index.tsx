@@ -22,17 +22,15 @@ type RootStackParamList = {
     data: AnimeResponse[]
   }
   AnimeDetail: {
-    data: AnimeResponse[]
+    category: string
+    data: AnimeResponse
   }
   WatchEpisode: {
     data: string
   }
 }
 
-type AnimesCategoryRouteProp = RouteProp<
-  RootStackParamList,
-  'AnimesCategory'
->
+type AnimesCategoryRouteProp = RouteProp<RootStackParamList, 'AnimesCategory'>
 
 type AnimesCategoryNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -79,14 +77,8 @@ export function Routes(): JSX.Element {
         initialRouteName="AnimesCategories"
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen
-          name="AnimesCategories"
-          component={AnimesCategories}
-        />
-        <Stack.Screen
-          name="AnimesCategory"
-          component={AnimesCategory}
-        />
+        <Stack.Screen name="AnimesCategories" component={AnimesCategories} />
+        <Stack.Screen name="AnimesCategory" component={AnimesCategory} />
         <Stack.Screen name="AnimeDetail" component={AnimeDetail} />
         <Stack.Screen name="WatchEpisode" component={WatchEpisode} />
       </Stack.Navigator>
