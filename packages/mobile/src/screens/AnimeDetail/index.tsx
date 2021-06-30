@@ -31,9 +31,13 @@ import {
 
 import animeBackground from '@assets/images/anime-thumbnail-default.jpg'
 
-import { Util } from '@util'
 import { Header, Episode as EpisodeItem } from '@components'
-import { AnimeResponse, EpisodeResponse } from '@api/response'
+import {
+  AnimeResponse,
+  EpisodeResponse,
+  StreamingsResponse
+} from '@api/response'
+import { api } from '@animes-united/axios-config'
 
 import { ScreenProps } from 'src/routes'
 
@@ -65,7 +69,20 @@ function Episodes({ data }: EpisodesRenderProps) {
 export function AnimeDetail({
   route
 }: ScreenProps<'AnimeDetail'>): JSX.Element {
-  const [data, setData] = useState<AnimeResponse[]>([])
+  const [data, setData] = useState<Omit<AnimeResponse, '_id'>>({
+    name: '',
+    rating: 0,
+    status: '',
+    genre: '',
+    studio: '',
+    imageURL: '',
+    synopsis: '',
+    yearRelease: 0,
+    streamings: {
+      episodes: [] as EpisodeResponse[],
+      ovas: [] as EpisodeResponse[]
+    }
+  })
   const [numberOfLines, setNumberOfLines] = useState(3)
   const [loadMoreSynopsis, setLoadMoreSynopsis] = useState(false)
   const [chevronDirection, setChevronDirection] = useState('down')
@@ -76,29 +93,53 @@ export function AnimeDetail({
     setChevronDirection(loadMoreSynopsis ? 'down' : 'up')
   }
 
-  function renderAnimes(): EpisodeResponse[] {
-    const episodes = []
+  function countAnimeEpisodes(streamings: StreamingsResponse): number {
+    return streamings.episodes.length + streamings.ovas.length
+  }
 
-    for (let i = 1; i <= 24; i++) {
-      episodes.push({
-        id: Math.random().toString(),
-        title: 'Darling in the fran xx',
-        number: i,
-        qualityStreaming: 'HD',
-        thumbnail: `https://yayanimes.net/Miniaturas/2018/DarlingintheFranXX/DarlingintheFranXX${Util.pad(
-          i
-        )}.jpg`,
-        url: 'https://dump.video/i/7BQ1FX.mp4'
-      })
-    }
-
-    return episodes
+  function normilizeAnimeNameRouteParam(name: string) {
+    return name
+      .split(' ')
+      .map(name => name.trim().toLowerCase())
+      .join('-')
   }
 
   useEffect(() => {
-    setData(route.params.data)
-    console.log(`Anime data: ${route.params.data}`)
-  }, [route.params.data])
+    async function updateAnimeDataOnDatabase(
+      category: string,
+      name: string
+    ): Promise<AnimeResponse> {
+      const nameRouteParam = normilizeAnimeNameRouteParam(name)
+      const response = await api.put(`/animes/${category}/${nameRouteParam}`)
+      return response.data
+    }
+
+    function checkForEpisodes(episodes: EpisodeResponse[]) {
+      if (episodes.length > 0) {
+        return true
+      }
+      return false
+    }
+
+    async function fetchAPI() {
+      console.log('Load Anime Detail')
+      let anime: AnimeResponse
+      if (checkForEpisodes(route.params.data.streamings.episodes)) {
+        console.log('Unnecessary update on database')
+        anime = route.params.data
+      } else {
+        console.log('Necessary update on database')
+        anime = await updateAnimeDataOnDatabase(
+          route.params.category,
+          route.params.data.name
+        )
+      }
+      setData(anime)
+      console.log(`Anime data: ${data}`)
+    }
+
+    fetchAPI()
+  }, [route.params, data])
 
   return (
     <Container>
@@ -109,18 +150,17 @@ export function AnimeDetail({
       <Section>
         <Thumbnail
           source={{
-            uri:
-              'http://static.tvmaze.com/uploads/images/original_untouched/138/346431.jpg'
+            uri: data.imageURL
           }}
         />
 
         <Info>
-          <Title>Darling in the fran xx 1nd Season</Title>
+          <Title>{data.name}</Title>
 
           <Description>
             <Describe>
               <DescribeText>M. PONTOS</DescribeText>
-              <DescribeValue>4.9/5</DescribeValue>
+              <DescribeValue>{data.rating}</DescribeValue>
             </Describe>
 
             <Describe>
@@ -130,12 +170,14 @@ export function AnimeDetail({
 
             <Describe>
               <DescribeText>STATUS</DescribeText>
-              <DescribeValue>COMPLETO</DescribeValue>
+              <DescribeValue>{data.status}</DescribeValue>
             </Describe>
 
             <Describe>
               <DescribeText>QTD. EPISÓDIOS</DescribeText>
-              <DescribeValue>24</DescribeValue>
+              <DescribeValue>
+                {countAnimeEpisodes(data.streamings)}
+              </DescribeValue>
             </Describe>
           </Description>
         </Info>
@@ -162,29 +204,7 @@ export function AnimeDetail({
               numberOfLines={numberOfLines}
               ellipsizeMode="tail"
             >
-              &ldquo;Eles sonham em um dia voarem pelo céu sem fim, mesmo que
-              estejam dolorosamente cientes de quão longe é o céu além da redoma
-              que bloqueia o seu voo. {'\n\n'}
-              Em um futuro distante a humanidade se estabeleceu em cidades-forte
-              móveis, chamadas de Plantações, para viverem pelas terras
-              desérticas e a civilização floresceu. Dentro da cidade há o
-              alojamento dos pilotos chamado de Mistilteinn, também conhecido
-              como gaiola. É aí que as crianças vivem... Sem saber de nada do
-              mundo exterior nem do vasto céu. A única missão da vida deles era
-              o voo.{'\n\n'}
-              Seus inimigos são os organismos gigantes e misteriosos conhecidos
-              como Estridossauros. As crianças pilotam robôs chamados de FRANXX
-              para enfrentar esses monstros desconhecidos porque eles acreditam
-              que esse é o seu propósito na vida. Em meio a eles havia um garoto
-              que uma vez foi chamado de criança prodígio: Código n° 016, Hiro.
-              Contudo, agora ele é um fracassado e é considerado dispensável.
-              Aqueles que não conseguem pilotar os FRANXX basicamente não
-              existem.
-              {'\n\n'}
-              Um dia, uma garota misteriosa chamada Zero Two aparece na frente
-              de Hiro. Da cabeça dela cresciam dois chifres fascinantes.
-              {'\n\n'}
-              &ldquo;Eu te achei, meu Darling&rdquo;&rdquo;.
+              {data.synopsis}
             </SynopsisDescription>
             <MoreButton onPress={handleLoadMoreSynopsis}>
               <MoreText>More</MoreText>
@@ -197,7 +217,7 @@ export function AnimeDetail({
           </Synopsis>
 
           <EpisodesContainer>
-            <Episodes data={renderAnimes()} />
+            <Episodes data={data.streamings.episodes} />
           </EpisodesContainer>
         </Aside>
       </Main>
