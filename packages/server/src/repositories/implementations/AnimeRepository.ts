@@ -67,6 +67,33 @@ export class AnimeRepository extends MongoDB implements IAnimeRepository {
     throw new Error('Failed to save anime')
   }
 
+  public async updateByName(
+    anime: Omit<Anime, '_id'>,
+    name: string
+  ): Promise<boolean> {
+    const db = await this.connect()
+
+    if (!this.collectionName) {
+      throw new Error('Collection name not defined')
+    }
+
+    const collection = db.collection(this.collectionName)
+    const updated = await collection.updateOne(
+      {
+        name
+      },
+      {
+        $set: anime
+      }
+    )
+
+    if (updated.modifiedCount) {
+      return true
+    }
+
+    throw new Error('Failed to update anime by name')
+  }
+
   public async updateById(
     anime: Omit<Anime, '_id'>,
     _id: ObjectId
