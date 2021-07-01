@@ -8,6 +8,7 @@ export interface IAnimeRepository {
   category(category: string): IAnimeRepository
   save(anime: Anime): Promise<boolean>
   updateById(anime: Omit<Anime, '_id'>, _id: ObjectId): Promise<boolean>
+  updateByName(anime: Omit<Anime, '_id'>, name: string): Promise<boolean>
   findByName(name: string): Promise<Anime | undefined>
   deleteByName(name: string): Promise<boolean>
 }
