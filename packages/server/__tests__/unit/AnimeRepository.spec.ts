@@ -95,6 +95,38 @@ describe('Test Anime Repository', () => {
     expect(expected).to.be.true
   })
 
+  it('Should be able to throw error if not update anime by name (AnimeRepository.updateByName)', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+
+    const expectedToThrow = async () => {
+      await animeRepository
+        .category(category)
+        .updateByName(anime, 'abcabcabcabcabcabcabcabc')
+    }
+
+    expect(expectedToThrow).to.be.throw
+  })
+
+  it('Should be able to updateByName an anime with successfully (AnimeRepository.updateByName)', async () => {
+    const animeRepository = new AnimeRepository(mongodbURITest)
+
+    const animeName = 'Charlotte Atualizado'
+    const updatedName = 'Charlotte Atualizado 2'
+    await animeRepository.category(category).updateByName(
+      {
+        ...anime,
+        name: updatedName
+      },
+      animeName
+    )
+
+    const animeUpdated = (await animeRepository
+      .category(category)
+      .findByName(updatedName)) as Anime
+
+    expect(animeUpdated.name).to.be.equal(updatedName)
+  })
+
   it('Should be able to throw error if findByCategory method does not have a parameter', async () => {
     const animeRepository = new AnimeRepository(mongodbURITest)
     let error
@@ -151,7 +183,7 @@ describe('Test Anime Repository', () => {
     const animeRepository = new AnimeRepository(mongodbURITest)
     const expected = await animeRepository
       .category('c')
-      .findByName('Charlotte Atualizado')
+      .findByName('Charlotte Atualizado 2')
 
     expect(expected).to.have.property('_id')
   })
