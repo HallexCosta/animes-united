@@ -15,10 +15,15 @@ export class Anime {
 
   public readonly streamings: Streamings
 
-  constructor(props: Omit<Anime, '_id'>, _id?: ObjectId) {
+  public readonly createdAt: Date
+  public readonly updatedAt: Date
+
+  constructor(props: Omit<Anime, '_id'>, id?: ObjectId) {
     Object.assign(this, props)
 
-    if (!_id) {
+    if (id) {
+      this._id = id
+    } else {
       this._id = new ObjectId()
     }
 
