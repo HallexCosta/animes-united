@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { UpdateAnimeService } from 'src/services/UpdateAnimeService'
+import { UpdateAnimeService } from '@services'
 
 export class UpdateAnimeController {
   async handle(request: Request, response: Response): Promise<Response> {
