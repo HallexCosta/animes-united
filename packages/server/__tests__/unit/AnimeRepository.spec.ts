@@ -40,7 +40,9 @@ const anime = new Anime({
         url: 'https://yayanimes.net/charlotte-ova-1/'
       })
     ]
-  }
+  },
+  createdAt: new Date(),
+  updatedAt: new Date()
 })
 
 describe('Test Anime Repository', () => {
@@ -57,7 +59,7 @@ describe('Test Anime Repository', () => {
     expect(expected).to.be.instanceOf(AnimeRepository)
   })
 
-  it('Should be able to save an anime with successfully', async () => {
+  it('Should be able to save an anime with successfully (AnimeRepository.save)', async () => {
     const animeRepository = new AnimeRepository(mongodbURITest)
     const expected = await animeRepository.category(category).save(anime)
 
