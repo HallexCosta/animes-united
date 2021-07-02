@@ -17,7 +17,9 @@
       "@useCases/*": ["./src/useCases/*"],
       "@entities/*": ["./src/entities/*"],
       "@entities": ["./src/entities/index.ts"],
+      "@repositories": ["./src/repositories/index.ts"],
       "@repositories/*": ["./src/repositories/*"],
+      "@providers": ["./src/providers/index.ts"],
       "@providers/*": ["./src/providers/*"],
       "@common/*": ["./src/common/*"],
       "@errors/*": ["./src/errors/*"]
