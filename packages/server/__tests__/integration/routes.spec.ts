@@ -1,5 +1,5 @@
 import supertest from 'supertest'
-import { app } from './app'
+import { app } from '../../src/app'
 
 const request = supertest(app)
 
@@ -91,4 +91,16 @@ describe('Test routes', () => {
     },
     timeout
   )
+
+  it('Should be able to update list anime by name (http://localhost:3333/animes/:category/:name)', async () => {
+    const response = await request
+      .get(`/animes/${params.category}/${params.name}`)
+      .send()
+
+    expect(response.status).toEqual(200)
+    expect(response.body).toBeTruthy()
+    expect(response.body).not.toEqual([])
+    expect(response.body).not.toBeUndefined()
+    expect(typeof response.body).toEqual('object')
+  })
 })

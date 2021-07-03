@@ -50,9 +50,13 @@ export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
   }
 
   public async getAnime(name: string): Promise<Omit<Anime, '_id'> | undefined> {
+    const normalize = (name: string) => {
+      return name.split(' ').join('-').toLowerCase()
+    }
+
     const { browser, page } = await this.initPage()
 
-    const uri = `${this.getBaseURL()}/${name.toLowerCase()}`
+    const uri = `${this.getBaseURL()}/${normalize(name)}`
 
     await page.goto(uri, {
       timeout: 0,

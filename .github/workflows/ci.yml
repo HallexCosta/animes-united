@@ -14,36 +14,27 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 15.x]
-        os: [ubuntu-latest, windows-latest]
+        node-version: [12.x, 14.x, 16.x]
+        os: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node_version }}
         uses: actions/setup-node@v1
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
         with:
           node-version: ${{ matrix.node_version }}
           args: install:ci
-
-      # - name: install puppeteer libraries
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y libgbm1
 
       - name: Install dependencies...
         run: yarn install:ci
 
       - name: Testing server...
-        uses: mujo-code/puppeteer-headful@master
+        run: yarn lerna:test:ci
         env:
           MONGODB_URI_TEST: ${{ secrets.MONGODB_URI_TEST }}
           PUPPETEER_DEBUG: 'false'
           CI: 'true'
-        with:
-          args: yarn lerna:test:ci
 
   deploy-development:
     runs-on: ubuntu-latest
