@@ -8,12 +8,13 @@ export function handleErrors(
 ): Response {
   if (error instanceof Error) {
     return response.status(400).json({
-      error: error.message
+      message: error.message
     })
   }
 
   return response.status(500).json({
     status: 'error',
-    message: 'Internal Server Error'
+    message: 'Internal Server Error',
+    stackTrace: error
   })
 }
