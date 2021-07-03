@@ -3,7 +3,8 @@ import { UpdateAnimeService } from '@services'
 
 export class UpdateAnimeController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name, category } = request.params
+    const { name } = request.body
+    const { category } = request.params
 
     const updateAnimeService = new UpdateAnimeService()
 
