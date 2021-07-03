@@ -44,6 +44,14 @@ export class UpdateAnimeService {
   }
 
   async execute({ name, category }: UpdateAnimeDTO): Promise<Anime> {
+    if (!name) {
+      throw new Error('Name incorrect')
+    }
+
+    if (!category) {
+      throw new Error('Category incorrect')
+    }
+
     this.animeRepository.category(category)
 
     const animeFromDatabase = await this.animeRepository.findByName(name)
