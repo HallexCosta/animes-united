@@ -15,6 +15,7 @@
       "@adapters/*": ["./src/adapters/*"],
       "@adapters": ["./src/adapters/index.ts"],
       "@useCases/*": ["./src/useCases/*"],
+      "@middlewares": ["./src/middlewares/index.ts"],
       "@entities/*": ["./src/entities/*"],
       "@entities": ["./src/entities/index.ts"],
       "@repositories": ["./src/repositories/index.ts"],
