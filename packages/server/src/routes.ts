@@ -27,9 +27,9 @@ routes
   .get('/animes/calendar', (request: Request, response: Response) => {
     return listAnimesCalendarController.handle(request, response)
   })
+  .patch('/animes/:category', updateAnimeController.handle)
   .get('/animes/:category/:name', (request: Request, response: Response) => {
     return listAnimeController.handle(request, response)
   })
-  .patch('/animes/:category/:name', updateAnimeController.handle)
 
 export { routes }
