@@ -1,30 +1,28 @@
-import { ObjectId } from 'mongodb'
+import { guid } from '@animes-united/hash-generator'
 import { Streamings } from './Streamings'
 
 export class Anime {
-  public readonly _id: ObjectId
+  public readonly _id?: string
 
   public readonly name: string
-  public readonly imageURL: string
+  public readonly image_url: string
   public readonly genre: string
   public readonly status: string
   public readonly studio: string
   public readonly synopsis: string
-  public readonly yearRelease: number
+  public readonly year_release: number
   public readonly rating: number
 
   public readonly streamings: Streamings
 
-  public readonly createdAt: Date
-  public readonly updatedAt: Date
+  public readonly created_at: Date
+  public readonly updated_at: Date
 
-  constructor(props: Omit<Anime, '_id'>, id?: ObjectId) {
+  constructor(props: Anime) {
     Object.assign(this, props)
 
-    if (id) {
-      this._id = id
-    } else {
-      this._id = new ObjectId()
+    if (!this._id) {
+      this._id = guid()
     }
 
     Object.freeze(this)
