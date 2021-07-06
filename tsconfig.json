@@ -1,7 +1,4 @@
 {
-  "ts-node": {
-    "transpileOnly": true
-  },
   "compileOnSave": true,
   "compilerOptions": {
     "target": "es2017",
