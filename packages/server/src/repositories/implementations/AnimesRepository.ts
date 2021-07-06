@@ -9,7 +9,7 @@ export type CategoryAnime = {
   data: Anime[]
 }
 
-export class AnimeRepository extends MongoDB implements IAnimesRepository {
+export class AnimesRepository extends MongoDB implements IAnimesRepository {
   constructor(uri: string) {
     super(uri)
   }
