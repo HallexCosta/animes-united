@@ -2,14 +2,14 @@ import { Collection, MongoError, ObjectId } from 'mongodb'
 
 import { MongoDB } from './MongoDB'
 import { Anime } from '@entities/Anime'
-import { IAnimeRepository } from '@repositories/IAnimeRepository'
+import { IAnimesRepository } from '@repositories'
 
 export type CategoryAnime = {
   category: string
   data: Anime[]
 }
 
-export class AnimeRepository extends MongoDB implements IAnimeRepository {
+export class AnimeRepository extends MongoDB implements IAnimesRepository {
   constructor(uri: string) {
     super(uri)
   }

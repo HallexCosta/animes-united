@@ -1,11 +1,11 @@
 import { ObjectId } from 'mongodb'
 import { Anime } from '@entities/Anime'
-import { CategoryAnime } from './implementations/AnimeRepository'
+import { CategoryAnime } from '@repository'
 
-export interface IAnimeRepository {
+export interface IAnimesRepository {
   findAll(): Promise<CategoryAnime[]>
   findByCategory(category?: string): Promise<CategoryAnime>
-  category(category: string): IAnimeRepository
+  category(category: string): IAnimesRepository
   save(anime: Anime): Promise<boolean>
   updateById(anime: Omit<Anime, '_id'>, _id: ObjectId): Promise<boolean>
   updateByName(anime: Omit<Anime, '_id'>, name: string): Promise<boolean>
