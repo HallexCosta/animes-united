@@ -3,7 +3,8 @@ module.exports = {
     browser: true,
     es2020: true,
     node: true,
-    jest: true
+    jest: true,
+    mocha: true
   },
   extends: [
     'plugin:react/recommended',
@@ -27,6 +28,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'prettier/prettier': 'error',
     'no-useless-constructor': 'off',
+    camelcase: ['off', { properties: 'never' }],
     'space-before-function-paren': [
       'error',
       {
