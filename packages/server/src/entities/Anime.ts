@@ -1,4 +1,5 @@
 import { guid } from '@animes-united/hash-generator'
+import { Episode } from '.'
 import { Streamings } from './Streamings'
 
 export class Anime {
@@ -19,7 +20,15 @@ export class Anime {
   public readonly updated_at: Date
 
   constructor(props: Anime) {
-    Object.assign(this, props)
+    Object.assign(this, {
+      ...props,
+      streamings: new Streamings({
+        episodes: props.streamings.episodes.map(
+          episode => new Episode(episode)
+        ),
+        ovas: props.streamings.ovas.map(ova => new Episode(ova))
+      })
+    })
 
     if (!this._id) {
       this._id = guid()
