@@ -14,7 +14,6 @@ describe('Anime Entity', () => {
   before(() => {
     anime = new Anime(animeStub)
     expect(anime).to.be.instanceOf(Anime)
-    console.log(anime)
   })
 
   it('Must be able to generate a unique id for AnimeEntity class with a length of 24 chars.', () => {
