@@ -1,5 +1,3 @@
-import { Anime, Streamings, Episode } from '@entities'
-
 export const category = 'C'
 
 export const anime = {
