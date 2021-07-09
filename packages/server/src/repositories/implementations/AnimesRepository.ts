@@ -19,11 +19,7 @@ export class AnimesRepository extends MongoDB implements IAnimesRepository {
   }
 
   public create(anime: Omit<Anime, '_id'>): Anime {
-    return new Anime({
-      ...anime,
-      created_at: new Date(),
-      updated_at: new Date()
-    })
+    return new Anime(anime)
   }
 
   public async findAll(): Promise<AnimeCategory[]> {
