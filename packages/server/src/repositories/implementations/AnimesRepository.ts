@@ -1,160 +1,239 @@
-import { Collection, MongoError, ObjectId } from 'mongodb'
+import { Collection } from 'mongodb'
 
 import { MongoDB } from './MongoDB'
 import { Anime } from '@entities/Anime'
-import { IAnimesRepository } from '@repositories'
-
-export type CategoryAnime = {
-  category: string
-  data: Anime[]
-}
+import {
+  AnimeCategory,
+  DeletedAnime,
+  IAnimesRepository,
+  UpdatedAnime
+} from '@repositories'
 
 export class AnimesRepository extends MongoDB implements IAnimesRepository {
   constructor(uri: string) {
     super(uri)
   }
 
-  public async findAll(): Promise<CategoryAnime[]> {
+  public category(category: string): IAnimesRepository {
+    return this.collection(category.toUpperCase())
+  }
+
+  public create(anime: Omit<Anime, '_id'>): Anime {
+    return new Anime({
+      ...anime,
+      created_at: new Date(),
+      updated_at: new Date()
+    })
+  }
+
+  public async findAll(): Promise<AnimeCategory[]> {
     const db = await this.connect()
 
-    const animes: CategoryAnime[] = []
+    const categories: AnimeCategory[] = []
 
     const collections: Collection<Anime>[] = await db.collections()
 
     for (const collection of collections) {
-      animes.push({
-        category: collection.collectionName,
-        data: await collection.find().toArray()
+      const animes = await collection.find<Anime>().toArray()
+
+      const signedAnimes = animes.map(this.signAnime)
+
+      const category = collection.collectionName
+
+      categories.push({
+        category,
+        animes: signedAnimes
       })
     }
 
-    return this.orderByAlphabetical(animes)
+    return this.orderByAlphabetical(categories)
   }
 
-  public async findByCategory(category?: string): Promise<CategoryAnime> {
-    const db = await this.connect()
-    const collectionName = category || this.collectionName
-
-    if (!collectionName) {
-      throw new Error('Collection name not defined')
+  public async findByCategory(category?: string): Promise<Anime[]> {
+    if (!category) {
+      category = this.collectionName
     }
 
-    const collection = db.collection(collectionName)
-    return {
-      category: collectionName,
-      data: await collection.find<Anime>().toArray()
+    if (!category) {
+      throw new Error('Category not defined')
     }
-  }
 
-  public category(category: string): IAnimeRepository {
-    return this.collection(category.toUpperCase())
-  }
-
-  public async save(anime: Anime): Promise<boolean> {
     const db = await this.connect()
 
+    const collection = db.collection(category)
+
+    const animes = await collection.find<Anime>().toArray()
+
+    return animes.map(this.signAnime)
+  }
+
+  public async findById(_id: string): Promise<Anime | null> {
     if (!this.collectionName) {
-      throw new Error('Collection name not defined')
+      throw new Error('Category not defined')
     }
+
+    const db = await this.connect()
 
     const collection = db.collection(this.collectionName)
-    const inserted = await collection.insertOne(anime)
 
-    if (inserted.result.ok) {
-      return true
+    const anime = await collection.findOne<Anime>({
+      _id
+    })
+
+    if (!anime) {
+      return null
     }
 
-    throw new Error('Failed to save anime')
+    return this.signAnime(anime)
   }
 
-  public async updateByName(
-    anime: Omit<Anime, '_id'>,
-    name: string
-  ): Promise<boolean> {
+  public async findByName(name: string): Promise<Anime | null> {
+    if (!this.collectionName) {
+      throw new Error('Category not defined')
+    }
+
     const db = await this.connect()
 
-    if (!this.collectionName) {
-      throw new Error('Collection name not defined')
-    }
-
     const collection = db.collection(this.collectionName)
-    const updated = await collection.updateOne(
-      {
-        name
-      },
-      {
-        $set: anime
-      }
-    )
 
-    if (updated.modifiedCount) {
-      return true
-    }
-
-    throw new Error('Failed to update anime by name')
-  }
-
-  public async updateById(
-    anime: Omit<Anime, '_id'>,
-    _id: ObjectId
-  ): Promise<boolean> {
-    const db = await this.connect()
-
-    if (!this.collectionName) {
-      throw new Error('Collection name not defined')
-    }
-
-    const collection = db.collection(this.collectionName)
-    const updated = await collection.updateOne(
-      {
-        _id
-      },
-      {
-        $set: anime
-      }
-    )
-
-    if (updated.modifiedCount) {
-      return true
-    }
-
-    throw new Error('Failed to update anime by id')
-  }
-
-  public async deleteByName(name: string): Promise<boolean> {
-    const db = await this.connect()
-
-    if (!this.collectionName) {
-      throw new Error('Collection name not defined')
-    }
-
-    const collection = db.collection(this.collectionName)
-    const deleted = await collection.deleteOne({
+    const anime = await collection.findOne<Anime>({
       name
     })
 
-    if (!deleted.result.ok) {
-      throw new MongoError('Failed to delete anime')
+    if (!anime) {
+      return null
     }
 
-    return true
+    return this.signAnime(anime)
   }
 
-  public async findByName(name: string): Promise<Anime | undefined> {
-    const animes = await this.findAll()
+  public async updateById(_id: string, anime: Anime): Promise<UpdatedAnime> {
+    if (!this.collectionName) {
+      throw new Error('Category not defined')
+    }
 
-    const animesCategory = animes.find(
-      anime => anime.category === this.collectionName
+    const db = await this.connect()
+
+    const collection = db.collection(this.collectionName)
+
+    const updatedAnime = await collection.updateOne(
+      {
+        _id
+      },
+      { $set: anime }
     )
 
-    if (!animesCategory) {
-      throw new Error('Category no found')
-    }
+    const updatedCount = updatedAnime.result.nModified
 
-    return animesCategory.data.find(anime => anime.name === name)
+    return {
+      updatedCount
+    }
   }
 
-  private orderByAlphabetical(categories: CategoryAnime[]): CategoryAnime[] {
+  public async updateByName(name: string, anime: Anime): Promise<UpdatedAnime> {
+    if (!this.collectionName) {
+      throw new Error('Category not defined')
+    }
+
+    const db = await this.connect()
+
+    const collection = db.collection(this.collectionName)
+
+    const updatedAnime = await collection.updateOne(
+      {
+        name
+      },
+      { $set: anime }
+    )
+
+    const updatedCount = updatedAnime.result.nModified
+
+    return {
+      updatedCount
+    }
+  }
+
+  public async deleteById(_id: string): Promise<DeletedAnime> {
+    if (!this.collectionName) {
+      throw new Error('Category not defined')
+    }
+
+    const db = await this.connect()
+
+    const collection = db.collection(this.collectionName)
+
+    const deletedAnime = await collection.deleteOne({
+      _id
+    })
+
+    let deletedCount = deletedAnime.deletedCount
+
+    if (!deletedCount) {
+      deletedCount = 0
+    }
+
+    return {
+      deletedCount
+    }
+  }
+
+  public async deleteByName(name: string): Promise<DeletedAnime> {
+    if (!this.collectionName) {
+      throw new Error('Category not defined')
+    }
+
+    const db = await this.connect()
+
+    const collection = db.collection(this.collectionName)
+
+    const deletedAnime = await collection.deleteOne({
+      name
+    })
+
+    let deletedCount = deletedAnime.deletedCount
+
+    if (!deletedCount) {
+      deletedCount = 0
+    }
+
+    return {
+      deletedCount
+    }
+  }
+
+  public async save(anime: Anime): Promise<Anime> {
+    if (!this.collectionName) {
+      throw new Error('Category not defined')
+    }
+
+    const db = await this.connect()
+
+    const collection = db.collection(this.collectionName)
+
+    await collection.insertOne(anime)
+
+    return this.signAnime(anime)
+  }
+
+  public async saveMany(animes: Anime[]): Promise<Anime[]> {
+    if (!this.collectionName) {
+      throw new Error('Category not defined')
+    }
+
+    const db = await this.connect()
+
+    const collection = db.collection(this.collectionName)
+
+    await collection.insertMany(animes)
+
+    return animes.map(this.signAnime)
+  }
+
+  private signAnime(anime: Anime): Anime {
+    return new Anime(anime)
+  }
+
+  private orderByAlphabetical(categories: AnimeCategory[]): AnimeCategory[] {
     return categories.sort((a, b) =>
       a.category > b.category ? 1 : b.category > a.category ? -1 : 0
     )
