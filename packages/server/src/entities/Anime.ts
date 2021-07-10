@@ -1,8 +1,12 @@
 import { guid } from '@animes-united/hash-generator'
+import { Episode } from '.'
 import { Streamings } from './Streamings'
 
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
+
 export class Anime {
-  public readonly _id?: string
+  public readonly _id: string
 
   public readonly name: string
   public readonly image_url: string
@@ -18,10 +22,18 @@ export class Anime {
   public readonly created_at: Date
   public readonly updated_at: Date
 
-  constructor(props: Anime) {
-    Object.assign(this, props)
+  constructor(props: PartialBy<Anime, '_id'>) {
+    Object.assign(this, {
+      ...props,
+      streamings: new Streamings({
+        episodes: props.streamings.episodes.map(
+          episode => new Episode(episode)
+        ),
+        ovas: props.streamings.ovas.map(ova => new Episode(ova))
+      })
+    })
 
-    if (!this._id) {
+    if (!props._id) {
       this._id = guid()
     }
 
