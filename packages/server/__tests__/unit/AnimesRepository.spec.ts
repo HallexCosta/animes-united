@@ -85,7 +85,7 @@ describe('Animes Repository', () => {
     expect(expected).to.be.instanceOf(Anime)
   })
 
-  it('Should be able to update anime through an id (IAnimesRepository.updateById).', async () => {
+  it('Should be able to throw an error if there no defined category (IAnimesRepository.updateById).', async () => {
     const expectedToAsyncThrow = repository.updateById(anime._id, {
       ...anime,
       name: '2Charlotte'
