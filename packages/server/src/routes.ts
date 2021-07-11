@@ -5,9 +5,14 @@ import { listAnimeController } from '@useCases/YayanimesProvider/ListAnime'
 import { listAnimesCalendarController } from '@useCases/YayanimesProvider/ListAnimesCalendar'
 import { listRecommendationAnimesController } from '@useCases/YayanimesProvider/ListRecommendationAnimes'
 
-import { ListAnimesController, UpdateAnimeController } from '@controllers'
+import {
+  ListAnimeCategoryController,
+  ListAnimesController,
+  UpdateAnimeController
+} from '@controllers'
 
 const listAnimesController = new ListAnimesController()
+const listAnimeCategoryController = new ListAnimeCategoryController()
 const updateAnimeController = new UpdateAnimeController()
 
 const routes: Router = Router()
@@ -26,6 +31,7 @@ routes
   .get('/animes/calendar', (request: Request, response: Response) => {
     return listAnimesCalendarController.handle(request, response)
   })
+  .get('/animes/:category', listAnimeCategoryController.handle)
   .patch('/animes/:category', updateAnimeController.handle)
   .get('/animes/:category/:name', (request: Request, response: Response) => {
     return listAnimeController.handle(request, response)
