@@ -76,11 +76,11 @@ export class AnimesRepository extends MongoDB implements IAnimesRepository {
       _id
     })
 
-    if (!anime) {
-      return null
+    if (anime) {
+      return this.signAnime(anime)
     }
 
-    return this.signAnime(anime)
+    return anime
   }
 
   public async findByName(name: string): Promise<Anime | null> {

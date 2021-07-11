@@ -1,16 +1,17 @@
 import { Router, Request, Response } from 'express'
 
 import { lastReleasesEpisodesController } from '@useCases/YayanimesProvider/LastReleasesEpisodes'
-import { listAnimeController } from '@useCases/YayanimesProvider/ListAnime'
 import { listAnimesCalendarController } from '@useCases/YayanimesProvider/ListAnimesCalendar'
 import { listRecommendationAnimesController } from '@useCases/YayanimesProvider/ListRecommendationAnimes'
 
 import {
+  ListAnimeController,
   ListAnimeCategoryController,
   ListAnimesController,
   UpdateAnimeController
 } from '@controllers'
 
+const listAnimeController = new ListAnimeController()
 const listAnimesController = new ListAnimesController()
 const listAnimeCategoryController = new ListAnimeCategoryController()
 const updateAnimeController = new UpdateAnimeController()
@@ -33,8 +34,6 @@ routes
   })
   .get('/animes/:category', listAnimeCategoryController.handle)
   .patch('/animes/:category', updateAnimeController.handle)
-  .get('/animes/:category/:name', (request: Request, response: Response) => {
-    return listAnimeController.handle(request, response)
-  })
+  .get('/animes/:category/:id', listAnimeController.handle)
 
 export { routes }
