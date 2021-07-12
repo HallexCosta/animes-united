@@ -2,27 +2,26 @@ import { Router, Request, Response } from 'express'
 
 import { lastReleasesEpisodesController } from '@useCases/YayanimesProvider/LastReleasesEpisodes'
 import { listAnimesCalendarController } from '@useCases/YayanimesProvider/ListAnimesCalendar'
-import { listRecommendationAnimesController } from '@useCases/YayanimesProvider/ListRecommendationAnimes'
 
 import {
   ListAnimeController,
   ListAnimeCategoryController,
   ListAnimesController,
+  ListAnimeRecommendationController,
   UpdateAnimeController
 } from '@controllers'
 
 const listAnimeController = new ListAnimeController()
 const listAnimesController = new ListAnimesController()
 const listAnimeCategoryController = new ListAnimeCategoryController()
+const listAnimeRecommendationController = new ListAnimeRecommendationController()
 const updateAnimeController = new UpdateAnimeController()
 
 const routes: Router = Router()
 
 routes
   .get('/animes', listAnimesController.handle)
-  .get('/animes/recommendation', (request: Request, response: Response) => {
-    return listRecommendationAnimesController.handle(request, response)
-  })
+  .get('/animes/recommendation', listAnimeRecommendationController.handle)
   .get(
     '/animes/last-releases-episodes',
     (request: Request, response: Response) => {
