@@ -1,4 +1,5 @@
 export * from './ListAnimeService'
 export * from './ListAnimesService'
 export * from './ListAnimeCategoryService'
+export * from './ListAnimeRecommendationService'
 export * from './UpdateAnimeService'
