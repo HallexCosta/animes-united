@@ -21,15 +21,12 @@ const updateAnimeController = new UpdateAnimeController()
 const routes: Router = Router()
 
 routes
-  .get('/animes', listAnimesController.handle)
-  .get('/animes/recommendation', listAnimeRecommendationController.handle)
-  .get(
-    '/animes/latest-episodes-release',
-    listLatestEpisodesReleaseController.handle
-  )
-  .get('/animes/calendar', listAnimesCalendarController.handle)
-  .get('/animes/:category', listAnimeCategoryController.handle)
-  .patch('/animes/:category', updateAnimeController.handle)
-  .get('/animes/:category/:id', listAnimeController.handle)
+  .get('/', listAnimesController.handle)
+  .get('/recommendation', listAnimeRecommendationController.handle)
+  .get('/latest-episodes-release', listLatestEpisodesReleaseController.handle)
+  .get('/calendar', listAnimesCalendarController.handle)
+  .get('/:category', listAnimeCategoryController.handle)
+  .patch('/:category', updateAnimeController.handle)
+  .get('/:category/:id', listAnimeController.handle)
 
 export { routes }
