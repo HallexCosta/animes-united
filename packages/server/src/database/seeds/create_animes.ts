@@ -1,19 +1,19 @@
 import { mongodbURI } from '@common/configs/mongodb'
 import { Anime } from '@entities'
-import { AnimeRepository } from '@repositories'
+import { AnimesRepository } from '@repositories'
 
 import { animes as animesCategories } from './animes-by-category'
 ;(async function seed() {
-  const repository = new AnimeRepository(mongodbURI)
+  const repository = new AnimesRepository(mongodbURI)
 
-  for (const { category, data: animes } of animesCategories) {
+  for (const { category, animes } of animesCategories) {
     for (const anime of animes) {
       const date = new Date()
 
       const entity = new Anime({
         ...anime,
-        createdAt: date,
-        updatedAt: date
+        created_at: date,
+        updated_at: date
       })
 
       await repository.category(category).save(entity)

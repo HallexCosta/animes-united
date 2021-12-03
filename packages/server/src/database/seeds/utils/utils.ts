@@ -1,5 +1,7 @@
+import { AnimeCategory } from '@repositories'
+
 export function separateAnimesByCategory(animes: any[]): any[] {
-  const namesByCategories: any[] = []
+  const namesByCategories: AnimeCategory[] = []
 
   for (const anime of animes) {
     const category: string = anime.name.match(/^[A-Z]/gi)
@@ -13,7 +15,7 @@ export function separateAnimesByCategory(animes: any[]): any[] {
     if (categoryFound) {
       for (const namesByCategory of namesByCategories) {
         if (namesByCategory.category === category) {
-          namesByCategory.data.push({
+          namesByCategory.animes.push({
             ...anime,
             name: anime.name
           })
@@ -23,7 +25,7 @@ export function separateAnimesByCategory(animes: any[]): any[] {
     } else {
       namesByCategories.push({
         category,
-        data: [
+        animes: [
           {
             ...anime,
             name: anime.name

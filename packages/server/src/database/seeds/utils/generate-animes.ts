@@ -5,7 +5,7 @@ const animes = names.map(name => {
   return {
     name,
     genre: '',
-    imageURL: '',
+    image_url: '',
     rating: 0,
     synopsis: '',
     status: '',
@@ -14,7 +14,7 @@ const animes = names.map(name => {
       ovas: []
     },
     studio: '',
-    yearRelease: 0
+    year_release: 0
   }
 })
 
