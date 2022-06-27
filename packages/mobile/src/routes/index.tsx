@@ -70,7 +70,7 @@ export type ScreenProps<
   ScreenName extends keyof ScreensProps
 > = ScreensProps[ScreenName]
 
-export function Routes(): JSX.Element {
+export default function Routes(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator
