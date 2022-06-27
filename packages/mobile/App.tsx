@@ -1,8 +1,7 @@
 /* eslint-disable camelcase */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'react-native'
-
-import { AppLoading } from 'expo'
+import * as SplashScreen from 'expo-splash-screen'
 
 import { Archivo_700Bold } from '@expo-google-fonts/archivo'
 import { Roboto_400Regular, Roboto_500Medium } from '@expo-google-fonts/roboto'
@@ -18,9 +17,10 @@ import {
   Poppins_800ExtraBold
 } from '@expo-google-fonts/poppins'
 
-import { Routes } from './src/routes'
+import Routes from './src/routes'
 
 export default function App(): JSX.Element {
+  const [appIsReady, setAppIsReady] = useState(false)
   const [fontsLoaded] = useFonts({
     Archivo_700Bold,
     Nunito_400Regular,
@@ -34,9 +34,20 @@ export default function App(): JSX.Element {
     Roboto_500Medium
   })
 
-  if (!fontsLoaded) {
-    return <AppLoading />
-  }
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync()
+      } catch (e) {
+        console.warn(e)
+      } finally {
+        setAppIsReady(true)
+      }
+    }
+    prepare()
+  })
+
+  if (!fontsLoaded || !appIsReady) return null
 
   return (
     <>
