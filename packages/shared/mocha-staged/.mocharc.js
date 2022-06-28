@@ -4,7 +4,7 @@ module.exports = {
   exit: true,
   extension: ['ts'],
   package: './package.json',
-  reporter: 'landing',
+  reporter: 'spec',
   file: ['__tests__/setup.ts', '__tests__/teardown.ts'],
   require: ['ts-node/register', 'tsconfig-paths/register'],
   timeout: 0,
