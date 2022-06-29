@@ -1,8 +1,6 @@
 name: CI/CD
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -45,23 +43,3 @@ jobs:
     steps:
       - name: Run deploy in environment Development
         run: echo Deploy Development
-
-  deploy-homologation:
-    runs-on: ubuntu-latest
-    environment:
-      name: homologation
-      url: 'homologation.animes-united.dev'
-    needs: deploy-development
-    steps:
-      - name: Run deploy in environment Homologation
-        run: echo Deploy Homologation
-
-  deploy-production:
-    runs-on: ubuntu-latest
-    environment:
-      name: production
-      url: 'production.animes-united.dev'
-    needs: deploy-homologation
-    steps:
-      - name: Run deploy in environment Production
-        run: echo Deploy Production
