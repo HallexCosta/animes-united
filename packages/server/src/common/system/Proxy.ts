@@ -1,8 +1,25 @@
 import httpProxy from 'http-proxy'
-import { IProxy } from './IProxy'
-import { ProxyConfigs } from './ProxyConfigs'
 
-export class Proxy implements IProxy {
+export interface IProxy {
+  build(): string
+  unBuild(): void
+  setWSEndPoint(wsEndPoint: string): IProxy
+  setOnConnected(onConnected: () => void): IProxy
+  setOnDisconnected(onDisconnected: () => void): IProxy
+}
+
+export type ProxyConfigs = {
+  host: string
+  port: number
+  ws: boolean
+}
+
+export enum ProxyConfigsEnum {
+  PORT = 65337,
+  WS = 1
+}
+
+export default class Proxy implements IProxy {
   private wsEndPoint: string
   private readonly host: string
   private readonly port: number
