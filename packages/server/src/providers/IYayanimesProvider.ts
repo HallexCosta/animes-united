@@ -1,5 +1,7 @@
-import { Anime, Episode } from '@entities'
-import { AnimeCalendar } from './implementations/YayanimesProvider'
+import { Anime } from '@entities/Anime'
+import { Episode } from '@entities/Episode'
+
+import { AnimeCalendar } from './YayanimesProvider'
 
 export interface IYayanimesProvider {
   getBaseURL(): string
