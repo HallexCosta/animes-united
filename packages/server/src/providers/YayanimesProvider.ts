@@ -1,7 +1,18 @@
-import { Override } from '@adapters'
-import { Anime, Episode } from '@entities'
-import { IYayanimesProvider } from '@providers/IYayanimesProvider'
+import { Override } from '@adapters/Override'
+
+import { Anime } from '@entities/Anime'
+import { Episode } from '@entities/Episode'
+
 import { Puppeteer } from './Puppeteer'
+
+export interface YayanimesProviderMethods {
+  getBaseURL(): string
+  getAnimeNames(): Promise<string[]>
+  getAnime(name: string): Promise<Omit<Anime, '_id'> | undefined>
+  getRecommendationAnimes(): Promise<Omit<Anime, '_id'>[]>
+  getLastReleasesEpisodes(): Promise<Omit<Episode, 'id'>[]>
+  getAnimesCalendar(): Promise<AnimeCalendar[]>
+}
 
 export type AnimeCalendar = {
   title: string
@@ -18,7 +29,7 @@ type AnimeWithoutId = Override<
   { streamings: StreamingsWithoutId }
 >
 
-export class YayanimesProvider extends Puppeteer implements IYayanimesProvider {
+export default class YayanimesProvider extends Puppeteer implements YayanimesProviderMethods {
   private static baseURL = 'https://yayanimes.net'
   public getBaseURL: () => string = () => YayanimesProvider.baseURL
 

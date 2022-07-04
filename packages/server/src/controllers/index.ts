@@ -1,7 +1,0 @@
-export * from './ListAnimeController'
-export * from './ListAnimesController'
-export * from './ListAnimesCalendarController'
-export * from './ListAnimeCategoryController'
-export * from './ListAnimeRecommendationController'
-export * from './ListLatestEpisodesReleaseController'
-export * from './UpdateAnimeController'

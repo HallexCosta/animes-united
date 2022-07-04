@@ -1,13 +1,14 @@
 import { mongodbURI } from '@common/configs/mongodb'
-import { Anime, Episode } from '@entities'
-import {
+
+import { Anime } from '@entities/Anime'
+import { Episode } from '@entities/Episode'
+import AnimesRepository, {
   AnimeCategory,
-  AnimesRepository,
-  IAnimesRepository
-} from '@repositories'
+  AnimesRepositoryMethods
+} from '@repositories/AnimesRepository'
 
 export class ListLatestEpisodesReleaseService {
-  private readonly repository: IAnimesRepository
+  private readonly repository: AnimesRepositoryMethods
 
   constructor() {
     this.repository = new AnimesRepository(mongodbURI)

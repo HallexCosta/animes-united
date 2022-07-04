@@ -1,11 +1,11 @@
+import puppeteer, { Browser, Page } from 'puppeteer'
+
 import { getIPv4, launch } from '@common/configs/puppeteer'
-import {
+import Proxy, {
   IProxy,
-  Proxy,
   ProxyConfigs,
   ProxyConfigsEnum
 } from '@common/system/Proxy'
-import puppeteer, { Browser, Page } from 'puppeteer'
 
 export abstract class Puppeteer {
   private proxy: IProxy

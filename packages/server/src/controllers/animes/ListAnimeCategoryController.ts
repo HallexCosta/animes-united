@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import { ListAnimeCategoryService } from '@services'
+import { ListAnimeCategoryService } from '@services/animes/ListAnimeCategoryService'
 
 export class ListAnimeCategoryController {
   async handle(request: Request, response: Response): Promise<Response> {

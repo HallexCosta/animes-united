@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
-import { ListAnimeService } from '@services'
+
+import { ListAnimeService } from '@services/animes/ListAnimeService'
 
 export class ListAnimeController {
   public async handle(request: Request, response: Response): Promise<Response> {

@@ -1,13 +1,14 @@
 import { mongodbURI } from '@common/configs/mongodb'
-import {
+
+import { Anime } from '@entities/Anime'
+
+import AnimesRepository, {
   AnimeCategory,
-  AnimesRepository,
-  IAnimesRepository
-} from '@repositories'
-import { Anime } from '@entities'
+  AnimesRepositoryMethods
+} from '@repositories/AnimesRepository'
 
 export class ListAnimeRecommendationService {
-  private readonly repository: IAnimesRepository
+  private readonly repository: AnimesRepositoryMethods
   private readonly amountRecommendedAnime = 8
 
   constructor() {

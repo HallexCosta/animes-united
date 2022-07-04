@@ -1,13 +1,14 @@
 import { mongodbURI } from '@common/configs/mongodb'
-import { Anime } from '@entities'
-import {
+
+import { Anime } from '@entities/Anime'
+
+import AnimesRepository, {
   AnimeCategory,
-  AnimesRepository,
-  IAnimesRepository
-} from '@repositories'
+  AnimesRepositoryMethods
+} from '@repositories/AnimesRepository'
 
 export class ListAnimesCalendarService {
-  private readonly repository: IAnimesRepository
+  private readonly repository: AnimesRepositoryMethods
   private readonly calendar: string[]
 
   constructor() {

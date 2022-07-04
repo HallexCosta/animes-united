@@ -1,20 +1,43 @@
 import { Collection } from 'mongodb'
 
 import { MongoDB } from './MongoDB'
-import { Anime } from '@entities/Anime'
-import {
-  AnimeCategory,
-  DeletedAnime,
-  IAnimesRepository,
-  UpdatedAnime
-} from '@repositories'
 
-export class AnimesRepository extends MongoDB implements IAnimesRepository {
+import { Anime } from '@entities/Anime'
+
+export type AnimeCategory = {
+  animes: Anime[]
+  category: string
+}
+
+export type UpdatedAnime = {
+  updatedCount: number
+}
+
+export type DeletedAnime = {
+  deletedCount: number
+}
+
+export interface AnimesRepositoryMethods {
+  category(category: string): AnimesRepositoryMethods
+  create(anime: Omit<Anime, '_id' | 'created_at' | 'updated_at'>): Anime
+  findAll(): Promise<AnimeCategory[]>
+  findByCategory(category?: string): Promise<Anime[]>
+  findById(_id: string): Promise<Anime | null>
+  findByName(name: string): Promise<Anime | null>
+  updateById(_id: string, anime: Anime): Promise<UpdatedAnime>
+  updateByName(name: string, anime: Anime): Promise<UpdatedAnime>
+  deleteById(_id: string): Promise<DeletedAnime>
+  deleteByName(name: string): Promise<DeletedAnime>
+  save(anime: Anime): Promise<Anime>
+  saveMany(animes: Anime[]): Promise<Anime[]>
+}
+
+export default class AnimesRepository extends MongoDB implements AnimesRepositoryMethods {
   constructor(uri: string) {
-    super(uri)
+    super(uri);
   }
 
-  public category(category: string): IAnimesRepository {
+  public category(category: string): AnimesRepositoryMethods {
     return this.collection(category.toUpperCase())
   }
 

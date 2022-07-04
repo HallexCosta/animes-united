@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 
-import { ListAnimesService } from '@services'
+import { ListAnimesCalendarService } from '@services/animes/ListAnimesCalendarService'
 
-export class ListAnimesController {
+export class ListAnimesCalendarController {
   public async handle(request: Request, response: Response): Promise<Response> {
-    const service = new ListAnimesService()
+    const service = new ListAnimesCalendarService()
 
     const animes = await service.execute()
 
