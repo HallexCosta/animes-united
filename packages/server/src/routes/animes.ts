@@ -1,14 +1,12 @@
 import { Router } from 'express'
 
-import {
-  ListAnimeController,
-  ListAnimeCategoryController,
-  ListAnimesCalendarController,
-  ListAnimesController,
-  ListAnimeRecommendationController,
-  ListLatestEpisodesReleaseController,
-  UpdateAnimeController
-} from '@controllers'
+import { ListAnimeController } from '@controllers/animes/ListAnimeController'
+import { ListAnimeCategoryController } from '@controllers/animes/ListAnimeCategoryController'
+import { ListAnimesCalendarController } from '@controllers/animes/ListAnimesCalendarController'
+import { ListAnimesController } from '@controllers/animes/ListAnimesController'
+import { ListAnimeRecommendationController } from '@controllers/animes/ListAnimeRecommendationController'
+import { ListLatestEpisodesReleaseController } from '@controllers/animes/ListLatestEpisodesReleaseController'
+import { UpdateAnimeController } from '@controllers/animes/UpdateAnimeController'
 
 const listAnimeController = new ListAnimeController()
 const listAnimesController = new ListAnimesController()
@@ -29,4 +27,4 @@ routes
   .patch('/:category', updateAnimeController.handle)
   .get('/:category/:id', listAnimeController.handle)
 
-export { routes }
+export default routes 
