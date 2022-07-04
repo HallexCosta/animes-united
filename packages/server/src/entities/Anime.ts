@@ -1,5 +1,6 @@
 import { guid } from '@animes-united/hash-generator'
-import { Episode } from '.'
+
+import { Episode } from './Episode'
 import { Streamings } from './Streamings'
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
