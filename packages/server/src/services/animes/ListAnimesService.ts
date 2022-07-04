@@ -1,12 +1,9 @@
 import { mongodbURI } from '@common/configs/mongodb'
-import {
-  AnimesRepository,
-  IAnimesRepository,
-  AnimeCategory
-} from '@repositories'
+
+import AnimesRepository, { AnimesRepositoryMethods, AnimeCategory } from '@repositories/AnimesRepository'
 
 export class ListAnimesService {
-  private readonly repository: IAnimesRepository
+  private readonly repository: AnimesRepositoryMethods
 
   public constructor() {
     this.repository = new AnimesRepository(mongodbURI)

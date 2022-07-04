@@ -1,7 +1,0 @@
-export * from './ListAnimeService'
-export * from './ListAnimesService'
-export * from './ListAnimesCalendarService'
-export * from './ListAnimeCategoryService'
-export * from './ListAnimeRecommendationService'
-export * from './ListLatestEpisodesReleaseService'
-export * from './UpdateAnimeService'

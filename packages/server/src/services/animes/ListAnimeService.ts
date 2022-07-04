@@ -1,6 +1,10 @@
 import { mongodbURI } from '@common/configs/mongodb'
-import { Anime } from '@entities'
-import { AnimesRepository, IAnimesRepository } from '@repositories'
+
+import { Anime } from '@entities/Anime'
+
+import AnimesRepository, {
+  AnimesRepositoryMethods
+} from '@repositories/AnimesRepository'
 
 type ListAnimeDTO = {
   id: string
@@ -8,7 +12,7 @@ type ListAnimeDTO = {
 }
 
 export class ListAnimeService {
-  private readonly repository: IAnimesRepository
+  private readonly repository: AnimesRepositoryMethods
 
   constructor() {
     this.repository = new AnimesRepository(mongodbURI)

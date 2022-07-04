@@ -1,7 +1,15 @@
 import { mongodbURI } from '@common/configs/mongodb'
-import { Anime } from '@entities'
-import { IYayanimesProvider, YayanimesProvider } from '@providers'
-import { IAnimeRepository, AnimeRepository } from '@repositories'
+
+import { Anime } from '@entities/Anime'
+
+import YayanimesProvider, { 
+  YayanimesProviderMethods
+} from '@providers/YayanimesProvider'
+
+import AnimesRepository, {
+  AnimesRepositoryMethods
+} from '@repositories/AnimesRepository'
+
 import { ObjectId } from 'mongodb'
 
 type UpdateAnimeDTO = {
@@ -10,11 +18,11 @@ type UpdateAnimeDTO = {
 }
 
 export class UpdateAnimeService {
-  private animeRepository: IAnimeRepository
-  private yayanimesProvider: IYayanimesProvider
+  private animeRepository: AnimesRepositoryMethods
+  private yayanimesProvider: YayanimesProviderMethods
 
   constructor() {
-    this.animeRepository = new AnimeRepository(mongodbURI)
+    this.animeRepository = new AnimesRepository(mongodbURI)
     this.yayanimesProvider = new YayanimesProvider()
   }
 
