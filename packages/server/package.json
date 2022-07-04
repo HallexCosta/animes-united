@@ -11,10 +11,8 @@
     "start:development": "ts-node -r tsconfig-paths/register --transpile-only src/server.ts",
     "start:development:watch": "nodemon -L",
     "start:production": "node ../../dist/server/src/server.js",
-    "test:jest": "jest --passWithNoTests --no-cache --runInBand --detectOpenHandles --colors --forceExit",
     "test": "mocha --config .mocharc.js",
     "test:watch": "yarn test --watch",
-    "test:ci": "yarn test --config .mocharc-ci.js",
     "install:ci": "yarn install --fronzen-lockfile"
   },
   "dependencies": {
