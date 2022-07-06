@@ -1,7 +1,6 @@
 import { join } from 'path'
 import { readFile, writeFile, stat, open } from 'fs/promises'
 
-import { ILogger } from './ILogger'
 import { FileError } from '@errors/system/FileError'
 
 export type LoggerFileConfig = {
@@ -10,7 +9,9 @@ export type LoggerFileConfig = {
   extension: 'log' | string
 }
 
-export class Logger implements ILogger {
+interface ILogger { }
+
+export default class Logger implements ILogger {
   private static directorySource = 'root'
   private static readonly filename = 'console'
   private static readonly extension = 'log'
