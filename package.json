@@ -25,7 +25,8 @@
   },
   "dependencies": {
     "@animes-united/axios-config": "*",
-    "@animes-united/hash-generator": "*"
+    "@animes-united/hash-generator": "*",
+    "mongodb": "^3.6.3"
   },
   "devDependencies": {
     "@animes-united/eslint-config": "*",
@@ -41,15 +42,18 @@
     "@sucrase/jest-plugin": "^2.0.0",
     "@types/chai": "^4.2.18",
     "@types/chai-as-promised": "^7.1.4",
+    "@types/deep-equal-in-any-order": "^1.0.1",
     "@types/dirty-chai": "^2.0.2",
     "@types/jest": "^26.0.19",
     "@types/mocha": "^8.2.2",
+    "@types/mongodb": "^3.6.3",
     "@types/sinon": "^10.0.2",
     "babel-core": "7.0.0-bridge.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-styled-components": "^1.12.0",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
+    "deep-equal-in-any-order": "^2.0.0",
     "dirty-chai": "^2.0.1",
     "jest": "^26.6.3",
     "lerna": "^3.22.1",
