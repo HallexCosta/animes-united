@@ -1,0 +1,41 @@
+{
+  "name": "@animes-united/yayanimes-seeder",
+  "version": "1.0.0",
+  "description": "This packages is reponsible in seeder database from @animes-united/server",
+  "main": "index.js",
+  "repository": "https://github.com/hallexcosta/animes-united.git",
+  "author": "HallexCosta",
+  "license": "MIT",
+  "scripts": {
+    "build": "rimraf dist && sucrase ./src -d ./lib --transforms typescript,imports",
+    "seeder": "node lib/request.js",
+    "seeder:local": "ts-node -r tsconfig-paths/register --transpile-only src/request.ts",
+    "ts:run": "ts-node -r tsconfig-paths/register --transpile-only",
+    "test": "mocha",
+    "coverage": "nyc yarn test",
+    "install:ci": "yarn install --fronzen-lockfile",
+    "postbuild": "link-module-alias",
+    "prebuild": "rimraf ./lib && command -v link-module-alias && link-module-alias clean || true"
+  },
+  "_moduleAliasIgnoreWarning": true,
+  "_moduleAliases": {
+    "@domains": "./lib/domains",
+    "@common": "./lib/common",
+    "@core": "./lib/core"
+  },
+  "devDependencies": {
+    "@types/deep-equal-in-any-order": "^1.0.1",
+    "@types/node": "^18.0.3",
+    "deep-equal-in-any-order": "^2.0.0",
+    "nyc": "^15.1.0",
+    "sucrase": "^3.23.0",
+    "ts-node": "^10.8.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "dotenv": "^16.0.1",
+    "puppeteer": "^15.3.2"
+  }
+}
