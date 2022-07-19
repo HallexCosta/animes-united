@@ -8,15 +8,6 @@ type Override<TypeSource, OverrideProperties> = Pick<
   Exclude<keyof TypeSource, keyof OverrideProperties>
 > & OverrideProperties
 
-export interface YayanimesProviderMethods {
-  getBaseURL(): string
-  getAnimeNames(): Promise<string[]>
-  getAnime(name: string): Promise<Omit<AnimeProps, '_id'> | undefined>
-  getRecommendationAnimes(): Promise<Omit<AnimeProps, '_id'>[]>
-  getLastReleasesEpisodes(): Promise<Omit<EpisodeProps, 'id'>[]>
-  getAnimesCalendar(): Promise<AnimeCalendar[]>
-}
-
 export type AnimeCalendar = {
   title: string
   thumbnail: string
@@ -31,6 +22,20 @@ type AnimeWithoutId = Override<
   Omit<AnimeProps, '_id'>,
   { streamings: StreamingsWithoutId }
 >
+
+export interface YayanimesProviderMethods {
+  getBaseURL(): string
+  getAnimeNames(): Promise<string[]>
+  /**
+   * get anime details using anime name
+   * @param name: string anime name to get details
+   * @returns Anime
+   */
+  getAnime(name: string): Promise<Omit<AnimeProps, '_id'> | undefined>
+  getRecommendationAnimes(): Promise<Omit<AnimeProps, '_id'>[]>
+  getLastReleasesEpisodes(): Promise<Omit<EpisodeProps, 'id'>[]>
+  getAnimesCalendar(): Promise<AnimeCalendar[]>
+}
 
 export default class YayanimesProvider extends Puppeteer implements YayanimesProviderMethods {
   private static baseURL = 'https://yayanimes.net'
@@ -126,7 +131,7 @@ export default class YayanimesProvider extends Puppeteer implements YayanimesPro
             const thumbnail = (episodeOrOva.children[0].children[1]
               .children[0] as HTMLImageElement).src
 
-            const qualityStreaming = (episodeOrOva.children[0].children[1]
+            const quality_streamming = (episodeOrOva.children[0].children[1]
               .children[1] as HTMLSpanElement).innerText.trim()
 
             const route = (episodeOrOva.children[1].children[0]
@@ -137,7 +142,7 @@ export default class YayanimesProvider extends Puppeteer implements YayanimesPro
                 title,
                 number,
                 thumbnail,
-                qualityStreaming,
+                quality_streamming,
                 url: `${baseURL}${route}`
               })
             } else {
@@ -145,7 +150,7 @@ export default class YayanimesProvider extends Puppeteer implements YayanimesPro
                 title,
                 number,
                 thumbnail,
-                qualityStreaming,
+                quality_streamming,
                 url: `${baseURL}${route}`
               })
             }
@@ -212,14 +217,14 @@ export default class YayanimesProvider extends Puppeteer implements YayanimesPro
     }
 
     const streamings = {
-      episodes: anime.streamings.episodes.map(episode => new Episode(episode)),
-      ovas: anime.streamings.ovas.map(ova => new Episode(ova))
+      episodes: anime.streamings.episodes.map(episode => new Episode(episode).props),
+      ovas: anime.streamings.ovas.map(ova => new Episode(ova).props)
     }
 
     return new Anime({
       ...anime,
       streamings
-    })
+    }).props
   }
 
   public async getRecommendationAnimes(): Promise<AnimeProps[]> {
@@ -277,7 +282,7 @@ export default class YayanimesProvider extends Puppeteer implements YayanimesPro
       return animes
     })
 
-    const animes = evaluateAnimes.map(evaluateAnime => new Anime(evaluateAnime))
+    const animes = evaluateAnimes.map(evaluateAnime => new Anime(evaluateAnime).props)
 
     await this.closeBrowser(browser)
 
@@ -358,14 +363,14 @@ export default class YayanimesProvider extends Puppeteer implements YayanimesPro
 
       const episodes: Omit<EpisodeProps, 'id'>[] = titles.map((title, index) => {
         const thumbnail = images[index]
-        const qualityStreaming = qualityStreamings[index]
+        const quality_streamming = qualityStreamings[index]
         const number = numbers[index]
         const url = urls[index]
 
         return {
           title,
           thumbnail,
-          qualityStreaming,
+          quality_streamming,
           number,
           url
         }
@@ -375,7 +380,7 @@ export default class YayanimesProvider extends Puppeteer implements YayanimesPro
     })
 
     const episodes = evaluateEpisodes.map(
-      evaluateEpisode => new Episode(evaluateEpisode)
+      evaluateEpisode => new Episode(evaluateEpisode).props
     )
 
     await this.closeBrowser(browser)

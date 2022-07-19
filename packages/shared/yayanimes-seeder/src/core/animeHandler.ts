@@ -3,6 +3,12 @@ import { AnimeCategoryProps } from '@domains/animeCategory'
 
 import Utils from '@common/utils'
 
+import { YayanimesProviderMethods } from './YayanimesProvider'
+
+type AnimeHandlerProps = {
+  yayanimes: YayanimesProviderMethods
+}
+
 interface AnimeHandlerMethods {
   /**
    * export animes categories data in json file
@@ -23,16 +29,22 @@ interface AnimeHandlerMethods {
    * @return AnimeProps[]
    */
   createEmptyAnimesObject(animesNames: string[]): AnimeProps[]
+  /**
+   * populate anime with details
+   * @param animeName: string
+   * @return Anime[]
+   */
+  populateAnime(anime: Anime[]): AnimeProps[]
 }
 
 export default class AnimeHandler implements AnimeHandlerMethods {
-  public constructor() { }
+  public constructor(public readonly props: AnimeHandlerProps) {}
 
   public async exportAnimesCategoriesInJSON(pathName: string, animesCategories: AnimeCategoryProps[]): Promise<void> {
     const animesCategoriesInJSON = JSON.stringify(animesCategories, null, 2)
     await Utils.createAndSaveFile(pathName, animesCategoriesInJSON)
     console.warn(`path exported: ${pathName}`)
-    console.log(animesCategories)
+    //console.log(animesCategories)
   }
 
   public createEmptyAnimesObject(animesNames: string[]): AnimeProps[] {
@@ -85,5 +97,9 @@ export default class AnimeHandler implements AnimeHandlerMethods {
     }
 
     return animesCategories
+  }
+
+  public requestAnimeDetails(animes): AnimeProps[] {
+
   }
 }
