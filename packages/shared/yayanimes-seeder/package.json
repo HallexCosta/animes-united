@@ -8,8 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && sucrase ./src -d ./lib --transforms typescript,imports",
-    "seeder": "node lib/request.js",
-    "seeder:local": "ts-node -r tsconfig-paths/register --transpile-only src/request.ts",
+    "yayanimes-seeder": "ts-node -r tsconfig-paths/register --transpile-only src/cli.ts",
     "ts:run": "ts-node -r tsconfig-paths/register --transpile-only",
     "test": "mocha",
     "coverage": "nyc yarn test",
