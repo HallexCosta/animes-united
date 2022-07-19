@@ -29,12 +29,6 @@ interface AnimeHandlerMethods {
    * @return AnimeProps[]
    */
   createEmptyAnimesObject(animesNames: string[]): AnimeProps[]
-  /**
-   * populate anime with details
-   * @param animeName: string
-   * @return Anime[]
-   */
-  populateAnime(anime: Anime[]): AnimeProps[]
 }
 
 export default class AnimeHandler implements AnimeHandlerMethods {
@@ -97,9 +91,5 @@ export default class AnimeHandler implements AnimeHandlerMethods {
     }
 
     return animesCategories
-  }
-
-  public requestAnimeDetails(animes): AnimeProps[] {
-
   }
 }

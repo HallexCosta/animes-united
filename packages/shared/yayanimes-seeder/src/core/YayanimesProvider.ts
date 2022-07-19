@@ -83,8 +83,8 @@ export default class YayanimesProvider extends Puppeteer implements YayanimesPro
     })
 
     const anime: AnimeWithoutId | undefined = await page.evaluate(
-      (baseURL: string) => {
-        const verifyIsInvalidAnime = () => {
+      function(baseURL: string) {
+        function verifyIsInvalidAnime() {
           let error = false
 
           const pageNotFound = document.querySelector<HTMLHeadingElement>('h3')
