@@ -1,0 +1,20 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../../dist/yayanimes-seeder",
+    "rootDirs": ["./src", "./__tests__"],
+    "target": "es2020",
+    "lib": ["DOM", "DOM.Iterable", "es2020"],
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "strictPropertyInitialization": false,
+    "paths": {
+      "@core/*": ["./src/core/*.ts"],
+      "@common/*": ["./src/common/*.ts"],
+      "@domains/*": ["./src/domains/*.ts"]
+    }
+  },
+  "include": ["src/**/*", "__tests__/**/*"],
+  "exclude": ["node_modules/**/*"]
+}

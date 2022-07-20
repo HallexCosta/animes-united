@@ -5,7 +5,7 @@ export class Episode {
   public readonly quality_streaming: string
   public readonly url: string
 
-  constructor(props: Episode) {
+  public constructor(props: Episode) {
     Object.assign(this, props)
     Object.freeze(this)
   }

@@ -1,0 +1,4 @@
+datas/
+.nyc_output/
+.env
+lib/
