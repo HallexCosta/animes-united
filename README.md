@@ -1,5 +1,7 @@
 <h1 align="center">Animes United Platform</h1>
 
+> This is my biggest study project in life, it was through this project that I started applying my studies in Node.js and Typescript
+
 ## Guide
 
 - [Languages](#languages)
